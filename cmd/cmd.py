@@ -58,33 +58,10 @@ def write_tunnel_info(tunnel_info, json_file_path):
 
 def commit_and_push():
     try:
-        # 添加所有更改
-        subprocess.run(['git', 'add', '.'], check=True)
-        
-        # 删除历史提交记录，仅保留最新记录
-        # 先检查是否有提交历史
-        result = subprocess.run(['git', 'rev-list', '--count', 'HEAD'], 
-                              capture_output=True, text=True)
-        if result.stdout.strip() != '0':  # 如果有提交历史
-            # 获取当前分支名
-            branch_result = subprocess.run(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], 
-                                         capture_output=True, text=True)
-            branch_name = branch_result.stdout.strip()
-            
-            # 重置提交历史
-            subprocess.run(['git', 'checkout', '--orphan', 'temp_branch'], check=True)
-            subprocess.run(['git', 'add', '.'], check=True)
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            subprocess.run(['git', 'commit', '-m', f"Update tunnel info - {timestamp}"], check=True)
-            subprocess.run(['git', 'branch', '-D', branch_name], check=True)
-            subprocess.run(['git', 'branch', '-m', branch_name], check=True)
-        else:
-            # 如果没有提交历史，正常提交
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            subprocess.run(['git', 'commit', '-m', f"Update tunnel info - {timestamp}"], check=True)
-        
-        # 推送到远程仓库
-        subprocess.run(['git', 'push', '-f'], check=True)
+        # 执行 upload-cmd.sh 脚本中的命令
+        subprocess.run(['git', 'add', '-A'], check=True)
+        subprocess.run(['git', 'commit', '-m', 'test'], check=True)
+        subprocess.run(['git', 'push', '-u', 'origin', 'master', '-f'], check=True)
         
         print("代码已成功提交并推送到GitHub")
     except subprocess.CalledProcessError as e:
