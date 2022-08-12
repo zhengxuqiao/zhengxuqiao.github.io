@@ -23,6 +23,22 @@
 
     </style>
     
+	
+	<SCRIPT language=JavaScript type=text/JavaScript>
+	//改变图片大小
+	function resizepic(thispic)
+	{
+		if(thispic.width>400) thispic.width=400;
+	}
+	//无级缩放图片大小
+	function bbimg(o)
+	{
+		var zoom=parseInt(o.style.zoom, 10)||100;
+		zoom+=event.wheelDelta/12;
+		if (zoom>0) o.style.zoom=zoom+'%';
+		return false;
+	}
+	</SCRIPT>
     
 
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
@@ -152,7 +168,7 @@
 		<div style="overflow: scroll;">
 
 			<embed src="descendants-chart.svg" width="100%" height="600" />
-			<img src="descendants-chart.svg"  alt="0"  width="100%" height="600" />
+			<img src="descendants-chart.svg"  alt="0"  width="100%" height="600" onmousewheel="return bbimg(this)" οnlοad="javascript:resizepic(this)" />
 			<object type="image/svg+xml" data="descendants-chart.svg">
 			<!-- 如果浏览器不支持，这里显示备选内容 -->
 			</object>
