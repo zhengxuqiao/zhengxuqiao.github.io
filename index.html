@@ -17,20 +17,6 @@
             font-size:30pt;
         }   
 
-		.table-cell {
-			display: table-cell;
-			vertical-align: middle;
-			text-align: center;
-			width: 90%;
-			height: 600px;
-			border:1px solid black;
-			overflow-x: auto;
-			overflow-y: auto;
-			margin: 0 auto;
-		}
-
-		
-
 
     </style>
     
@@ -39,7 +25,7 @@
 	//改变图片大小
 	function resizepic(thispic)
 	{
-		if(thispic.width>400) thispic.width=400;
+//		if(thispic.width>400) thispic.width=400;
 	}
 	//无级缩放图片大小
 	function bbimg(o)
@@ -185,7 +171,7 @@
 				vertical-align: middle;
 				border: 1px solid black;  ">  
 
-			<img src="descendants-chart.svg"  alt="0" onmousewheel="return bbimg(this)" οnlοad="javascript:resizepic(this)" />
+			<img src="descendants-chart.svg"  alt="0"  height="600" onmousewheel="return bbimg(this)" οnlοad="javascript:resizepic(this)" />
 			
 		</div>
 
