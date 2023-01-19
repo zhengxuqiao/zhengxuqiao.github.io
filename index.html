@@ -1,76 +1,86 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"> 
-    <title>郑氏族谱</title>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>郑氏族谱</title>
+		<link rel="stylesheet" href="https://unpkg.com/bootstrap@4/dist/css/bootstrap.min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="css/viewer.css">
+		<style>
+			.pictures {
+			      list-style: none;
+			      margin: 0;
+			      max-width: 30rem;
+			      padding: 0;
+			
+			    }
+			
+			    .pictures > li {
+			      border: 1px solid transparent;
+			      float: left;
+			      height: calc(100% );
+			      margin: 0 -1px -1px 0;
+			      overflow: hidden;
+			      width: calc(100% );
+			    }
+			
+			    .pictures > li > img {
+			      cursor: zoom-in;
+			      width: 100%;
+			    }
+		</style>
 
-    <style>
-        .tnt {
-            Writing-mode:tb-rl;
-            Text-align:left;
-            font-size:20pt;
-			overflow:hidden;
-			white-space: nowrap;
-        }
-        
-        .tnt2 {
-            Writing-mode:tb-lr;
-            Text-align:left;
-            font-size:20pt;
-			overflow:hidden;
-			white-space: nowrap;
-        }   
-		
-    </style>
+
+
+		<style type="text/css">
+			.tnt {
+				Writing-mode:tb-rl;
+				Text-align:left;
+				font-size:20pt;
+				overflow:hidden;
+				white-space: nowrap;
+			}
+			        
+			.tnt2 {
+				Writing-mode:tb-lr;
+				Text-align:left;
+				font-size:20pt;
+				overflow:hidden;
+				white-space: nowrap;
+			}	
+		</style>
+
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+		<script src="https://unpkg.com/jquery@3/dist/jquery.slim.min.js" crossorigin="anonymous"></script>
+		<script src="https://unpkg.com/bootstrap@4/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+		<script src="js/viewer.js"></script>
+		<script>
+			window.addEventListener('DOMContentLoaded', function () {
+				var galley = document.getElementById('galley');
+				var viewer = new Viewer(galley, {
+					url: 'data-original',
+					title: function (image) {
+						return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+					},
+				});
+			});
+		</script>
+	</head>
 	
-    
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="scripts/pdf.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        function showPdf(isShow) {
-            var state = "";
-            if (isShow) {
-                state = "block";
-            } else {
-                state = "none";
-            }
+	<body>
+		<div class="container">
 
-        }
-    </script>
-	
-	
-	<SCRIPT language=JavaScript type=text/JavaScript>
-	//改变图片大小
-	function resizepic(thispic)
-	{
-		//if(thispic.width>600) thispic.width=600;
-		if(thispic.height<600) thispic.height=600;
-	}
-	//无级缩放图片大小
-	function bbimg(e)
-	{
-		var zoom=parseInt(e.style.zoom, 10)||100;
-		zoom+=event.wheelDelta/12;
-		if (zoom>0) e.style.zoom=zoom+'%';
-		return false;
-	}
-	</SCRIPT>
-	
-	
-</head>
+			<h1 style="font-size:60px" align="center">譜 族 氏 鄭</h1>
 
-
-<body>
-
-    <h1 style="font-size:60px" align="center" >譜 族 氏 鄭</h1>
-
-        <br />
-        <br />
-        <h2 style="font-size:40px" align="center" > 家谱网站
-            <a href="
-		http://xpdeun.natappfree.cc 
+			<br />
+			<br />
+			<h2 style="font-size:40px" align="center"> 族谱网站&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="http://xpdeun.natappfree.cc 
             ">  &nbsp;&nbsp;&nbsp;&nbsp;点此进入  </a>
         </h2>
         <br />
