@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="utf-8"> 
+    <meta charset="UTF-8">
     <title>郑氏族谱</title>
-
-    <style>
+	
+	    <style>
         .tnt {
             Writing-mode:tb-rl;
             Text-align:left;
@@ -19,12 +19,11 @@
             font-size:20pt;
 			overflow:hidden;
 			white-space: nowrap;
-        }   
+        }   	
+		
 		
     </style>
-	
-    
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="scripts/pdf.js" type="text/javascript"></script>
@@ -40,38 +39,19 @@
         }
     </script>
 	
-	
-	<SCRIPT language=JavaScript type=text/JavaScript>
-	//改变图片大小
-	function resizepic(thispic)
-	{
-		//if(thispic.width>600) thispic.width=600;
-		if(thispic.height<600) thispic.height=600;
-	}
-	//无级缩放图片大小
-	function bbimg(e)
-	{
-		var zoom=parseInt(e.style.zoom, 10)||100;
-		zoom+=event.wheelDelta/12;
-		if (zoom>0) e.style.zoom=zoom+'%';
-		return false;
-	}
-	</SCRIPT>
-	
-	
 </head>
-
-
 <body>
+
+
+
 
     <h1 style="font-size:60px" align="center" >譜 族 氏 鄭</h1>
 
         <br />
         <br />
         <h2 style="font-size:40px" align="center" > 家谱网站
-            <a href="
-		http://xpdeun.natappfree.cc 
-            ">  &nbsp;&nbsp;&nbsp;&nbsp;点此进入  </a>
+            <a href="http://xpdeun.natappfree.cc 
+            ">  &nbsp;&nbsp;点此进入&nbsp;&nbsp;  </a>
         </h2>
         <br />
 		<h2 style="font-size:40px" align="center" >
@@ -178,67 +158,236 @@
         <br />
         <h2 style="font-size:40px" align="center" >族谱图</h2> 
         
-        <div>
-            <p>
-                <div style="
-                        width: 95%;
-                        height: 1000px; 
-                        overflow-x: scroll; 
-                        overflow-y: scroll; 
-                        text-align: center;
-						margin: 0 auto;  
-                        vertical-align: middle;
-                        border: 1px solid black;  ">
 
-                    <img src="descendants-chart.svg"  alt="0"  height="600px" 
-						onmousewheel="return bbimg(this)" 
-						οnlοad="javascript:resizepic(this)" />
 
-                </div>
-				
 
-            </p>
-        </div>
-        
-        <br />
-        <br />
-        <!-- p>
-            <h2 style="font-size:40px" align="center" >族谱照片</h2>    
-        </p>
-        <p>
-            <img src="./中图/image001.jpg" alt="1" width="95%" border="0" />
-        </p>
-        <p align="left">
-            <img src="./中图/image002.jpg" alt="2" width="95%" border="0" />
-        </p>
-        <p align="left">
-            <img src="./中图/image003.jpg" alt="3" width="95%" border="0" />
-        </p>
-        <p align="left">
-            <img src="./中图/image004.jpg" alt="4" width="95%" border="0" />
-        </p>
-        <p align="left">
-            <img src="./中图/image005.jpg" alt="5" width="95%" border="0" />
-        </p>
-        <p align="left">
-            <img src="./中图/image006.jpg" alt="6" width="95%" border="0" />
-        </p>
-        <p align="left">&nbsp;</p>
-		
-        <p>
-            <h2 style="font-size:40px" align="center" >族谱图</h2>    
-        </p>
-		
-		<br />
-		<br />
-		
-        <p>
-            <embed src="descendants-chart.svg" type="image/svg+xml" />
-        </p -->
-		
-		<br />
-		<br />
-    </body>
 
-	
+
+
+
+
+
+
+
+
+
+
+<style>
+    #log{position: fixed;top: 0;right: 0;width: 200px;background: #eee;color: #333;padding: 5px;}
+</style>
+<div id="log"></div>
+<script>
+    function log(){
+        document.getElementById("log").innerHTML = document.getElementById("log").innerHTML+"<br>"+[].join.call(arguments,",")
+    }
+    </script>
+
+    <style>
+*{margin: 0;padding: 0;}
+body{background: #fff;}
+#box{position: relative;overflow: hidden;margin: 0 auto;border: 1px solid #000;background: #fff;}
+#box img{position: absolute;}
+    </style>
+    <div id="box" style="width: 1000%;height: 500px;">
+        <img src="descendants-chart.svg" style="width:1000px; height:500px;" alt="">
+    </div>
+
+    <script>
+    evnt = function(event) {
+
+    var evn = event,
+        eventDoc, doc, body,
+        button = evn.button
+        evn.target = evn.target || evn.srcElement;
+
+    // Calculate pageX/Y if missing and clientX/Y available
+    if (evn.pageX == null && evn.clientX != null) {
+        eventDoc = evn.target.ownerDocument || document;
+        doc = eventDoc.documentElement;
+        body = eventDoc.body;
+
+        evn.pageX = evn.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0);
+        evn.pageY = evn.clientY + (doc && doc.scrollTop || body && body.scrollTop || 0) - (doc && doc.clientTop || body && body.clientTop || 0);
+    }
+
+    if (!evn.preventDefault) {
+        evn.preventDefault = function() {
+            this.returnValue = false;
+        }
+    }
+
+    if (!evn.stopPropagation) {
+        evn.stopPropagation = function() {
+            this.cancelBubble = true;
+        }
+    }
+
+    if (evn.which == null && (evn.charCode != null || evn.keyCode != null)) {
+        evn.which = evn.charCode != null ? evn.charCode : evn.keyCode;
+    }
+
+    // Add which for click: 1 === left; 2 === middle; 3 === right
+    // Note: button is not normalized, so don't use it
+    if (!evn.which && button !== undefined) {
+        evn.which = (button & 1 ? 1 : (button & 2 ? 3 : (button & 4 ? 2 : 0)));
+    }
+    return evn
+};
+
+function getOffset(o) {
+    var left = 0,
+        top = 0;
+    while (o != null && o != document.body) {
+        top += o.offsetTop;
+        left += o.offsetLeft;
+        o = o.offsetParent;
+    }
+    return {
+        left: left,
+        top: top
+    };
+}
+
+;
+(function() {
+    var d = document,
+        bind = function(b, a, c) {
+            b.addEventListener ? b.addEventListener(a, function(event) {
+                c.call(b, evnt(event));
+            }, false) : b.attachEvent("on" + a, function(event) {
+                c.call(b, evnt(window.event));
+            });
+        },
+        on = function(b, o) {
+            for (var a in o) {
+                bind(b, a, o[a]);
+            }
+        };
+
+    var isRun,
+        startX,
+        startY,
+        endX,
+        endY,
+        rX,
+        rY,
+        bgX = 0,
+        bgY = 0,
+        $b = d.getElementById("box");
+    ww = parseInt($b.style.width),
+    wh = parseInt($b.style.height),
+    i = $b.getElementsByTagName('img')[0],
+    img = i.style,
+    imgw = parseInt(img.width),
+    imgh = parseInt(img.height),
+    scaleSize = 1;
+
+    function rs() {
+        var w, h;
+        //以完全显示图片为基准,如果改为>，则为以铺满屏幕为基准
+        if (ww / wh < imgw / imgh) {
+            w = ww;
+            h = imgh * ww / imgw;
+            bgX = 0;
+            bgY = -(h - wh) / 2;
+            scaleSize = ww / imgw; //初始比率
+        } else {
+            w = imgw * wh / imgh;
+            h = wh;
+            bgX = -(w - ww) / 2;
+            bgY = 0;
+            scaleSize = wh / imgh;
+        }
+        img.width = w + "px";
+        img.height = h + "px";
+        img.left = bgX + "px";
+        img.top = bgY + "px";
+    }
+    rs();
+    /* Init */
+    on(d, {
+        "mousedown": function(e) {
+
+            //按中建快速还原大小
+            if (e.which === 2) {
+                rs();
+            }
+            if (e.which === 1 && e.target && (e.target === i || e.target === $b)) {
+                isRun = true;
+                startX = e.pageX;
+                startY = e.pageY;
+
+                e.preventDefault();
+            }
+        },
+        "mouseup": function(e) {
+            if (e.which !== 1) {
+                return;
+            }
+
+            img.cursor = "default";
+            isRun = false;
+             if(typeof(rX)!=="undefined")//这个判断原作没有，去掉该判断会出现单击后，放大缩小不是鼠标位置的情况；处理加载后就点击的情况；即rX是undefined          
+            {
+                bgX = rX;
+                bgY = rY;
+            }
+
+            e.preventDefault();
+        },
+        "mousemove": function(e) {
+            //
+            if (e.which !== 1) {
+                return;
+            }
+            if (isRun) {
+                e.preventDefault();
+                img.cursor = "move";
+                endX = e.pageX;
+                endY = e.pageY;
+                rX = bgX + endX - startX;
+                rY = bgY + endY - startY;
+
+                img.left = rX + "px";
+                img.top = rY + "px";
+            }
+        },
+        "mousewheel": function(e) {
+            //以鼠标为中心缩放，同时进行位置调整
+            var deltaY = 0;
+            var x = e.pageX;
+            var y = e.pageY;
+
+            e.preventDefault();
+
+            if (e.target && (e.target === i)) {
+
+                var l = getOffset($b);
+                x = x - l.left;
+                y = y - l.top;
+
+                //var p = (e.wheelDelta) / 1200;
+				var p = (e.wheelDelta) / 100;
+                var ns = scaleSize;
+                ns += p;
+                ns = ns < 1 ? 1 : (ns > 10000 ? 10000 : ns); //可以缩小到1,放大到10000倍
+
+                //计算位置，以鼠标所在位置为中心
+                //以每个点的x、y位置，计算其相对于图片的位置，再计算其相对放大后的图片的位置
+                bgX = bgX - (x - bgX) * (ns - scaleSize) / (scaleSize);
+                bgY = bgY - (y - bgY) * (ns - scaleSize) / (scaleSize);
+                scaleSize = ns; //更新倍率
+
+                img.width = imgw * ns + "px";
+                img.height = imgh * ns + "px";
+                img.top = bgY + "px";
+                img.left = bgX + "px";
+            }
+        }
+    });
+
+})();
+    </script>
+</body>
 </html>
+
