@@ -268,7 +268,7 @@
      * Define the min ratio of the image when zoom out.
      * @type {number}
      */
-    minZoomRatio: 0.2,
+    minZoomRatio: 0.1,
     /**
      * Define the max ratio of the image when zoom in.
      * @type {number}
