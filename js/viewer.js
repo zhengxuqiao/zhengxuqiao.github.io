@@ -268,12 +268,12 @@
      * Define the min ratio of the image when zoom out.
      * @type {number}
      */
-    minZoomRatio: 0.1,
+    minZoomRatio: 1,
     /**
      * Define the max ratio of the image when zoom in.
      * @type {number}
      */
-    maxZoomRatio: 100,
+    maxZoomRatio: 1000,
     /**
      * Define where to get the original image URL for viewing.
      * @type {string | Function}
