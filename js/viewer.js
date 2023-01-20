@@ -1286,10 +1286,10 @@
           this.view(getData(target, 'index'));
           break;
         case 'zoom-in':
-          this.zoom(1.0, true);
+          this.zoom(0.1, true);
           break;
         case 'zoom-out':
-          this.zoom(-1.0, true);
+          this.zoom(-0.1, true);
           break;
         case 'one-to-one':
           this.toggle();
@@ -1666,7 +1666,7 @@
       } else if (event.detail) {
         delta = event.detail > 0 ? 1 : -1;
       }
-      this.zoom(-delta * ratio * 10, true, null, event);
+      this.zoom(-delta * ratio, true, null, event);
     }
   };
 
