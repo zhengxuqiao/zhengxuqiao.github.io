@@ -207,7 +207,7 @@
      * Enable to rotate the image.
      * @type {boolean}
      */
-    rotatable: false,
+    rotatable: true,
     /**
      * Enable to scale the image.
      * @type {boolean}
@@ -263,17 +263,17 @@
      * Define the ratio when zoom the image by wheeling mouse.
      * @type {number}
      */
-    zoomRatio: 1,
+    zoomRatio: 0.1,
     /**
      * Define the min ratio of the image when zoom out.
      * @type {number}
      */
-    minZoomRatio: 0.1,
+    minZoomRatio: 0.01,
     /**
      * Define the max ratio of the image when zoom in.
      * @type {number}
      */
-    maxZoomRatio: 10000
+    maxZoomRatio: 100,
     /**
      * Define where to get the original image URL for viewing.
      * @type {string | Function}
