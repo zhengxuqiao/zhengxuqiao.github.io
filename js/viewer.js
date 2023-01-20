@@ -207,7 +207,7 @@
      * Enable to rotate the image.
      * @type {boolean}
      */
-    rotatable: true,
+    rotatable: false,
     /**
      * Enable to scale the image.
      * @type {boolean}
