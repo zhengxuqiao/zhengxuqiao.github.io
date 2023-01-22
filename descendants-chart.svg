@@ -43,7 +43,7 @@ svg rect.image {
 svg path.link {
     fill: none;
     stroke: rgb(255, 0, 0);
-    stroke-width: 3px;
+    stroke-width: 5px;
 }
 
 svg g.name text {
