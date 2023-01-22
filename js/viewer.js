@@ -142,7 +142,7 @@
      * {@link https://developer.mozilla.org/en-US/docs/Web/API/FullscreenOptions}
      * @type {boolean|FullscreenOptions}
      */
-    fullscreen: true,
+    fullscreen: False,
     /**
      * Define the extra attributes to inherit from the original image.
      * @type {Array}
