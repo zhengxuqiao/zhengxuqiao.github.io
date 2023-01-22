@@ -42,7 +42,7 @@ svg rect.image {
 
 svg path.link {
     fill: none;
-    stroke: rgb(175, 175, 175);
+    stroke: rgb(255, 0, 0);
     stroke-width: 1.5px;
 }
 
