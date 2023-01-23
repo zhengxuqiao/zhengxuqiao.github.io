@@ -122,7 +122,9 @@
 		
 		<script type="text/javascript" >
 		
-			//判断浏览器，如果在微信内打开，则显示"在浏览器打开"		
+			//判断浏览器，如果在微信内打开，则显示"在浏览器打开"	
+		
+			
 			var browser = {
 					versions: function() {
 						var u = navigator.userAgent,
@@ -146,6 +148,7 @@
 				},
 				con = document.getElementById("container");
 			if (browser.versions.wx) {
+				alert("Page End")	
 				con.style.cssText = "display:block";
 			} else if (browser.versions.android) {
 				// 此处写Andoird 的下载地址
