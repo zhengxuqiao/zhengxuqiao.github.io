@@ -120,58 +120,54 @@
 			});
 		</script>
 		
-		<script type="text/javascript" >
-		
-			//判断浏览器，如果在微信内打开，则显示"在浏览器打开"	
-			var browser = 
-			{
-				versions: function() 
-				{
-					var u = navigator.userAgent,
-						app = navigator.appVersion;
-					return 
-					{ //移动终端浏览器版本信息
-						trident: u.indexOf('Trident') > -1, //IE内核
-						presto: u.indexOf('Presto') > -1, //opera内核
-						webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-						gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-						mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
-						ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-						android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-						iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
-						iPad: u.indexOf('iPad') > -1, //是否iPad
-						webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
-						wx: u.indexOf("MicroMessenger") > 0 //是否是微信
-					};
-				}(),
-				language: (navigator.browserLanguage || navigator.language)
-					.toLowerCase()
-			},
-			con = document.getElementById("container");
-			alert(browser.versions.wx)
-			if (browser.versions.wx) {
-				alert("点击 右上角的"...",在浏览器中打开")	
-				con.style.cssText = "display:block";
-			} else if (browser.versions.android) {
-				// 此处写Andoird 的下载地址
-				window.location = "https://zhengxuqiao.github.io ";
-			} else if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
-				//TODO 此处写ios的下载地址
-				window.location = "https://zhengxuqiao.github.io ";
-			} else {
-				window.location = "https://zhengxuqiao.github.io ";
-			}
+
+<script>
+  /*
+   * 智能手机浏览器版本信息:
+   */
+  var browser = {
+    versions: function () {
+      var u = navigator.userAgent, app = navigator.appVersion;
+      return {//移动终端浏览器版本信息
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('Khtml') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+        iPad: u.indexOf('iPad') > -1, //是否iPad
+        webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+        wx: u.indexOf("MicroMessenger") > 0 //是否是微信
+      };
+    }(),
+    language: (navigator.browserLanguage || navigator.language).toLowerCase()
+  }, con = document.getElementById("container");
+  if (browser.versions.wx) {
+    con.style.cssText = "display:block";
+    // window.location.href= 'http://c.pc.qq.com/middle.html?pfurl=https://www.rencaiyoujia.com/appdown/index.html';
+  } else if (browser.versions.android) {
+    // 此处写Andoird 的下载地址
+    window.location = "https://www.w3h5.com/w3h5.apk";
+  } else if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
+    alert("iOS暂不支持下载哦~");
+    //TODO 此处写ios的下载地址
+    window.location = "https://www.w3h5.com/w3h5.ipa";
+  } else {
+    window.location = "https://www.w3h5.com/w3h5.apk";
+  }
+</script>
 
 
-		
-		</script>
 		
 		
 	</head>
 
 	<body>
 	
-		<!--   -->
+		<!-- -->
+		<!-- 图标我使用的阿里图标库，节省资源，提高打开速度。  -->
 		<div id="container" style="display: none">
 			<div style='position:relative;padding-top:100px;color:#333;font-size: 22px;text-align: center;'>
 				<i style='position: absolute;top: 10px;right: 10px;font-size: 100px' class='iconfont icon-jiantou'></i>
