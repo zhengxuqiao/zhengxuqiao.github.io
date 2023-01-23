@@ -145,8 +145,9 @@
     language: (navigator.browserLanguage || navigator.language).toLowerCase()
   }, con = document.getElementById("container");
   if (browser.versions.wx) {
+	alert("iOS暂不支持下载哦~");
     con.style.cssText = "display:block";
-    // window.location.href= 'http://c.pc.qq.com/middle.html?pfurl=https://www.rencaiyoujia.com/appdown/index.html';
+    
   } else if (browser.versions.android) {
     // 此处写Andoird 的下载地址
     window.location = "https://www.w3h5.com/w3h5.apk";
