@@ -3129,6 +3129,7 @@
               return;
             }
             var size = deep && !isUndefined(value.size) ? value.size : value;
+			
             var click = deep && !isUndefined(value.click) ? value.click : value;
             var item = document.createElement('li');
             if (options.keyboard) {
