@@ -30,9 +30,10 @@
 			language: (navigator.browserLanguage || navigator.language).toLowerCase()
 		  }, con = document.getElementById("container");
 		  if (browser.versions.wx) {
+				alert("请点击屏幕右上角 [ ··· ] 在浏览器打开 ");
 			con.style.cssText = "display:block";
 		  }else {
-		  			window.location = "index2.html";
+				window.location = "index2.html";
 		  }
 		</script>
 				
