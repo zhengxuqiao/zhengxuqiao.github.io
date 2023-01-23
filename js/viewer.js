@@ -3128,8 +3128,8 @@
             if (!show || !options.zoomable && zoomButtons.indexOf(name) !== -1 || !options.rotatable && rotateButtons.indexOf(name) !== -1 || !options.scalable && scaleButtons.indexOf(name) !== -1) {
               return;
             }
-            
-			var size = large ;
+            var size = deep && !isUndefined(value.size) ? value.size : value;
+			
             var click = deep && !isUndefined(value.click) ? value.click : value;
             var item = document.createElement('li');
             if (options.keyboard) {
