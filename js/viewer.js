@@ -187,7 +187,7 @@
      * Indicate if enable loop viewing or not.
      * @type {boolean}
      */
-    loop: true,
+    loop: false,
     /**
      * Min width of the viewer in inline mode.
      * @type {number}
