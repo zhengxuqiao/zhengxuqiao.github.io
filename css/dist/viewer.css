@@ -375,14 +375,11 @@
   display: none;
 }
 
-/*
+
 .viewer-backdrop {
   background-color: rgba(0, 0, 0, 50%);
 }
-*/
-.viewer-backdrop {
-  background-color: rgba(255, 255, 255, 0%);
-}
+
 
 
 .viewer-invisible {
