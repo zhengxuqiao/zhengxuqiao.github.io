@@ -118,6 +118,17 @@
 					},
 				});
 			});
+			
+			window.addEventListener('DOMContentLoaded', function () {
+				var galley2 = document.getElementById('galley2');
+				var viewer = new Viewer(galley2, {
+					url: 'data-original',
+					title: function (image) {
+						return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+					},
+				});
+			});
+			
 		</script>				
 	</head>
 
