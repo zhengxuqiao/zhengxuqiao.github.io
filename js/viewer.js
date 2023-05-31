@@ -273,7 +273,7 @@
      * Define the max ratio of the image when zoom in.
      * @type {number}
      */
-    maxZoomRatio: 100,
+    maxZoomRatio: 10000,
     /**
      * Define where to get the original image URL for viewing.
      * @type {string | Function}
@@ -2247,7 +2247,7 @@
       if (isNumber(ratio) && this.viewed && !this.played && (_zoomable || options.zoomable)) {
         if (!_zoomable) {
           var minZoomRatio = Math.max(0.01, options.minZoomRatio);
-          var maxZoomRatio = Math.min(100, options.maxZoomRatio);
+          var maxZoomRatio = Math.min(10000, options.maxZoomRatio);
           ratio = Math.min(Math.max(ratio, minZoomRatio), maxZoomRatio);
         }
         if (_originalEvent) {
