@@ -273,7 +273,7 @@
      * Define the max ratio of the image when zoom in.
      * @type {number}
      */
-    maxZoomRatio: 100,
+    maxZoomRatio: 1000,
     /**
      * Define where to get the original image URL for viewing.
      * @type {string | Function}
