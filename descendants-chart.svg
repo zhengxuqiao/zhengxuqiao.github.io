@@ -12,6 +12,10 @@ svg.rtl {
     unicode-bidi: bidi-override !important;
 }
 
+svg text {
+    font-weight: bold;
+}
+
 svg rect.female {
     stroke: var(--sex-f-fg, rgb(255, 32, 128));
     stroke-dasharray: none;
