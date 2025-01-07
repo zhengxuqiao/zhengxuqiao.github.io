@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>郑氏族谱</title>
+
+    <!-- Bootstrap 4 CSS -->
+
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@4/dist/css/bootstrap.min.css" crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+
+    <link rel="stylesheet" href="css/viewer.css">
+
+    <style>
+
+        .pictures > li > img {
+
+            cursor: zoom-in;
+
+            width: 100%;
+
+        }
+
+        .pictures2 > li > img {
+
+            cursor: zoom-in;
+
+            width: calc(13% - 10px); /* Adjusted for border and spacing */
+
+            margin: 5px;
+
+        }
+
+        .tnt, .tnt2 {
+
+            writing-mode: tb-rl;
+
+            text-align: center;
+
+            font-size: 8pt;
+
+            overflow: hidden;
+
+            white-space: nowrap;
+
+        }
+
+        .tnt3 {
+
+            writing-mode: tb-lr;
+
+            text-align: left;
+
+            font-size: 6pt;
+
+            overflow: hidden;
+
+            white-space: nowrap;
+
+        }
+
+        .centered {
+
+            text-align: center;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1 class="centered" style="font-size: 60px;">鄭 氏 族 譜</h1>
+
+    <div class="centered">
+
+        <h2 style="font-size: 40px;">
+
+            <a href="http://tn92iq.natappfree.cc">登录和编辑</a>
+
+        </h2>
+
+        <button type="button" class="btn btn-primary" onclick="location.reload()">刷新</button>
+
+    </div>
+
+    
+
+    <ul id="myTab" class="nav nav-tabs centered" style="font-size: 40px;" role="tablist">
+
+        <li class="nav-item">
+
+            <a class="nav-link active" data-toggle="tab" href="#fanti" role="tab">繁体</a>
+
+        </li>
+
+        <li class="nav-item">
+
+            <a class="nav-link" data-toggle="tab" href="#jianti" role="tab">简体</a>
+
+        </li>
+
+    </ul>
+
+ 
+
+    <div id="myTabContent" class="tab-content">
+
+        <div class="tab-pane fade show active" id="fanti">
+
+            <table class="table table-bordered centered" style="height: 300px; width: 100%;">
+
+                <tr>
+
+                    <td class="tnt" style="height: 300px; vertical-align: middle;">
+
+                        <p>
+
+                            苗莊鄭氏，原居山東省泰安郊區房村...（内容省略，与原文相同）
+
+                        </p>
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div class="tab-pane fade" id="jianti">
+
+            <table class="table table-bordered centered" style="height: 300px; width: 100%;">
+
+                <tr>
+
+                    <td class="tnt2" style="height: 300px; vertical-align: middle;">
+
+                        <p>
+
+                            苗庄郑氏，原居山东省泰安郊区房村...（内容省略，与原文相同，简体版）
+
+                        </p>
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+ 
+
+    <div class="tnt3 centered" style="margin-top: 20px;">
+
+        注①：行辈由郑衍昆口传
+
+    </div>
+
+ 
+
+    <div class="centered" style="margin-top: 40px;">
+
+        <h2 style="font-size: 40px;">族谱图</h2>
+
+        <h3>点击查看大图</h3>
+
+        <div class="container">
+
+            <div id="galley">
+
+                <ul class="pictures list-unstyled">
+
+                    <li style="border: 1px solid black;">
+
+                        <img data-original="descendants-chart.svg" src="descendants-chart.svg" alt="族谱图">
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div id="galley2" style="margin-top: 20px;">
+
+                <ul class="pictures2 list-unstyled">
+
+                    <li style="display: flex; justify-content: center; flex-wrap: wrap;">
+
+                        <img data-original="image/中图/image001.jpg" src="image/中图/image001.jpg" alt="族谱图1">
+
+                        <img data-original="image/中图/image002.jpg" src="image/中图/image002.jpg" alt="族谱图2">
+
+                        <img data-original="image/中图/image003.jpg" src="image/中图/image003.jpg" alt="族谱图3">
+
+                        <img data-original="image/中图/image004.jpg" src="image/中图/image004.jpg" alt="族谱图4">
+
+                        <img data-original="image/中图/image005.jpg" src="image/中图/image005.jpg" alt="族谱图5">
+
+                        <img data-original="image/中图/image006.jpg" src="image/中图/image006.jpg" alt="族谱图6">
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+ 
+
+    <!-- Bootstrap 4 JS and dependencies -->
+
+    <script src="https://unpkg.com/jquery@3/dist/jquery.slim.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/bootstrap@4/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <script src="js/viewer.js"></script>
+
+    <script>
+
+        window.addEventListener('DOMContentLoaded', function () {
+
+            var galley = document.getElementById('galley');
+
+            var viewer = new Viewer(galley, {
+
+                url: 'data-original',
+
+                title: function (image) {
+
+                    return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+
+                }
+
+            });
+
+ 
+
+            var galley2 = document.getElementById('galley2');
+
+            var viewer2 = new Viewer(galley2, {
+
+                url: 'data-original',
+
+                title: function (image) {
+
+                    return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
