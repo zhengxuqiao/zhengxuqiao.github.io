@@ -219,7 +219,7 @@
                             大图
                         </p>
                     </h3>
-                    <div id="galley2" style="margin-top: 20px;">
+                    <div id="galley3" style="margin-top: 20px;">
                         <ul class="pictures2 list-unstyled">
                             <li style="border: 1px solid black; display: flex; justify-content: center; flex-wrap: wrap;">
                                 <img data-original="image/大图/image001.jpg" src="image/大图/image001.jpg"
@@ -273,6 +273,22 @@
                 var galley2 = document.getElementById('galley2');
 
                 var viewer2 = new Viewer(galley2, {
+
+                    url: 'data-original',
+
+                    title: function(image) {
+
+                        return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+
+                    }
+
+                });
+				
+				
+				
+				var galley3 = document.getElementById('galley3');
+
+                var viewer3 = new Viewer(galley3, {
 
                     url: 'data-original',
 
