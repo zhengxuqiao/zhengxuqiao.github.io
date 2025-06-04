@@ -50,11 +50,24 @@ def write_tunnel_info(tunnel_info, json_file_path):
                 else:
                     cleaned_info[key] = cleaned_value
         
+        # 读取现有JSON文件内容（如果存在）
+        existing_info = {}
+        if os.path.exists(json_file_path):
+            try:
+                with open(json_file_path, 'r') as file:
+                    existing_info = json.load(file)
+            except Exception as e:
+                print(f"读取现有JSON文件时出错: {e}")
+        
+        # 合并现有信息和新信息，新信息覆盖旧信息
+        existing_info.update(cleaned_info)
+        
         with open(json_file_path, 'w') as file:
-            json.dump(cleaned_info, file, indent=4)
+            json.dump(existing_info, file, indent=4)
         print(f"隧道信息已写入 {json_file_path}")
     except Exception as e:
         print(f"写入文件时出错: {e}")
+
 
 def commit_and_push():
     try:
