@@ -1,342 +1,698 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> 郑氏族谱 </title>
-    <!-- Bootstrap 4 CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap@4/dist/css/bootstrap.min.css" crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/viewer.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家谱全图 - 郑氏族谱(新)</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif;
+        }
+        
         body {
-            font-family: SimSun, serif; /* 设置页面默认字体 */
-        }
-        .pictures>li>img {
-            cursor: zoom-in;
-            width: 100%;
-        }
-
-        .pictures2>li>img {
-            cursor: zoom-in;
-            width: calc(13% - 10px);
-            /* Adjusted for border
-            and spacing */
-            margin: 5px;
-        }
-
-        .tnt,
-        .tnt2 {
-            writing-mode: tb-rl;
-            text-align: center;
-            font-size: 8pt;
-            font-family: KaiTi, cursive; /* 添加更适合中文的字体 */
-            line-height: 1.8; /* 调整行高 */
-            letter-spacing: 1px; /* 调整字间距 */
-            overflow: hidden;
-            white-space: nowrap;
-            background-color: #f5f5dc; /* 添加浅色背景 */
-            padding: 20px; /* 调整内边距 */
-        }
-
-        .tnt3 {
-            writing-mode: tb-lr;
-            text-align: left;
-            font-size: 6pt;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .centered {
-            text-align: center;
-        }
-        
-        /* 新增的样式 */
-        .main-title {
-            font-size: 60px;
-            border-bottom: 2px solid #333; /* 为标题添加装饰性样式 */
-            padding-bottom: 10px;
-        }
-        
-        .preface-title {
-            font-size: 50px;
-            padding-bottom: 10px;
-        }
-        
-        .gallery-title {
-            font-size: 50px;
-        }
-        
-        .traditional-gallery-title,
-        .new-gallery-title {
-            font-size: 40px;
-        }
-        
-        .edit-button {
-            text-decoration: none;
-            color: white;
-            background-color: #007bff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 20px;
-            display: inline-block;
-        }
-        
-        .refresh-button {
-            font-size: 20px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        
-        /* 为族谱图添加边框或阴影 */
-        #galley2 .pictures2 li {
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        }
-        
-        #galley .pictures li {
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        }
-        
-        /* 响应式图片展示 */
-        .image-gallery {
+            background: linear-gradient(135deg, #f9f7f0, #e8e5d8);
+            color: #3a3325;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-top: 20px;
+            border: 1px solid #e0d9c5;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #d4c8a6;
+        }
+        
+        h1 {
+            font-size: 3.2rem;
+            margin-bottom: 5px;
+            color: #8c5e3c;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #a1886f;
+            font-style: italic;
+            letter-spacing: 2px;
+        }
+        
+        /* 标签页样式 */
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            background: #f1ede4;
+            border-radius: 12px;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #d8d0bc;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            color: #7a6e5a;
+        }
+        
+        .tab.active {
+            background: #d4c8a6;
+            color: #5a4a32;
+            box-shadow: 0 4px 15px rgba(140, 94, 60, 0.2);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .viewer-container {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            background: #f8f5ec;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border: 1px solid #d8d0bc;
+            touch-action: none;
+        }
+        
+        .svg-container {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+            background-image: 
+                linear-gradient(#e6dfcf 1px, transparent 1px),
+                linear-gradient(90deg, #e6dfcf 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .svg-container:active {
+            cursor: grabbing;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
+            gap: 15px;
+            padding: 15px 0;
+        }
+        
+        .zoom-info {
+            background: #f1ede4;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            min-width: 150px;
+            text-align: center;
+            border: 1px solid #d8d0bc;
+            color: #5a4a32;
+        }
+        
+        .btn {
+            background: #8c5e3c;
+            color: #f9f7f0;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(140, 94, 60, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(140, 94, 60, 0.4);
+            background: #7a4e2c;
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .viewer-container {
+                height: 55vh;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                border-radius: 12px;
+            }
+        }
+        
+        .zoom-controls {
+            display: flex;
             gap: 10px;
         }
         
-        .image-gallery img {
-            max-width: 100%;
-            height: auto;
-        }
-        
-        /* 居中标签页 */
-        .nav-tabs-centered {
+        .zoom-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             display: flex;
+            align-items: center;
             justify-content: center;
-            border-bottom: none;
+            font-size: 1.6rem;
+            font-weight: bold;
         }
         
-        .nav-tabs-centered .nav-item {
-            margin-bottom: 0;
+        .watermark {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            color: rgba(140, 94, 60, 0.2);
+            font-size: 1.2rem;
+            font-weight: bold;
+            pointer-events: none;
+            user-select: none;
         }
         
-        .nav-tabs-centered .nav-link {
-            border: 1px solid #dee2e6;
-            border-bottom: none;
-            border-radius: 0.375rem 0.375rem 0 0;
+        .help-text {
+            text-align: center;
+            margin-top: 15px;
+            color: #7a6e5a;
+            font-size: 0.95rem;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #8c5e3c;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .error-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 80%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e74c3c;
+        }
+        
+        .error-message h3 {
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+        
+        .error-message p {
+            margin-bottom: 15px;
+            color: #5a4a32;
+        }
+        
+        .error-message ul {
+            text-align: left;
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        .error-message li {
+            margin-bottom: 8px;
+            color: #5a4a32;
+        }
+        
+        .mobile-instructions {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+            color: #7a6e5a;
+            font-size: 0.9rem;
+            padding: 10px;
+            background: #f1ede4;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-instructions {
+                display: block;
+            }
         }
     </style>
 </head>
-
 <body>
-    <h1 class="centered main-title" style="text-align: center;"> 鄭 氏 族 譜 </h1>
-    <br />
-    <br />
-    <div class="centered" style="display: flex; align-items: center; justify-content: center;">
-        <h2 class="preface-title" style="margin-right: 20px;"> 前言 </h2>
-    </div>
-    <!-- 添加简体/繁体切换标签 -->
-    <ul class="nav nav-tabs nav-tabs-centered" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="fanti-tab" data-toggle="tab" href="#fanti" role="tab" aria-controls="fanti" aria-selected="true">繁體</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="jianti-tab" data-toggle="tab" href="#jianti" role="tab" aria-controls="jianti" aria-selected="false">简体</a>
-        </li>
-    </ul>
-    <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade show active" id="fanti">
-            <div class="container">
-                <table class="table table-bordered centered" style="height: 300px; width: 100%;">
-                    <tr>
-                        <td class="tnt" style="height: 300px; vertical-align: middle;">
-                            <p align="left">
-                                &nbsp;&nbsp;&nbsp;&nbsp; 苗莊鄭氏，原居山東省泰安郊區房村 <br />
-                                鄉埠裏八村。明朝萬歷年間，因兵荒馬亂 <br />
-                                遷至苗莊。始祖名曉字東升，世代勤勞 <br />
-                                忠厚，艱苦創業，遂發展成為鄭氏家族， <br />
-                                生息繁衍而又分別定居至樓德和西營。 <br />
-                                &nbsp;&nbsp;&nbsp;&nbsp; 星轉鬥移，經過四百余年的風風雨雨， <br />
-                                人世變遷，鄭氏家族有了很大發展，思先人 <br />
-                                之恩，遂想立一家譜供後世瞻仰，便根據 <br />
-                                以前先人的軸堂和前輩老人的傳說記載， <br />
-                                經考證落實，遂製成本譜。望鄭氏子孫 <br />
-                                勿忘先人之德，使鄭氏家族發揚廣大， <br />
-                                流芳萬世。 <br />
-                                <br />
-                                行輩&nbsp;&nbsp;&nbsp;&nbsp;：興賢緒耐兆&nbsp;傳善家方長 <sup> ① </sup> <br />
-                                支代表：鄭金山 <br />
-                                族代表：鄭澄保，鄭澄舜，鄭澄津，鄭希強 <br />
-                                主辦人：鄭衍昆，鄭衍超 <br />
-                                書寫人：鄭衍瑞 <br />
-                                <br />
-                                公園一九九五年古歷十一月&nbsp;&nbsp;敬書 <br />
-                            </p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="jianti">
-            <div class="container">
-                <table class="table table-bordered centered" style="height: 300px; width: 100%;">
-                    <tr>
-                        <td class="tnt2" style="height: 300px; vertical-align: middle;">
-                            <p align="left">
-                                &nbsp;&nbsp;&nbsp;&nbsp; 苗庄郑氏，原居山东省泰安郊区房村 <br />
-                                乡埠里八村。明朝万历年间，因兵荒马乱 <br />
-                                迁至苗庄。始祖名晓字东升，世代勤劳 <br />
-                                忠厚，艰苦创业，遂发展成为郑氏家族， <br />
-                                生息繁衍而又分别定居至楼德和西营。 <br />
-                                &nbsp;&nbsp;&nbsp;&nbsp; 星转斗移，经过四百余年的风风雨雨， <br />
-                                人世变迁，郑氏家族有了很大发展，思先人 <br />
-                                之恩，遂想立一族谱供后世瞻仰，便根据 <br />
-                                以前先人的轴堂和前辈老人的传说记载， <br />
-                                经考证落实，遂制成本谱。望郑氏子孙 <br />
-                                勿忘先人之德，使郑氏家族发扬广大， <br />
-                                流芳万世。 <br />
-                                <br />
-                                行辈&nbsp;&nbsp;&nbsp;&nbsp;：興賢緒耐兆&nbsp;传善家方长 <sup> ① </sup> <br />
-                                支代表：郑金山 <br />
-                                族代表：郑澄保，郑澄舜，郑澄津，郑希强 <br />
-                                主办人：郑衍昆，郑衍超 <br />
-                                书写人：郑衍瑞 <br />
-                                <br />
-                                公园一九九五年古历十一月&nbsp;&nbsp;敬书 <br />
-                            </p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
     <div class="container">
-        <div class="tnt3 centered" style="margin-top: 20px;">
-            <p align="left"> 注①：行辈由郑衍昆口传 </p>
+        <header>
+            <h1>家谱全图</h1>
+            <p class="subtitle">--郑氏族谱(新)</p>
+        </header>
+        
+        <!-- 标签页导航 -->
+        <div class="tabs">
+            <div class="tab active" data-tab="tab1">图1</div>
+            <div class="tab" data-tab="tab2">图2</div>
+        </div>
+        
+        <!-- 标签页1内容 -->
+        <div id="tab1" class="tab-content active">
+            <div class="viewer-container">
+                <div id="svg-container-1" class="svg-container">
+                    <div class="loading">正在加载家谱图...</div>
+                    <div class="watermark">郑氏族谱</div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <div class="zoom-info">
+                    缩放比例: <span id="zoom-level-1">100%</span>
+                </div>
+                
+                <div class="zoom-controls">
+                    <button class="btn zoom-btn" id="zoom-in-1">+</button>
+                    <button class="btn zoom-btn" id="zoom-out-1">-</button>
+                    <button class="btn" id="reset-view-1">恢复全图</button>
+                </div>
+            </div>
+            <p class="help-text">descendants-chart.svg - 家族树状图</p>
+            <p class="mobile-instructions">双指缩放 · 单指拖动</p>
+        </div>
+        
+        <!-- 标签页2内容 -->
+        <div id="tab2" class="tab-content">
+            <div class="viewer-container">
+                <div id="svg-container-2" class="svg-container">
+                    <div class="loading">正在加载家谱图...</div>
+                    <div class="watermark">郑氏族谱</div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <div class="zoom-info">
+                    缩放比例: <span id="zoom-level-2">100%</span>
+                </div>
+                
+                <div class="zoom-controls">
+                    <button class="btn zoom-btn" id="zoom-in-2">+</button>
+                    <button class="btn zoom-btn" id="zoom-out-2">-</button>
+                    <button class="btn" id="reset-view-2">恢复全图</button>
+                </div>
+            </div>
+            <p class="help-text">gvexport.svg - 家族关系图</p>
+            <p class="mobile-instructions">双指缩放 · 单指拖动</p>
         </div>
     </div>
-    <br />
-    <br />
-    <div class="centered" style="margin-top: 40px;">
-        <h2 class="gallery-title"> 族谱图 </h2>
-        <br />
-        <div class="container">
-            <h3 class="traditional-gallery-title">
-                传统族谱图
-            </h3>
-            <div id="galley2" style="margin-top: 20px;">
-                <ul class="pictures2 list-unstyled">
-                    <li class="image-gallery">
-                        <img data-original="image/中图/image001.jpg" src="image/中图/image001.jpg" alt="族谱图1">
-                        <img data-original="image/中图/image002.jpg" src="image/中图/image002.jpg" alt="族谱图2">
-                        <img data-original="image/中图/image003.jpg" src="image/中图/image003.jpg" alt="族谱图3">
-                        <img data-original="image/中图/image004.jpg" src="image/中图/image004.jpg" alt="族谱图4">
-                        <img data-original="image/中图/image005.jpg" src="image/中图/image005.jpg" alt="族谱图5">
-                        <img data-original="image/中图/image006.jpg" src="image/中图/image006.jpg" alt="族谱图6">
-                    </li>
-                </ul>
-            </div>
-            <br />
-            <h3 class="new-gallery-title">
-                新族谱图
-            </h3>
-            <div>
-                <table style="width: 100%;">
-                    <tr>
-                        <td style="width: 15%;"></td>
-                        <td style="width: 30%;">
-                            <!-- 修改编辑按钮为从文件读取网址 -->
-                            <a href="#" class="edit-button" id="editButton" target="_blank">编辑</a>
-                        </td>
-                        <td style="width: 10%;"></td>
-                        <td style="width: 30%;"><button type="button" class="refresh-button" onclick="location.reload()">刷新</button></td>
-                        <td style="width: 15%;"></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="centered"> </div>
-            <div id="galley">
-                <ul class="pictures list-unstyled">
-                    <li style="border: 1px solid black;"> <img data-original="gvexport.svg" src="gvexport.svg" alt="族谱图"> </li>
-                </ul>
-            </div>
-            <div class="tnt3 centered" style="margin-top: 20px;">
-                <p align="left"> 2025年2月更新 </p>
-            </div>
-            <br />
-            <br />
-        </div>
-    </div>
-    <!-- Bootstrap 4 JS and dependencies -->
-    <script src="https://unpkg.com/jquery@3/dist/jquery.slim.min.js" crossorigin="anonymous">
-    </script>
-    <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js" crossorigin="anonymous">
-    </script>
-    <script src="https://unpkg.com/bootstrap@4/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-    </script>
-    <script src="js/viewer.js">
-    </script>
+
     <script>
-        // 页面加载时读取tunnel.json文件中的网址
-        window.addEventListener('DOMContentLoaded', function() {
-            fetch('tunnel.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const editButton = document.getElementById('editButton');
-                    let finalUrl = data["02.website"];
-                    if (finalUrl) {
-                        // 确保URL包含协议前缀
-                        if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
-                            finalUrl = 'http://' + finalUrl;
-                        }
-                        editButton.href = finalUrl;
-                    } else {
-                        // 如果json中没有提供URL，则使用默认网址
-                        editButton.href = 'https://zhengxuqiao.github.io/';
-                    }
-                })
-                .catch(error => {
-                    console.error('无法加载json配置文件:', error);
-                    // 如果无法读取json文件，使用默认网址
-                    const editButton = document.getElementById('editButton');
-                    editButton.href = 'https://zhengxuqiao.github.io/';
-                });
-        });
-    </script>
-    <script>
-        window.addEventListener('DOMContentLoaded',
-            function() {
-                var gallery = document.getElementById('galley');
-                var viewer = new Viewer(gallery, {
-                    url: 'data-original',
-                    title: function(image) {
-                        return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
-                    }
-                });
-
-                var gallery2 = document.getElementById('galley2');
-                var viewer2 = new Viewer(gallery2, {
-                    url: 'data-original',
-                    title: function(image) {
-                        return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
-
-                    }
-
+        document.addEventListener('DOMContentLoaded', function() {
+            // 标签页切换功能
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // 移除所有active类
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                    
+                    // 添加active类到当前标签
+                    tab.classList.add('active');
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
                 });
             });
+            
+            // 创建SVG查看器类
+            class SvgViewer {
+                constructor(containerId, zoomLevelId, zoomInId, zoomOutId, resetId, svgName) {
+                    this.container = document.getElementById(containerId);
+                    this.zoomLevelElement = document.getElementById(zoomLevelId);
+                    this.zoomInButton = document.getElementById(zoomInId);
+                    this.zoomOutButton = document.getElementById(zoomOutId);
+                    this.resetButton = document.getElementById(resetId);
+                    this.svgName = svgName;
+                    
+                    // 缩放状态
+                    this.scale = 1;
+                    this.viewBox = { x: 0, y: 0, width: 800, height: 600 };
+                    this.minScale = 0.1;
+                    this.maxScale = 100;
+                    this.isDragging = false;
+                    this.startX = 0;
+                    this.startY = 0;
+                    this.startViewBoxX = 0;
+                    this.startViewBoxY = 0;
+                    
+                    // 触摸状态
+                    this.touchStartDistance = 0;
+                    this.touchStartScale = 1;
+                    this.touchCenterX = 0;
+                    this.touchCenterY = 0;
+                    
+                    // 初始化SVG
+                    this.initSvg();
+                    
+                    // 绑定事件
+                    this.bindEvents();
+                }
+                
+                async initSvg() {
+                    try {
+                        // 创建SVG元素
+                        const svgNS = "http://www.w3.org/2000/svg";
+                        this.svg = document.createElementNS(svgNS, "svg");
+                        this.svg.setAttribute("id", "svg-viewer");
+                        this.svg.setAttribute("width", "100%");
+                        this.svg.setAttribute("height", "100%");
+                        this.svg.setAttribute("viewBox", "0 0 800 600");
+                        this.svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+                        
+                        // 创建可缩放的SVG组
+                        this.zoomGroup = document.createElementNS(svgNS, "g");
+                        this.zoomGroup.setAttribute("id", "zoom-group");
+                        
+                        // 加载实际SVG文件
+                        const response = await fetch(this.svgName);
+                        if (!response.ok) {
+                            throw new Error(`无法加载SVG文件: ${this.svgName}`);
+                        }
+                        const svgData = await response.text();
+                        
+                        // 解析SVG内容
+                        const parser = new DOMParser();
+                        const svgDoc = parser.parseFromString(svgData, "image/svg+xml");
+                        const svgContent = svgDoc.querySelector('svg');
+                        
+                        if (!svgContent) {
+                            throw new Error(`无效的SVG文件: ${this.svgName}`);
+                        }
+                        
+                        // 获取原始尺寸
+                        const viewBox = svgContent.getAttribute('viewBox');
+                        if (viewBox) {
+                            const [x, y, width, height] = viewBox.split(' ').map(Number);
+                            this.viewBox = { x, y, width, height };
+                        } else {
+                            const width = parseFloat(svgContent.getAttribute('width') || 800);
+                            const height = parseFloat(svgContent.getAttribute('height') || 600);
+                            this.viewBox = { x: 0, y: 0, width, height };
+                        }
+                        
+                        // 将SVG内容添加到缩放组
+                        while (svgContent.firstChild) {
+                            this.zoomGroup.appendChild(svgContent.firstChild);
+                        }
+                        
+                        this.svg.appendChild(this.zoomGroup);
+                        this.container.appendChild(this.svg);
+                        
+                        // 移除加载提示
+                        this.container.querySelector('.loading').remove();
+                        
+                        // 初始化视图
+                        this.updateView();
+                    } catch (error) {
+                        console.error(error);
+                        this.showError(error);
+                    }
+                }
+                
+                showError(error) {
+                    const loadingElement = this.container.querySelector('.loading');
+                    loadingElement.remove();
+                    
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.innerHTML = `
+                        <h3>加载失败</h3>
+                        <p>无法加载SVG文件: ${this.svgName}</p>
+                        <p>错误信息: ${error.message}</p>
+                        <p>请检查:</p>
+                        <ul>
+                            <li>文件是否与HTML文件在同一目录</li>
+                            <li>文件名是否正确: ${this.svgName}</li>
+                            <li>是否通过HTTP服务器运行（而不是直接打开HTML文件）</li>
+                        </ul>
+                        <p>您可以使用下面的按钮恢复默认视图</p>
+                    `;
+                    
+                    const retryButton = document.createElement('button');
+                    retryButton.className = 'btn';
+                    retryButton.textContent = '重试加载';
+                    retryButton.addEventListener('click', () => {
+                        errorDiv.remove();
+                        this.container.innerHTML = `
+                            <div class="loading">正在加载家谱图...</div>
+                            <div class="watermark">郑氏族谱</div>
+                        `;
+                        this.initSvg();
+                    });
+                    
+                    errorDiv.appendChild(retryButton);
+                    this.container.appendChild(errorDiv);
+                }
+                
+                updateView() {
+                    this.svg.setAttribute("viewBox", 
+                        `${this.viewBox.x} ${this.viewBox.y} ${this.viewBox.width} ${this.viewBox.height}`);
+                    this.zoomLevelElement.textContent = `${Math.round(this.scale * 100)}%`;
+                }
+                
+                zoomAtPoint(scaleFactor, clientX, clientY) {
+                    const containerRect = this.container.getBoundingClientRect();
+                    const mouseX = clientX - containerRect.left;
+                    const mouseY = clientY - containerRect.top;
+                    
+                    // 计算鼠标在SVG坐标中的位置
+                    const svgX = this.viewBox.x + (mouseX / containerRect.width) * this.viewBox.width;
+                    const svgY = this.viewBox.y + (mouseY / containerRect.height) * this.viewBox.height;
+                    
+                    // 计算新的缩放比例
+                    const newScale = Math.max(this.minScale, Math.min(this.maxScale, this.scale * scaleFactor));
+                    
+                    // 如果缩放比例没有变化，则返回
+                    if (newScale === this.scale) return;
+                    
+                    // 计算缩放后的视口大小
+                    const newWidth = this.viewBox.width * (this.scale / newScale);
+                    const newHeight = this.viewBox.height * (this.scale / newScale);
+                    
+                    // 调整视口位置以保持鼠标位置不变
+                    this.viewBox.x = svgX - (mouseX / containerRect.width) * newWidth;
+                    this.viewBox.y = svgY - (mouseY / containerRect.height) * newHeight;
+                    this.viewBox.width = newWidth;
+                    this.viewBox.height = newHeight;
+                    
+                    this.scale = newScale;
+                    this.updateView();
+                }
+                
+                bindEvents() {
+                    // 鼠标滚轮缩放（以鼠标位置为中心）
+                    this.container.addEventListener('wheel', (e) => {
+                        e.preventDefault();
+                        const scaleFactor = e.deltaY > 0 ? 0.8 : 1.2;
+                        this.zoomAtPoint(scaleFactor, e.clientX, e.clientY);
+                    });
+                    
+                    // 鼠标拖动平移
+                    this.container.addEventListener('mousedown', (e) => {
+                        if (e.button !== 0) return; // 只处理左键
+                        
+                        this.isDragging = true;
+                        this.startX = e.clientX;
+                        this.startY = e.clientY;
+                        this.startViewBoxX = this.viewBox.x;
+                        this.startViewBoxY = this.viewBox.y;
+                        this.container.style.cursor = 'grabbing';
+                    });
+                    
+                    document.addEventListener('mousemove', (e) => {
+                        if (!this.isDragging) return;
+                        
+                        const dx = e.clientX - this.startX;
+                        const dy = e.clientY - this.startY;
+                        
+                        // 计算在SVG坐标系中的移动距离
+                        const moveX = (dx / this.container.clientWidth) * this.viewBox.width;
+                        const moveY = (dy / this.container.clientHeight) * this.viewBox.height;
+                        
+                        this.viewBox.x = this.startViewBoxX - moveX;
+                        this.viewBox.y = this.startViewBoxY - moveY;
+                        
+                        this.updateView();
+                    });
+                    
+                    document.addEventListener('mouseup', () => {
+                        this.isDragging = false;
+                        this.container.style.cursor = 'grab';
+                    });
+                    
+                    // 按钮事件
+                    this.resetButton.addEventListener('click', () => {
+                        this.viewBox = { x: 0, y: 0, width: 800, height: 600 };
+                        this.scale = 1;
+                        this.updateView();
+                    });
+                    
+                    this.zoomInButton.addEventListener('click', () => {
+                        // 以中心点进行缩放
+                        const containerRect = this.container.getBoundingClientRect();
+                        const centerX = containerRect.left + containerRect.width / 2;
+                        const centerY = containerRect.top + containerRect.height / 2;
+                        this.zoomAtPoint(1.2, centerX, centerY);
+                    });
+                    
+                    this.zoomOutButton.addEventListener('click', () => {
+                        // 以中心点进行缩放
+                        const containerRect = this.container.getBoundingClientRect();
+                        const centerX = containerRect.left + containerRect.width / 2;
+                        const centerY = containerRect.top + containerRect.height / 2;
+                        this.zoomAtPoint(0.8, centerX, centerY);
+                    });
+                    
+                    // 触摸事件 - 单指拖动
+                    this.container.addEventListener('touchstart', (e) => {
+                        if (e.touches.length === 1) {
+                            const touch = e.touches[0];
+                            this.isDragging = true;
+                            this.startX = touch.clientX;
+                            this.startY = touch.clientY;
+                            this.startViewBoxX = this.viewBox.x;
+                            this.startViewBoxY = this.viewBox.y;
+                        } else if (e.touches.length === 2) {
+                            // 双指缩放
+                            const touch1 = e.touches[0];
+                            const touch2 = e.touches[1];
+                            
+                            // 计算双指距离
+                            const dx = touch1.clientX - touch2.clientX;
+                            const dy = touch1.clientY - touch2.clientY;
+                            this.touchStartDistance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            // 计算双指中心点
+                            this.touchCenterX = (touch1.clientX + touch2.clientX) / 2;
+                            this.touchCenterY = (touch1.clientY + touch2.clientY) / 2;
+                            
+                            this.touchStartScale = this.scale;
+                        }
+                    });
+                    
+                    this.container.addEventListener('touchmove', (e) => {
+                        e.preventDefault();
+                        
+                        if (e.touches.length === 1 && this.isDragging) {
+                            // 单指拖动
+                            const touch = e.touches[0];
+                            const dx = touch.clientX - this.startX;
+                            const dy = touch.clientY - this.startY;
+                            
+                            // 计算在SVG坐标系中的移动距离
+                            const moveX = (dx / this.container.clientWidth) * this.viewBox.width;
+                            const moveY = (dy / this.container.clientHeight) * this.viewBox.height;
+                            
+                            this.viewBox.x = this.startViewBoxX - moveX;
+                            this.viewBox.y = this.startViewBoxY - moveY;
+                            
+                            this.updateView();
+                        } else if (e.touches.length === 2) {
+                            // 双指缩放
+                            const touch1 = e.touches[0];
+                            const touch2 = e.touches[1];
+                            
+                            // 计算当前双指距离
+                            const dx = touch1.clientX - touch2.clientX;
+                            const dy = touch1.clientY - touch2.clientY;
+                            const touchDistance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            // 计算缩放比例
+                            const scaleFactor = touchDistance / this.touchStartDistance;
+                            const newScale = this.touchStartScale * scaleFactor;
+                            
+                            // 限制缩放范围
+                            if (newScale < this.minScale || newScale > this.maxScale) return;
+                            
+                            // 应用缩放
+                            this.zoomAtPoint(scaleFactor, this.touchCenterX, this.touchCenterY);
+                        }
+                    });
+                    
+                    this.container.addEventListener('touchend', () => {
+                        this.isDragging = false;
+                    });
+                }
+            }
+            
+            // 初始化两个SVG查看器
+            const viewer1 = new SvgViewer(
+                'svg-container-1', 
+                'zoom-level-1', 
+                'zoom-in-1', 
+                'zoom-out-1', 
+                'reset-view-1',
+                'descendants-chart.svg'
+            );
+            
+            const viewer2 = new SvgViewer(
+                'svg-container-2', 
+                'zoom-level-2', 
+                'zoom-in-2', 
+                'zoom-out-2', 
+                'reset-view-2',
+                'gvexport.svg'
+            );
+        });
     </script>
 </body>
-
 </html>
