@@ -257,15 +257,6 @@
                 display: block;
             }
         }
-        
-        .status-message {
-            text-align: center;
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 10px;
-            background: #f1ede4;
-            border: 1px solid #d8d0bc;
-        }
     </style>
 </head>
 <body>
@@ -274,11 +265,6 @@
             <h1>家谱全图</h1>
             <p class="subtitle">--郑氏族谱(新)</p>
         </header>
-        
-        <div class="status-message">
-            <p>正在自动加载本地SVG文件...</p>
-            <p>descendants-chart.svg (图1) 和 gvexport.svg (图2)</p>
-        </div>
         
         <!-- 标签页导航 -->
         <div class="tabs">
@@ -675,16 +661,6 @@
                 'reset-view-2',
                 'gvexport.svg'
             );
-            
-            // 更新状态信息
-            setTimeout(() => {
-                const statusMessage = document.querySelector('.status-message');
-                statusMessage.innerHTML = `
-                    <p>已加载本地SVG文件</p>
-                    <p>descendants-chart.svg (图1) 和 gvexport.svg (图2)</p>
-                    <p>使用标签页切换查看不同家谱图</p>
-                `;
-            }, 3000);
         });
     </script>
 </body>
