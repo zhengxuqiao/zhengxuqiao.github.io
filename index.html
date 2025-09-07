@@ -26,7 +26,7 @@
         .container {
             max-width: 1400px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             padding: 25px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -241,41 +241,6 @@
             font-weight: bold;
         }
         
-        .error-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            max-width: 80%;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e74c3c;
-        }
-        
-        .error-message h3 {
-            color: #e74c3c;
-            margin-bottom: 10px;
-        }
-        
-        .error-message p {
-            margin-bottom: 15px;
-            color: #5a4a32;
-        }
-        
-        .error-message ul {
-            text-align: left;
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-        
-        .error-message li {
-            margin-bottom: 8px;
-            color: #5a4a32;
-        }
-        
         .mobile-instructions {
             display: none;
             text-align: center;
@@ -292,6 +257,15 @@
                 display: block;
             }
         }
+        
+        .status-message {
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 10px;
+            background: #f1ede4;
+            border: 1px solid #d8d0bc;
+        }
     </style>
 </head>
 <body>
@@ -300,6 +274,11 @@
             <h1>家谱全图</h1>
             <p class="subtitle">--郑氏族谱(新)</p>
         </header>
+        
+        <div class="status-message">
+            <p>正在自动加载本地SVG文件...</p>
+            <p>descendants-chart.svg (图1) 和 gvexport.svg (图2)</p>
+        </div>
         
         <!-- 标签页导航 -->
         <div class="tabs">
@@ -460,8 +439,8 @@
                         // 移除加载提示
                         this.container.querySelector('.loading').remove();
                         
-                        // 初始化视图
-                        this.updateView();
+                        // 初始化视图 - 确保图片完整显示
+                        this.resetView();
                     } catch (error) {
                         console.error(error);
                         this.showError(error);
@@ -470,37 +449,9 @@
                 
                 showError(error) {
                     const loadingElement = this.container.querySelector('.loading');
-                    loadingElement.remove();
-                    
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'error-message';
-                    errorDiv.innerHTML = `
-                        <h3>加载失败</h3>
-                        <p>无法加载SVG文件: ${this.svgName}</p>
-                        <p>错误信息: ${error.message}</p>
-                        <p>请检查:</p>
-                        <ul>
-                            <li>文件是否与HTML文件在同一目录</li>
-                            <li>文件名是否正确: ${this.svgName}</li>
-                            <li>是否通过HTTP服务器运行（而不是直接打开HTML文件）</li>
-                        </ul>
-                        <p>您可以使用下面的按钮恢复默认视图</p>
-                    `;
-                    
-                    const retryButton = document.createElement('button');
-                    retryButton.className = 'btn';
-                    retryButton.textContent = '重试加载';
-                    retryButton.addEventListener('click', () => {
-                        errorDiv.remove();
-                        this.container.innerHTML = `
-                            <div class="loading">正在加载家谱图...</div>
-                            <div class="watermark">郑氏族谱</div>
-                        `;
-                        this.initSvg();
-                    });
-                    
-                    errorDiv.appendChild(retryButton);
-                    this.container.appendChild(errorDiv);
+                    loadingElement.textContent = `加载失败: ${error.message}`;
+                    loadingElement.style.color = '#e74c3c';
+                    loadingElement.style.fontWeight = 'bold';
                 }
                 
                 updateView() {
@@ -538,11 +489,19 @@
                     this.updateView();
                 }
                 
+                resetView() {
+                    // 重置视图并确保图片完整显示
+                    this.viewBox = { x: 0, y: 0, width: 800, height: 600 };
+                    this.scale = 1;
+                    this.updateView();
+                }
+                
                 bindEvents() {
                     // 鼠标滚轮缩放（以鼠标位置为中心）
                     this.container.addEventListener('wheel', (e) => {
                         e.preventDefault();
-                        const scaleFactor = e.deltaY > 0 ? 0.8 : 1.2;
+                        // 增加缩放速度 - 使用更大的缩放因子
+                        const scaleFactor = e.deltaY > 0 ? 0.6 : 1.8;
                         this.zoomAtPoint(scaleFactor, e.clientX, e.clientY);
                     });
                     
@@ -581,9 +540,7 @@
                     
                     // 按钮事件
                     this.resetButton.addEventListener('click', () => {
-                        this.viewBox = { x: 0, y: 0, width: 800, height: 600 };
-                        this.scale = 1;
-                        this.updateView();
+                        this.resetView();
                     });
                     
                     this.zoomInButton.addEventListener('click', () => {
@@ -591,7 +548,7 @@
                         const containerRect = this.container.getBoundingClientRect();
                         const centerX = containerRect.left + containerRect.width / 2;
                         const centerY = containerRect.top + containerRect.height / 2;
-                        this.zoomAtPoint(1.2, centerX, centerY);
+                        this.zoomAtPoint(1.8, centerX, centerY);
                     });
                     
                     this.zoomOutButton.addEventListener('click', () => {
@@ -599,7 +556,7 @@
                         const containerRect = this.container.getBoundingClientRect();
                         const centerX = containerRect.left + containerRect.width / 2;
                         const centerY = containerRect.top + containerRect.height / 2;
-                        this.zoomAtPoint(0.8, centerX, centerY);
+                        this.zoomAtPoint(0.6, centerX, centerY);
                     });
                     
                     // 触摸事件 - 单指拖动
@@ -692,6 +649,16 @@
                 'reset-view-2',
                 'gvexport.svg'
             );
+            
+            // 更新状态信息
+            setTimeout(() => {
+                const statusMessage = document.querySelector('.status-message');
+                statusMessage.innerHTML = `
+                    <p>已加载本地SVG文件</p>
+                    <p>descendants-chart.svg (图1) 和 gvexport.svg (图2)</p>
+                    <p>使用标签页切换查看不同家谱图</p>
+                `;
+            }, 3000);
         });
     </script>
 </body>
