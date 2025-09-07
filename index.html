@@ -365,8 +365,8 @@
                     // 缩放状态
                     this.scale = 1;
                     this.viewBox = { x: 0, y: 0, width: 800, height: 600 };
-                    this.minScale = 0.1;
-                    this.maxScale = 100;
+                    this.minScale = 0.05; // 更小的最小缩放比例
+                    this.maxScale = 10;   // 更大的最大缩放比例
                     this.isDragging = false;
                     this.startX = 0;
                     this.startY = 0;
@@ -378,6 +378,10 @@
                     this.touchStartScale = 1;
                     this.touchCenterX = 0;
                     this.touchCenterY = 0;
+                    
+                    // SVG原始尺寸
+                    this.originalWidth = 0;
+                    this.originalHeight = 0;
                     
                     // 初始化SVG
                     this.initSvg();
@@ -421,11 +425,11 @@
                         const viewBox = svgContent.getAttribute('viewBox');
                         if (viewBox) {
                             const [x, y, width, height] = viewBox.split(' ').map(Number);
-                            this.viewBox = { x, y, width, height };
+                            this.originalWidth = width;
+                            this.originalHeight = height;
                         } else {
-                            const width = parseFloat(svgContent.getAttribute('width') || 800);
-                            const height = parseFloat(svgContent.getAttribute('height') || 600);
-                            this.viewBox = { x: 0, y: 0, width, height };
+                            this.originalWidth = parseFloat(svgContent.getAttribute('width') || 800);
+                            this.originalHeight = parseFloat(svgContent.getAttribute('height') || 600);
                         }
                         
                         // 将SVG内容添加到缩放组
@@ -440,7 +444,7 @@
                         this.container.querySelector('.loading').remove();
                         
                         // 初始化视图 - 确保图片完整显示
-                        this.resetView();
+                        setTimeout(() => this.resetView(), 100);
                     } catch (error) {
                         console.error(error);
                         this.showError(error);
@@ -491,7 +495,29 @@
                 
                 resetView() {
                     // 重置视图并确保图片完整显示
-                    this.viewBox = { x: 0, y: 0, width: 800, height: 600 };
+                    const containerRect = this.container.getBoundingClientRect();
+                    const containerWidth = containerRect.width;
+                    const containerHeight = containerRect.height;
+                    
+                    // 计算缩放比例，使图片完整显示在容器中
+                    const scaleX = containerWidth / this.originalWidth;
+                    const scaleY = containerHeight / this.originalHeight;
+                    const scale = Math.min(scaleX, scaleY);
+                    
+                    // 计算新的视口大小
+                    const newWidth = this.originalWidth * scale;
+                    const newHeight = this.originalHeight * scale;
+                    
+                    // 计算居中位置
+                    const x = (this.originalWidth - newWidth) / 2;
+                    const y = (this.originalHeight - newHeight) / 2;
+                    
+                    this.viewBox = {
+                        x: x,
+                        y: y,
+                        width: newWidth,
+                        height: newHeight
+                    };
                     this.scale = 1;
                     this.updateView();
                 }
