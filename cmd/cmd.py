@@ -2,7 +2,6 @@ import re
 import json
 import time
 import subprocess
-from datetime import datetime
 import os
 
 def parse_access_log(log_file_path):
@@ -28,74 +27,75 @@ def parse_access_log(log_file_path):
     return tunnel_info
 
 def write_tunnel_info(tunnel_info, json_file_path):
-    try:
-        # 清理转义字符并构造正确的JSON
-        cleaned_info = {}
-        for key, value in tunnel_info.items():
-            # 移除多余的转义字符
-            cleaned_value = value.replace('\\', '')
-            # 尝试解析为JSON对象
-            try:
-                # 查找第一个完整的URL
-                url_match = re.search(r'(tcp://[^\s\"]+|http://[^\s\"]+|https://[^\s\"]+)', cleaned_value)
-                if url_match:
-                    cleaned_info[key] = url_match.group(1)
-                else:
-                    cleaned_info[key] = cleaned_value
-            except:
-                # 如果解析失败，直接使用清理后的字符串
-                url_match = re.search(r'(tcp://[^\s\"]+|http://[^\s\"]+|https://[^\s\"]+)', cleaned_value)
-                if url_match:
-                    cleaned_info[key] = url_match.group(1)
-                else:
-                    cleaned_info[key] = cleaned_value
-        
-        # 读取现有JSON文件内容（如果存在）
-        existing_info = {}
-        if os.path.exists(json_file_path):
-            try:
-                with open(json_file_path, 'r') as file:
-                    existing_info = json.load(file)
-            except Exception as e:
-                print(f"读取现有JSON文件时出错: {e}")
-        
-        # 合并现有信息和新信息，新信息覆盖旧信息
-        existing_info.update(cleaned_info)
-        
+    # 检查是否需要更新文件
+    existing_info = {}
+    if os.path.exists(json_file_path):
+        try:
+            with open(json_file_path, 'r') as file:
+                existing_info = json.load(file)
+        except:
+            existing_info = {}
+    
+    # 只有当隧道信息变化时才更新文件
+    if tunnel_info != existing_info:
         with open(json_file_path, 'w') as file:
-            json.dump(existing_info, file, indent=4)
-        print(f"隧道信息已写入 {json_file_path}")
-    except Exception as e:
-        print(f"写入文件时出错: {e}")
+            json.dump(tunnel_info, file, indent=4)
+        print(f"隧道信息已更新 {json_file_path}")
+        return True
+    else:
+        print("隧道信息未变化，无需更新")
+        return False
 
-
-def commit_and_push():
+def git_push():
     try:
-        # 执行 upload-cmd.sh 脚本中的命令
+        # 添加所有更改
         subprocess.run(['git', 'add', '-A'], check=True)
-        subprocess.run(['git', 'commit', '-m', 'test'], check=True)
-        subprocess.run(['git', 'push', '-u', 'origin', 'master', '-f'], check=True)
         
-        print("代码已成功提交并推送到GitHub")
+        # 检查是否有实际更改
+        status = subprocess.run(['git', 'status', '--porcelain'], 
+                                stdout=subprocess.PIPE, 
+                                text=True, 
+                                check=True)
+        
+        if status.stdout.strip():
+            # 生成带时间戳的提交信息
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            commit_msg = f"自动更新隧道信息 {timestamp}"
+            subprocess.run(['git', 'commit', '-m', commit_msg], check=True)
+            print("提交成功")
+        else:
+            print("没有需要提交的更改")
+        
+        # 普通推送代替强制推送
+        push_result = subprocess.run(['git', 'push', 'origin', 'master'], 
+                                     capture_output=True,
+                                     text=True)
+        
+        if push_result.returncode != 0:
+            if "rejected" in push_result.stderr:
+                print("推送被拒绝，执行强制推送")
+                subprocess.run(['git', 'push', '-f', 'origin', 'master'], check=True)
+            else:
+                push_result.check_returncode()  # 抛出原始错误
+                
+        print("推送成功")
+        return True
+        
     except subprocess.CalledProcessError as e:
         print(f"Git操作失败: {e}")
+        return False
 
 def main():
-    # 日志文件和JSON文件路径
-
-    # log_file_path  = '/home/user/Desktop/zhengxuqiao.github.io-master/cmd/access.log'
-    # json_file_path = '/home/user/Desktop/zhengxuqiao.github.io-master/tunnel.json'
-
     log_file_path = '/var/log/cpolar/access.log'
     json_file_path = '/home/pi/zhengxuqiao.github.io/zhengxuqiao.github.io/tunnel.json'
     
     # 解析日志文件
     tunnel_info = parse_access_log(log_file_path)
     
-    # 如果解析到信息，则写入JSON文件
     if tunnel_info:
-        write_tunnel_info(tunnel_info, json_file_path)
-        commit_and_push()
+        # 只有当文件实际更新时才执行Git操作
+        if write_tunnel_info(tunnel_info, json_file_path):
+            git_push()
     else:
         print("未找到隧道信息")
 
