@@ -1,4 +1,4 @@
 {
-    "02.website": "http://345a0398.r27.cpolar.top",
-    "01.ssh": "tcp://27.tcp.cpolar.top:11169"
+    "02.website": "http://345a0398.r27.cpolar.top\\\",\\\"Protocol\\\":\\\"http\\\",\\\"LocalAddr\\\":\\\"http://localhost:80\\\",\\\"Error\\\":\\\"\\\",\\\"StatusCode\\\":0},{\\\"ID\\\":\\\"27dda4d0-9b06-4202-a723-440741e224fd\\\",\\\"TunnelName\\\":\\\"02.website\\\",\\\"HostHeader\\\":\\\"\\\",\\\"ReqId\\\":\\\"e0ba23c115b92f57\\\",\\\"Url\\\":\\\"https://345a0398.r27.cpolar.top\\\",\\\"Protocol\\\":\\\"https\\\",\\\"LocalAddr\\\":\\\"http://localhost:80\\\",\\\"Error\\\":\\\"\\\",\\\"StatusCode\\\":0}],\\\"PublicUrl\\\":\\\"https://345a0398.r27.cpolar.top\\\",\\\"Error\\\":\\\"\\\",\\\"StatusCode\\\":0}}\"",
+    "01.ssh": "tcp://27.tcp.cpolar.top:11169\\\",\\\"Protocol\\\":\\\"tcp\\\",\\\"LocalAddr\\\":\\\"tcp://127.0.0.1:22\\\",\\\"Error\\\":\\\"\\\",\\\"StatusCode\\\":0}],\\\"PublicUrl\\\":\\\"tcp://27.tcp.cpolar.top:11169\\\",\\\"Error\\\":\\\"\\\",\\\"StatusCode\\\":0}}\""
 }
