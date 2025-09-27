@@ -5,6 +5,7 @@ import subprocess
 from datetime import datetime  # 添加这个导入
 import os
 
+
 def parse_access_log(log_file_path):
     keywords = ['01.ssh', '02.website']
     tunnel_info = {}
@@ -22,7 +23,20 @@ def parse_access_log(log_file_path):
         print(f"日志文件 {log_file_path} 未找到")
         return {}
     
-    return tunnel_info
+    # 优化URL提取逻辑，只提取纯净的URL地址
+    clean_tunnel_info = {}
+    for keyword, url_string in tunnel_info.items():
+        # 使用更精确的正则表达式提取URL，并处理转义字符
+        url_pattern = r'https?://[^\s"\\]+|tcp://[^\s"\\]+'
+        matches = re.findall(url_pattern, url_string)
+        if matches:
+            # 取第一个匹配的纯净URL
+            clean_tunnel_info[keyword] = matches[0].replace('\\', '')
+        else:
+            clean_tunnel_info[keyword] = url_string.replace('\\', '')
+    
+    print(clean_tunnel_info)
+    return clean_tunnel_info
 
 def write_tunnel_info(tunnel_info, json_file_path):
     existing_info = {}
