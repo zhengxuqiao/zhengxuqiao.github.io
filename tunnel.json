@@ -1,3 +1,4 @@
 {
-    "01.ssh": "tcp://27.tcp.cpolar.top:14586"
+    "01.ssh": "tcp://27.tcp.cpolar.top:14586",
+    "02.website": "http://72ec1913.r27.cpolar.top"
 }
