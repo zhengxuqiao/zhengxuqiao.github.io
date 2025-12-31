@@ -1,118 +1,114 @@
 import re
 import json
 import time
-import subprocess
-from datetime import datetime  # 添加这个导入
-import os
+from datetime import datetime
 
 
-def parse_access_log(log_file_path):
-    keywords = ['01.ssh', '02.website']
-    tunnel_info = {}
+def extract_latest_urls(log_file):
+    urls = {}
     
-    try:
-        with open(log_file_path, 'r') as file:
-            for line in file:
-                for keyword in keywords:
-                    if keyword in line:
-                        url_pattern = r'(tcp://[^\s]+|http://[^\s]+|https://[^\s]+)'
-                        matches = re.findall(url_pattern, line)
-                        if matches:
-                            tunnel_info[keyword] = matches[-1]
-    except FileNotFoundError:
-        print(f"日志文件 {log_file_path} 未找到")
-        return {}
+    with open(log_file, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
     
-    # 优化URL提取逻辑，只提取纯净的URL地址
-    clean_tunnel_info = {}
-    for keyword, url_string in tunnel_info.items():
-        # 使用更精确的正则表达式提取URL，并处理转义字符
-        url_pattern = r'https?://[^\s"\\]+|tcp://[^\s"\\]+'
-        matches = re.findall(url_pattern, url_string)
-        if matches:
-            # 取第一个匹配的纯净URL
-            clean_tunnel_info[keyword] = matches[0].replace('\\', '')
-        else:
-            clean_tunnel_info[keyword] = url_string.replace('\\', '')
-    
-    print(clean_tunnel_info)
-    return clean_tunnel_info
-
-def write_tunnel_info(tunnel_info, json_file_path):
-    existing_info = {}
-    if os.path.exists(json_file_path):
-        try:
-            with open(json_file_path, 'r') as file:
-                existing_info = json.load(file)
-        except:
-            existing_info = {}
-    
-    if tunnel_info != existing_info:
-        with open(json_file_path, 'w') as file:
-            json.dump(tunnel_info, file, indent=4)
-        print(f"隧道信息已更新 {json_file_path}")
-        return True
-    else:
-        print("隧道信息未变化，无需更新")
-        return False
-
-def git_push():
-    try:
-        # 1. 添加所有更改
-        subprocess.run(['git', 'add', '-A'], check=True)
-        
-        # 2. 检查是否有实际更改
-        status = subprocess.run(['git', 'status', '--porcelain'], 
-                                stdout=subprocess.PIPE, 
-                                text=True, 
-                                check=True)
-        
-        if status.stdout.strip():
-            # 3. 提交更改（添加了datetime导入）
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            commit_msg = f"自动更新隧道信息 {timestamp}"
-            subprocess.run(['git', 'commit', '-m', commit_msg], check=True)
-            print("提交成功")
-        else:
-            print("没有需要提交的更改")
-            return True  # 没有更改但操作成功
-        
-        # 4. 尝试普通推送
-        push_result = subprocess.run(['git', 'push', 'origin', 'master'], 
-                                     capture_output=True,
-                                     text=True)
-        
-        if push_result.returncode == 0:
-            print("推送成功")
-            return True
+    # 从后往前遍历日志，找到最新的网址信息
+    for line in reversed(lines):
+        # 匹配Tunnel established行
+        # 正则表达式解析：
+        # - Tunnel established at 匹配日志中的固定文本
+        # - (tcp|http|https) 捕获协议类型
+        # - :// 匹配URL分隔符
+        # - ([^\s]+) 匹配任意非空白字符（URL主体）
+        tunnel_match = re.search(r'Tunnel established at (tcp|http|https)://([^\s]+)', line)
+        if tunnel_match:
+            protocol = tunnel_match.group(1)
+            url = f"{protocol}://{tunnel_match.group(2)}"
+            # 去除任何可能的引号
+            url = url.rstrip('"')
             
-        # 5. 处理推送失败情况
-        if "rejected" in push_result.stderr:
-            print("推送被拒绝，执行强制推送")
-            subprocess.run(['git', 'push', '-f', 'origin', 'master'], check=True)
-            print("强制推送成功")
-            return True
-        else:
-            # 抛出其他类型的错误
-            push_result.check_returncode()
+            # 确定隧道名称
+            if 'ssh' in line.lower() or 'tcp' in protocol:
+                tunnel_name = 'ssh'
+            elif 'website' in line.lower() or 'http' in protocol:
+                tunnel_name = 'website'
+            else:
+                continue
             
-    except subprocess.CalledProcessError as e:
-        print(f"Git操作失败: {e}")
-        return False
+            # 如果已经有了该隧道的最新信息，跳过
+            if tunnel_name not in urls:
+                urls[tunnel_name] = url
+            
+            # 如果已经找到了所有隧道，提前退出
+            if len(urls) >= 2:  # ssh和website
+                break
+        
+        # 匹配JSON消息中的Url字段
+        # 正则表达式解析：
+        # - "Url":" 匹配JSON中的"Url"字段
+        # - ((tcp|http|https)://[^"]+) 匹配URL部分
+        #   - (tcp|http|https) 捕获协议类型
+        #   - :// 匹配URL分隔符
+        #   - [^"]+ 匹配任意非引号字符（URL主体）
+        # - " 匹配JSON字段结束引号
+        json_url_match = re.search(r'"Url":"((tcp|http|https)://[^"]+)"', line)
+        if json_url_match:
+            # 从匹配结果中提取完整URL（组1）和协议类型（组2）
+            url = json_url_match.group(1)
+            protocol = json_url_match.group(2)
+            # 去除URL中可能存在的尾部引号
+            url = url.rstrip('"')
+            
+            # 根据日志内容和协议类型确定隧道名称
+            if 'ssh' in line.lower() or 'tcp' in protocol:
+                # SSH隧道通常使用TCP协议
+                tunnel_name = 'ssh'
+            elif 'website' in line.lower() or 'http' in protocol:
+                # 网站隧道使用HTTP或HTTPS协议
+                tunnel_name = 'website'
+            else:
+                # 其他类型的隧道暂时不处理
+                continue
+            
+            # 如果已经有了该隧道的最新信息，跳过
+            if tunnel_name not in urls:
+                urls[tunnel_name] = url
+            
+            # 如果已经找到了所有隧道，提前退出
+            if len(urls) >= 2:  # ssh和website
+                break
+    
+    return urls
+
+
+def write_to_tunnel_json(urls, json_file):
+    # 按照tunnel.json的格式组织数据
+    tunnel_data = {
+        "01.ssh": urls.get("ssh", ""),
+        "02.website": urls.get("website", "")
+    }
+    
+    # 写入JSON文件
+    with open(json_file, 'w', encoding='utf-8') as f:
+        json.dump(tunnel_data, f, indent=4)
+    
+    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 已更新tunnel.json")
+    print(f'SSH隧道: {urls.get("ssh", "未找到")}')
+    print(f'Website隧道: {urls.get("website", "未找到")}')
+
 
 def main():
-    log_file_path = '/var/log/cpolar/access.log'
-    json_file_path = '/home/pi/zhengxuqiao.github.io/zhengxuqiao.github.io/tunnel.json'
+    log_file = "/var/log/cpolar/access.log"
+    json_file = "./../tunnel.json"
     
-    tunnel_info = parse_access_log(log_file_path)
-    
-    if tunnel_info:
-        if write_tunnel_info(tunnel_info, json_file_path):
-            git_push()
-    else:
-        print("未找到隧道信息")
+    while True:
+        try:
+            urls = extract_latest_urls(log_file)
+            write_to_tunnel_json(urls, json_file)
+        except Exception as e:
+            print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 错误: {str(e)}")
+        
+        # 每分钟执行一次
+        time.sleep(60)
+
 
 if __name__ == "__main__":
-    while True:
-        main()
-        time.sleep(60)
+    main()
