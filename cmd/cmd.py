@@ -189,30 +189,30 @@ def main():
                 os.write(fd, str(os.getpid()).encode('utf-8'))
                 os.close(fd)
             except FileExistsError:
-                # 文件已存在，检查是否有进程在运行
-                try:
-                    with open(pid_file, 'r') as f:
-                        existing_pid = int(f.read().strip())
-                    import ctypes
-                    kernel32 = ctypes.windll.kernel32
-                    process_handle = kernel32.OpenProcess(1, False, existing_pid)
-                    if process_handle != 0:
-                        kernel32.CloseHandle(process_handle)
-                        print("程序已经在运行中！")
-                        sys.exit(1)
-                    else:
-                        # 进程不存在，删除旧的PID文件并创建新的
-                        os.remove(pid_file)
+                    # 文件已存在，检查是否有进程在运行
+                    try:
+                        with open(pid_file, 'r') as f:
+                            existing_pid = int(f.read().strip())
+                        import ctypes
+                        kernel32 = ctypes.windll.kernel32
+                        process_handle = kernel32.OpenProcess(1, False, existing_pid)
+                        if process_handle != 0:
+                            kernel32.CloseHandle(process_handle)
+                            print("程序已经在运行中！")
+                            sys.exit(1)
+                        else:
+                            # 进程不存在，删除旧的PID文件并创建新的
+                            os.remove(pid_file)
+                            with open(pid_file, 'w') as f:
+                                f.write(str(os.getpid()))
+                    except (ValueError, IOError, OSError):
+                        # PID文件无效或无法读取，删除后重新创建
+                        try:
+                            os.remove(pid_file)
+                        except:
+                            pass
                         with open(pid_file, 'w') as f:
                             f.write(str(os.getpid()))
-                except (ValueError, IOError, OSError):
-                    # PID文件无效或无法读取，删除后重新创建
-                    try:
-                        os.remove(pid_file)
-                    except:
-                        pass
-                    with open(pid_file, 'w') as f:
-                        f.write(str(os.getpid()))
     except Exception as e:
         print(f"检查进程状态时出错: {str(e)}")
         sys.exit(1)
@@ -227,6 +227,19 @@ def main():
     
     import atexit
     atexit.register(cleanup)
+    
+    # 添加信号处理，确保在用户中断程序时也能删除PID文件
+    import signal
+    def signal_handler(signum, frame):
+        cleanup()
+        print("\n程序已退出")
+        sys.exit(0)
+    
+    # 注册信号处理函数
+    signal.signal(signal.SIGINT, signal_handler)  # 处理Ctrl+C
+    if os.name == 'posix':
+        signal.signal(signal.SIGTSTP, signal_handler)  # 处理Ctrl+Z (Linux/Mac)
+        signal.signal(signal.SIGTERM, signal_handler)  # 处理kill命令
     
     log_file = cpolar_log_file
     json_file = tunnel_json_file
