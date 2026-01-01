@@ -11,3 +11,7 @@ stderr: To github.com:zhengxuqiao/zhengxuqiao.github.io.git
    a48e9a3..2815e19  master -> master
 
 返回码: 0
+[2026-01-01 21:06:50] 已更新tunnel.json
+SSH隧道: tcp://27.tcp.cpolar.top:11478
+Website隧道: https://310be9c2.r27.cpolar.top
+[2026-01-01 21:06:50] 开始执行upload-cmd.sh脚本
