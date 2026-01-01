@@ -1,36 +1,4 @@
-[2026-01-01 13:53:02] 已更新tunnel.json
+[2026-01-01 14:07:07] 已更新tunnel.json
 SSH隧道: tcp://27.tcp.cpolar.top:11478
 Website隧道: https://310be9c2.r27.cpolar.top
-[2026-01-01 13:53:02] 开始执行upload-cmd.sh脚本
-[2026-01-01 13:53:02] upload-cmd.sh脚本执行结果:
-stdout: 
-stderr: bash: ./../upload-cmd.sh: No such file or directory
-
-返回码: 127
-[2026-01-01 13:55:05] 已更新tunnel.json
-SSH隧道: tcp://27.tcp.cpolar.top:11478
-Website隧道: https://310be9c2.r27.cpolar.top
-[2026-01-01 13:55:05] 开始执行upload-cmd.sh脚本
-[2026-01-01 13:55:05] upload-cmd.sh脚本执行结果:
-stdout: 
-stderr: bash: ./../upload-cmd.sh: No such file or directory
-
-返回码: 127
-[2026-01-01 14:02:54] 已更新tunnel.json
-SSH隧道: tcp://27.tcp.cpolar.top:11478
-Website隧道: https://310be9c2.r27.cpolar.top
-[2026-01-01 14:02:54] 开始执行upload-cmd.sh脚本
-[2026-01-01 14:02:58] upload-cmd.sh脚本执行结果:
-stdout: [master c57a645] test
- 2 files changed, 77 insertions(+), 10 deletions(-)
- create mode 100644 cmd/log/log.txt
-branch 'master' set up to track 'origin/master'.
-
-stderr: To github.com:zhengxuqiao/zhengxuqiao.github.io.git
-   734fb63..c57a645  master -> master
-
-返回码: 0
-[2026-01-01 14:03:59] 已更新tunnel.json
-SSH隧道: tcp://27.tcp.cpolar.top:11478
-Website隧道: https://310be9c2.r27.cpolar.top
-[2026-01-01 14:03:59] 开始执行upload-cmd.sh脚本
+[2026-01-01 14:07:07] 开始执行upload-cmd.sh脚本
