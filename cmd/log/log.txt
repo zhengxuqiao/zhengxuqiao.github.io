@@ -2,3 +2,18 @@
 SSH隧道: tcp://27.tcp.cpolar.top:11478
 Website隧道: https://310be9c2.r27.cpolar.top
 [2026-01-01 20:47:01] 开始执行upload-cmd.sh脚本
+[2026-01-01 20:47:06] upload-cmd.sh脚本执行结果:
+stdout: [master df911fa] test
+ 4 files changed, 214 insertions(+)
+ create mode 100644 cmd/cmd.pid
+ create mode 100644 cmd/cmd.py.bak
+branch 'master' set up to track 'origin/master'.
+
+stderr: To github.com:zhengxuqiao/zhengxuqiao.github.io.git
+   5cdd5e3..df911fa  master -> master
+
+返回码: 0
+[2026-01-01 20:47:45] 已更新tunnel.json
+SSH隧道: tcp://27.tcp.cpolar.top:11478
+Website隧道: https://310be9c2.r27.cpolar.top
+[2026-01-01 20:47:45] 开始执行upload-cmd.sh脚本
