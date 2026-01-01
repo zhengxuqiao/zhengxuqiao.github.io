@@ -1,0 +1,4 @@
+[2026-01-01 20:47:01] 已更新tunnel.json
+SSH隧道: tcp://27.tcp.cpolar.top:11478
+Website隧道: https://310be9c2.r27.cpolar.top
+[2026-01-01 20:47:01] 开始执行upload-cmd.sh脚本

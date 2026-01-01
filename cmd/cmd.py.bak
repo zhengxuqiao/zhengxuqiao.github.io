@@ -10,9 +10,6 @@ from datetime import datetime
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))  # 项目根目录
 cmd_dir = os.path.dirname(__file__)  # 当前脚本目录
 
-# PID文件路径（用于防止程序多次执行）
-pid_file = os.path.join(cmd_dir, 'cmd.pid')
-
 # 日志文件路径
 cpolar_log_file = '/var/log/cpolar/access.log'  # cpolar日志文件路径
 app_log_dir = os.path.join(cmd_dir, 'log')  # 应用日志目录
@@ -143,41 +140,6 @@ def write_to_tunnel_json(urls, json_file):
 
 
 def main():
-    # 检查是否已有进程在运行
-    if os.path.exists(pid_file):
-        try:
-            with open(pid_file, 'r') as f:
-                existing_pid = int(f.read().strip())
-            # 检查PID是否存在
-            if os.name == 'posix':
-                os.kill(existing_pid, 0)  # 向进程发送0号信号，如果进程存在则返回0，否则抛出异常
-            else:  # Windows
-                import ctypes
-                kernel32 = ctypes.windll.kernel32
-                process_handle = kernel32.OpenProcess(1, False, existing_pid)
-                if process_handle != 0:
-                    kernel32.CloseHandle(process_handle)
-                    print("程序已经在运行中！")
-                    sys.exit(1)
-        except (OSError, ValueError, IOError):
-            # 进程不存在或PID文件无效，删除PID文件
-            os.remove(pid_file)
-    
-    # 创建PID文件
-    with open(pid_file, 'w') as f:
-        f.write(str(os.getpid()))
-    
-    # 程序退出时删除PID文件
-    def cleanup():
-        if os.path.exists(pid_file):
-            try:
-                os.remove(pid_file)
-            except:
-                pass
-    
-    import atexit
-    atexit.register(cleanup)
-    
     log_file = cpolar_log_file
     json_file = tunnel_json_file
     upload_script = upload_script_file
