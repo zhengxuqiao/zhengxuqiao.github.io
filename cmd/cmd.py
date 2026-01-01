@@ -1,7 +1,25 @@
 import re
 import json
 import time
+import sys
+import os
 from datetime import datetime
+
+
+# 路径配置
+base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))  # 项目根目录
+cmd_dir = os.path.dirname(__file__)  # 当前脚本目录
+
+# 日志文件路径
+cpolar_log_file = '/var/log/cpolar/access.log'  # cpolar日志文件路径
+app_log_dir = os.path.join(cmd_dir, 'log')  # 应用日志目录
+app_log_file = os.path.join(app_log_dir, 'log.txt')  # 应用日志文件
+
+# JSON文件路径
+tunnel_json_file = os.path.join(base_dir, 'tunnel.json')  # 隧道配置JSON文件
+
+# 脚本路径
+upload_script_file = os.path.join(base_dir, 'upload-cmd.sh')  # 上传脚本路径
 
 
 def extract_latest_urls(log_file):
@@ -97,10 +115,37 @@ def write_to_tunnel_json(urls, json_file):
 
 import subprocess
 
+def log_output(message):
+    """将消息同时输出到控制台和日志文件"""
+    print(message)
+    # 写入日志文件
+    with open(app_log_file, "a", encoding="utf-8") as f:
+        f.write(f"{message}\n")
+
+
+def write_to_tunnel_json(urls, json_file):
+    # 按照tunnel.json的格式组织数据
+    tunnel_data = {
+        "01.ssh": urls.get("ssh", ""),
+        "02.website": urls.get("website", "")
+    }
+    
+    # 写入JSON文件
+    with open(json_file, 'w', encoding='utf-8') as f:
+        json.dump(tunnel_data, f, indent=4)
+    
+    log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 已更新tunnel.json")
+    log_output(f'SSH隧道: {urls.get("ssh", "未找到")}')
+    log_output(f'Website隧道: {urls.get("website", "未找到")}')
+
+
 def main():
-    log_file = "/var/log/cpolar/access.log"
-    json_file = "./../tunnel.json"
-    upload_script = "./../upload-cmd.sh"
+    log_file = cpolar_log_file
+    json_file = tunnel_json_file
+    upload_script = upload_script_file
+    
+    # 确保log目录存在
+    os.makedirs(app_log_dir, exist_ok=True)
     
     while True:
         try:
@@ -108,15 +153,15 @@ def main():
             write_to_tunnel_json(urls, json_file)
             
             # 执行upload-cmd.sh脚本
-            print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 开始执行upload-cmd.sh脚本")
-            result = subprocess.run(["bash", upload_script], capture_output=True, text=True, cwd="./../")
-            print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] upload-cmd.sh脚本执行结果:")
-            print(f"stdout: {result.stdout}")
+            log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 开始执行upload-cmd.sh脚本")
+            result = subprocess.run(["bash", upload_script], capture_output=True, text=True, cwd=base_dir)
+            log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] upload-cmd.sh脚本执行结果:")
+            log_output(f"stdout: {result.stdout}")
             if result.stderr:
-                print(f"stderr: {result.stderr}")
-            print(f"返回码: {result.returncode}")
+                log_output(f"stderr: {result.stderr}")
+            log_output(f"返回码: {result.returncode}")
         except Exception as e:
-            print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 错误: {str(e)}")
+            log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 错误: {str(e)}")
         
         # 每分钟执行一次
         time.sleep(60)

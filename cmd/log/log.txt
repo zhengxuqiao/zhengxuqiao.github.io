@@ -1,0 +1,22 @@
+[2026-01-01 13:53:02] 已更新tunnel.json
+SSH隧道: tcp://27.tcp.cpolar.top:11478
+Website隧道: https://310be9c2.r27.cpolar.top
+[2026-01-01 13:53:02] 开始执行upload-cmd.sh脚本
+[2026-01-01 13:53:02] upload-cmd.sh脚本执行结果:
+stdout: 
+stderr: bash: ./../upload-cmd.sh: No such file or directory
+
+返回码: 127
+[2026-01-01 13:55:05] 已更新tunnel.json
+SSH隧道: tcp://27.tcp.cpolar.top:11478
+Website隧道: https://310be9c2.r27.cpolar.top
+[2026-01-01 13:55:05] 开始执行upload-cmd.sh脚本
+[2026-01-01 13:55:05] upload-cmd.sh脚本执行结果:
+stdout: 
+stderr: bash: ./../upload-cmd.sh: No such file or directory
+
+返回码: 127
+[2026-01-01 14:02:54] 已更新tunnel.json
+SSH隧道: tcp://27.tcp.cpolar.top:11478
+Website隧道: https://310be9c2.r27.cpolar.top
+[2026-01-01 14:02:54] 开始执行upload-cmd.sh脚本
