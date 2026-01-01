@@ -498,3 +498,16 @@ stderr: To github.com:zhengxuqiao/zhengxuqiao.github.io.git
 SSH隧道: tcp://27.tcp.cpolar.top:11478
 Website隧道: https://310be9c2.r27.cpolar.top
 [2026-01-01 14:57:26] 开始执行upload-cmd.sh脚本
+[2026-01-01 14:57:30] upload-cmd.sh脚本执行结果:
+stdout: [master 7f882f8] test
+ 1 file changed, 13 insertions(+)
+branch 'master' set up to track 'origin/master'.
+
+stderr: To github.com:zhengxuqiao/zhengxuqiao.github.io.git
+   1bf3103..7f882f8  master -> master
+
+返回码: 0
+[2026-01-01 14:58:30] 已更新tunnel.json
+SSH隧道: tcp://27.tcp.cpolar.top:11478
+Website隧道: https://310be9c2.r27.cpolar.top
+[2026-01-01 14:58:30] 开始执行upload-cmd.sh脚本
