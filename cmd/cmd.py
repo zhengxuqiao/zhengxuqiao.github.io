@@ -95,14 +95,26 @@ def write_to_tunnel_json(urls, json_file):
     print(f'Website隧道: {urls.get("website", "未找到")}')
 
 
+import subprocess
+
 def main():
     log_file = "/var/log/cpolar/access.log"
     json_file = "./../tunnel.json"
+    upload_script = "./../upload-cmd.sh"
     
     while True:
         try:
             urls = extract_latest_urls(log_file)
             write_to_tunnel_json(urls, json_file)
+            
+            # 执行upload-cmd.sh脚本
+            print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 开始执行upload-cmd.sh脚本")
+            result = subprocess.run(["bash", upload_script], capture_output=True, text=True, cwd="./../")
+            print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] upload-cmd.sh脚本执行结果:")
+            print(f"stdout: {result.stdout}")
+            if result.stderr:
+                print(f"stderr: {result.stderr}")
+            print(f"返回码: {result.returncode}")
         except Exception as e:
             print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 错误: {str(e)}")
         
