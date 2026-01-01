@@ -1,0 +1,16 @@
+# 忽略log目录下的所有文件
+cmd/log/
+log/
+**/log/
+**/log/*
+
+# 忽略Python编译文件
+__pycache__/
+*.pyc
+
+# 忽略其他临时文件
+*.tmp
+*.swp
+*.bak
+.DS_Store
+Thumbs.db
