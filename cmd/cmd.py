@@ -143,6 +143,35 @@ def write_to_tunnel_json(urls, json_file):
 
 
 def main():
+    # 程序退出时删除PID文件
+    def cleanup():
+        if os.path.exists(pid_file):
+            try:
+                os.remove(pid_file)
+            except:
+                pass
+    
+    # 添加信号处理，确保在用户中断程序时也能删除PID文件
+    import signal
+    def signal_handler(signum, frame):
+        cleanup()
+        print("\n程序已退出")
+        sys.exit(0)
+    
+    # 注册信号处理函数
+    signal.signal(signal.SIGINT, signal_handler)  # 处理Ctrl+C
+    if os.name == 'posix':
+        signal.signal(signal.SIGTSTP, signal_handler)  # 处理Ctrl+Z (Linux/Mac)
+        signal.signal(signal.SIGTERM, signal_handler)  # 处理kill命令
+    elif os.name == 'nt':  # Windows系统
+        # Windows的Ctrl+Z (SIGTSTP)处理比较特殊
+        # 我们可以通过捕获SIGBREAK来处理控制台中断
+        signal.signal(signal.SIGBREAK, signal_handler)
+    
+    # 注册atexit，确保正常退出时也能清理
+    import atexit
+    atexit.register(cleanup)
+    
     # 使用文件锁机制防止多个实例同时运行
     lock_file = None
     try:
@@ -157,6 +186,7 @@ def main():
                 # 无法获取锁，说明已有进程在运行
                 lock_file.close()
                 print("程序已经在运行中！")
+                cleanup()
                 sys.exit(1)
             # 锁定成功，读取当前PID文件内容
             lock_file.seek(0)
@@ -169,6 +199,7 @@ def main():
                         try:
                             os.kill(existing_pid, 0)
                             print("程序已经在运行中！")
+                            cleanup()
                             sys.exit(1)
                         except OSError:
                             # 进程不存在，继续执行
@@ -189,57 +220,35 @@ def main():
                 os.write(fd, str(os.getpid()).encode('utf-8'))
                 os.close(fd)
             except FileExistsError:
-                    # 文件已存在，检查是否有进程在运行
-                    try:
-                        with open(pid_file, 'r') as f:
-                            existing_pid = int(f.read().strip())
-                        import ctypes
-                        kernel32 = ctypes.windll.kernel32
-                        process_handle = kernel32.OpenProcess(1, False, existing_pid)
-                        if process_handle != 0:
-                            kernel32.CloseHandle(process_handle)
-                            print("程序已经在运行中！")
-                            sys.exit(1)
-                        else:
-                            # 进程不存在，删除旧的PID文件并创建新的
-                            os.remove(pid_file)
-                            with open(pid_file, 'w') as f:
-                                f.write(str(os.getpid()))
-                    except (ValueError, IOError, OSError):
-                        # PID文件无效或无法读取，删除后重新创建
-                        try:
-                            os.remove(pid_file)
-                        except:
-                            pass
+                # 文件已存在，检查是否有进程在运行
+                try:
+                    with open(pid_file, 'r') as f:
+                        existing_pid = int(f.read().strip())
+                    import ctypes
+                    kernel32 = ctypes.windll.kernel32
+                    process_handle = kernel32.OpenProcess(1, False, existing_pid)
+                    if process_handle != 0:
+                        kernel32.CloseHandle(process_handle)
+                        print("程序已经在运行中！")
+                        cleanup()
+                        sys.exit(1)
+                    else:
+                        # 进程不存在，删除旧的PID文件并创建新的
+                        os.remove(pid_file)
                         with open(pid_file, 'w') as f:
                             f.write(str(os.getpid()))
+                except (ValueError, IOError, OSError):
+                    # PID文件无效或无法读取，删除后重新创建
+                    try:
+                        os.remove(pid_file)
+                    except:
+                        pass
+                    with open(pid_file, 'w') as f:
+                        f.write(str(os.getpid()))
     except Exception as e:
         print(f"检查进程状态时出错: {str(e)}")
-        sys.exit(1)
-    
-    # 程序退出时删除PID文件
-    def cleanup():
-        if os.path.exists(pid_file):
-            try:
-                os.remove(pid_file)
-            except:
-                pass
-    
-    import atexit
-    atexit.register(cleanup)
-    
-    # 添加信号处理，确保在用户中断程序时也能删除PID文件
-    import signal
-    def signal_handler(signum, frame):
         cleanup()
-        print("\n程序已退出")
-        sys.exit(0)
-    
-    # 注册信号处理函数
-    signal.signal(signal.SIGINT, signal_handler)  # 处理Ctrl+C
-    if os.name == 'posix':
-        signal.signal(signal.SIGTSTP, signal_handler)  # 处理Ctrl+Z (Linux/Mac)
-        signal.signal(signal.SIGTERM, signal_handler)  # 处理kill命令
+        sys.exit(1)
     
     log_file = cpolar_log_file
     json_file = tunnel_json_file
@@ -248,24 +257,30 @@ def main():
     # 确保log目录存在
     os.makedirs(app_log_dir, exist_ok=True)
     
-    while True:
-        try:
-            urls = extract_latest_urls(log_file)
-            write_to_tunnel_json(urls, json_file)
+    try:
+        while True:
+            try:
+                urls = extract_latest_urls(log_file)
+                write_to_tunnel_json(urls, json_file)
+                
+                # 执行upload-cmd.sh脚本
+                log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 开始执行upload-cmd.sh脚本")
+                result = subprocess.run(["bash", upload_script], capture_output=True, text=True, cwd=base_dir)
+                log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] upload-cmd.sh脚本执行结果:")
+                log_output(f"stdout: {result.stdout}")
+                if result.stderr:
+                    log_output(f"stderr: {result.stderr}")
+                log_output(f"返回码: {result.returncode}")
+            except Exception as e:
+                log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 错误: {str(e)}")
             
-            # 执行upload-cmd.sh脚本
-            log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 开始执行upload-cmd.sh脚本")
-            result = subprocess.run(["bash", upload_script], capture_output=True, text=True, cwd=base_dir)
-            log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] upload-cmd.sh脚本执行结果:")
-            log_output(f"stdout: {result.stdout}")
-            if result.stderr:
-                log_output(f"stderr: {result.stderr}")
-            log_output(f"返回码: {result.returncode}")
-        except Exception as e:
-            log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 错误: {str(e)}")
-        
-        # 每分钟执行一次
-        time.sleep(60)
+            # 每分钟执行一次
+            time.sleep(60)
+    except Exception as e:
+        # 捕获任何未处理的异常
+        log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 严重错误: {str(e)}")
+        cleanup()
+        sys.exit(1)
 
 
 if __name__ == "__main__":
