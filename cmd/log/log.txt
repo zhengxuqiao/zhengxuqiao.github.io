@@ -2,3 +2,16 @@
 SSH隧道: tcp://27.tcp.cpolar.top:11478
 Website隧道: https://310be9c2.r27.cpolar.top
 [2026-01-01 21:00:28] 开始执行upload-cmd.sh脚本
+[2026-01-01 21:00:33] upload-cmd.sh脚本执行结果:
+stdout: [master 4b33925] test
+ 3 files changed, 4 insertions(+), 153 deletions(-)
+branch 'master' set up to track 'origin/master'.
+
+stderr: To github.com:zhengxuqiao/zhengxuqiao.github.io.git
+   7b62ba3..4b33925  master -> master
+
+返回码: 0
+[2026-01-01 21:01:33] 已更新tunnel.json
+SSH隧道: tcp://27.tcp.cpolar.top:11478
+Website隧道: https://310be9c2.r27.cpolar.top
+[2026-01-01 21:01:33] 开始执行upload-cmd.sh脚本
