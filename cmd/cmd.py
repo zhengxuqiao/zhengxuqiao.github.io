@@ -24,6 +24,9 @@ tunnel_json_file = os.path.join(base_dir, 'tunnel.json')  # 隧道配置JSON文�
 # 脚本路径
 upload_script_file = os.path.join(base_dir, 'upload-cmd.sh')  # 上传脚本路径
 
+# 日志配置
+# LOG_ENABLED = True  # 设置为False可关闭日志文件写入功能
+LOG_ENABLED = False  # 设置为False可关闭日志文件写入功能
 
 def extract_latest_urls(log_file):
     urls = {}
@@ -121,9 +124,10 @@ import subprocess
 def log_output(message):
     """将消息同时输出到控制台和日志文件"""
     print(message)
-    # 写入日志文件
-    with open(app_log_file, "a", encoding="utf-8") as f:
-        f.write(f"{message}\n")
+    # 写入日志文件（如果启用）
+    if LOG_ENABLED:
+        with open(app_log_file, "a", encoding="utf-8") as f:
+            f.write(f"{message}\n")
 
 
 def write_to_tunnel_json(urls, json_file):
