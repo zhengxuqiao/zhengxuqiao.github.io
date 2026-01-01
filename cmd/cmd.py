@@ -143,29 +143,79 @@ def write_to_tunnel_json(urls, json_file):
 
 
 def main():
-    # 检查是否已有进程在运行
-    if os.path.exists(pid_file):
-        try:
-            with open(pid_file, 'r') as f:
-                existing_pid = int(f.read().strip())
-            # 检查PID是否存在
-            if os.name == 'posix':
-                os.kill(existing_pid, 0)  # 向进程发送0号信号，如果进程存在则返回0，否则抛出异常
-            else:  # Windows
-                import ctypes
-                kernel32 = ctypes.windll.kernel32
-                process_handle = kernel32.OpenProcess(1, False, existing_pid)
-                if process_handle != 0:
-                    kernel32.CloseHandle(process_handle)
-                    print("程序已经在运行中！")
-                    sys.exit(1)
-        except (OSError, ValueError, IOError):
-            # 进程不存在或PID文件无效，删除PID文件
-            os.remove(pid_file)
-    
-    # 创建PID文件
-    with open(pid_file, 'w') as f:
-        f.write(str(os.getpid()))
+    # 使用文件锁机制防止多个实例同时运行
+    lock_file = None
+    try:
+        # 尝试打开PID文件并获取排他锁
+        if os.name == 'posix':
+            # Linux/Mac系统
+            import fcntl
+            lock_file = open(pid_file, 'a+')
+            try:
+                fcntl.flock(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)  # 尝试获取排他锁，非阻塞
+            except BlockingIOError:
+                # 无法获取锁，说明已有进程在运行
+                lock_file.close()
+                print("程序已经在运行中！")
+                sys.exit(1)
+            # 锁定成功，读取当前PID文件内容
+            lock_file.seek(0)
+            content = lock_file.read().strip()
+            if content:
+                try:
+                    existing_pid = int(content)
+                    if existing_pid != os.getpid():
+                        # 检查已有PID是否真的在运行
+                        try:
+                            os.kill(existing_pid, 0)
+                            print("程序已经在运行中！")
+                            sys.exit(1)
+                        except OSError:
+                            # 进程不存在，继续执行
+                            pass
+                except ValueError:
+                    # PID文件内容无效，继续执行
+                    pass
+            # 更新PID文件内容为当前进程ID
+            lock_file.truncate(0)
+            lock_file.write(str(os.getpid()))
+            lock_file.flush()
+        else:  # Windows系统
+            # 尝试创建PID文件并获取独占访问权
+            try:
+                # 使用os.O_CREAT | os.O_EXCL标志确保只在文件不存在时创建
+                import msvcrt
+                fd = os.open(pid_file, os.O_WRONLY | os.O_CREAT | os.O_EXCL)
+                os.write(fd, str(os.getpid()).encode('utf-8'))
+                os.close(fd)
+            except FileExistsError:
+                # 文件已存在，检查是否有进程在运行
+                try:
+                    with open(pid_file, 'r') as f:
+                        existing_pid = int(f.read().strip())
+                    import ctypes
+                    kernel32 = ctypes.windll.kernel32
+                    process_handle = kernel32.OpenProcess(1, False, existing_pid)
+                    if process_handle != 0:
+                        kernel32.CloseHandle(process_handle)
+                        print("程序已经在运行中！")
+                        sys.exit(1)
+                    else:
+                        # 进程不存在，删除旧的PID文件并创建新的
+                        os.remove(pid_file)
+                        with open(pid_file, 'w') as f:
+                            f.write(str(os.getpid()))
+                except (ValueError, IOError, OSError):
+                    # PID文件无效或无法读取，删除后重新创建
+                    try:
+                        os.remove(pid_file)
+                    except:
+                        pass
+                    with open(pid_file, 'w') as f:
+                        f.write(str(os.getpid()))
+    except Exception as e:
+        print(f"检查进程状态时出错: {str(e)}")
+        sys.exit(1)
     
     # 程序退出时删除PID文件
     def cleanup():
