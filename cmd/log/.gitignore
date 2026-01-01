@@ -12,5 +12,6 @@ __pycache__/
 *.tmp
 *.swp
 *.bak
+*.txt
 .DS_Store
 Thumbs.db
