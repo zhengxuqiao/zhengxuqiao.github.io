@@ -6,7 +6,7 @@ Wants=network-online.target
 [Service]
 Type=exec
 ExecStart=/usr/bin/python3 -u cmd.py
-WorkingDirectory=/home/pi/zhengxuqiao.github.io/zhengxuqiao.github.io/cmd
+WorkingDirectory=/home/pi/Desktop/zhengxuqiao.github.io/cmd/
 Restart=on-failure
 RestartSec=5s
 User=pi
