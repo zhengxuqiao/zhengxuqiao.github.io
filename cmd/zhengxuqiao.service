@@ -1,0 +1,16 @@
+[Unit]
+Description=ZhengXuQiao Website Tunnel Manager
+After=network.target cpolar.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/Desktop/zhengxuqiao.github.io
+ExecStart=/usr/bin/python3 /home/pi/Desktop/zhengxuqiao.github.io/cmd/cmd.py
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

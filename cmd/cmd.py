@@ -10,8 +10,7 @@ from datetime import datetime
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))  # 项目根目录
 cmd_dir = os.path.dirname(__file__)  # 当前脚本目录
 
-# PID文件路径（用于防止程序多次执行）
-pid_file = os.path.join(cmd_dir, 'cmd.pid')
+# 不使用PID文件，改用Linux服务管理
 
 # 日志文件路径
 cpolar_log_file = '/var/log/cpolar/access.log'  # cpolar日志文件路径
@@ -147,112 +146,6 @@ def write_to_tunnel_json(urls, json_file):
 
 
 def main():
-    # 程序退出时删除PID文件
-    def cleanup():
-        if os.path.exists(pid_file):
-            try:
-                os.remove(pid_file)
-            except:
-                pass
-    
-    # 添加信号处理，确保在用户中断程序时也能删除PID文件
-    import signal
-    def signal_handler(signum, frame):
-        cleanup()
-        print("\n程序已退出")
-        sys.exit(0)
-    
-    # 注册信号处理函数
-    signal.signal(signal.SIGINT, signal_handler)  # 处理Ctrl+C
-    if os.name == 'posix':
-        signal.signal(signal.SIGTSTP, signal_handler)  # 处理Ctrl+Z (Linux/Mac)
-        signal.signal(signal.SIGTERM, signal_handler)  # 处理kill命令
-    elif os.name == 'nt':  # Windows系统
-        # Windows的Ctrl+Z (SIGTSTP)处理比较特殊
-        # 我们可以通过捕获SIGBREAK来处理控制台中断
-        signal.signal(signal.SIGBREAK, signal_handler)
-    
-    # 注册atexit，确保正常退出时也能清理
-    import atexit
-    atexit.register(cleanup)
-    
-    # 使用文件锁机制防止多个实例同时运行
-    lock_file = None
-    try:
-        # 尝试打开PID文件并获取排他锁
-        if os.name == 'posix':
-            # Linux/Mac系统
-            import fcntl
-            lock_file = open(pid_file, 'a+')
-            try:
-                fcntl.flock(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)  # 尝试获取排他锁，非阻塞
-            except BlockingIOError:
-                # 无法获取锁，说明已有进程在运行
-                lock_file.close()
-                print("程序已经在运行中！")
-                cleanup()
-                sys.exit(1)
-            # 锁定成功，读取当前PID文件内容
-            lock_file.seek(0)
-            content = lock_file.read().strip()
-            if content:
-                try:
-                    existing_pid = int(content)
-                    if existing_pid != os.getpid():
-                        # 检查已有PID是否真的在运行
-                        try:
-                            os.kill(existing_pid, 0)
-                            print("程序已经在运行中！")
-                            cleanup()
-                            sys.exit(1)
-                        except OSError:
-                            # 进程不存在，继续执行
-                            pass
-                except ValueError:
-                    # PID文件内容无效，继续执行
-                    pass
-            # 更新PID文件内容为当前进程ID
-            lock_file.truncate(0)
-            lock_file.write(str(os.getpid()))
-            lock_file.flush()
-        else:  # Windows系统
-            # 尝试创建PID文件并获取独占访问权
-            try:
-                # 使用os.O_CREAT | os.O_EXCL标志确保只在文件不存在时创建
-                import msvcrt
-                fd = os.open(pid_file, os.O_WRONLY | os.O_CREAT | os.O_EXCL)
-                os.write(fd, str(os.getpid()).encode('utf-8'))
-                os.close(fd)
-            except FileExistsError:
-                # 文件已存在，检查是否有进程在运行
-                try:
-                    with open(pid_file, 'r') as f:
-                        existing_pid = int(f.read().strip())
-                    import ctypes
-                    kernel32 = ctypes.windll.kernel32
-                    process_handle = kernel32.OpenProcess(1, False, existing_pid)
-                    if process_handle != 0:
-                        kernel32.CloseHandle(process_handle)
-                        print("程序已经在运行中！")
-                        cleanup()
-                        sys.exit(1)
-                    else:
-                        # 进程不存在，删除旧的PID文件并创建新的
-                        os.remove(pid_file)
-                        with open(pid_file, 'w') as f:
-                            f.write(str(os.getpid()))
-                except (ValueError, IOError, OSError):
-                    # PID文件无效或无法读取，删除后重新创建
-                    try:
-                        os.remove(pid_file)
-                    except:
-                        pass
-                    with open(pid_file, 'w') as f:
-                        f.write(str(os.getpid()))
-    except Exception as e:
-        print(f"检查进程状态时出错: {str(e)}")
-        cleanup()
-        sys.exit(1)
     
     log_file = cpolar_log_file
     json_file = tunnel_json_file

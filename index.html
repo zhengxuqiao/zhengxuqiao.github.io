@@ -54,13 +54,19 @@
         font-family: KaiTi, cursive;
         line-height: 2.0;
         letter-spacing: 2px;
-        /* 移除导致内容截断的属性 */
-        /* overflow: hidden; */
-        /* white-space: nowrap; */
         background-color: #f5f5dc;
         padding: 20px;
-        height: auto !important;
-        min-height: 300px;
+        height: 600px !important;
+        min-height: 600px !important;
+        /* 允许内容溢出时自动换行 */
+        overflow-wrap: break-word;
+        /* 确保文字在垂直排版时正确显示 */
+        white-space: normal;
+        /* 使用flex布局实现竖排文字的左右居中（水平居中） */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
     }
     
     .tnt2 {
@@ -70,13 +76,130 @@
         font-family: KaiTi, cursive;
         line-height: 2.0;
         letter-spacing: 2px;
-        /* 移除导致内容截断的属性 */
-        /* overflow: hidden; */
-        /* white-space: nowrap; */
         background-color: #f5f5dc;
         padding: 20px;
         height: auto !important;
         min-height: 300px;
+    }
+    
+    /* 确保段落从顶部开始显示 */
+    .tnt p {
+        margin: 0;
+        padding: 0;
+        writing-mode: tb-rl;
+        /* 确保段落从顶部开始 */
+        vertical-align: top;
+        display: inline-block;
+        text-align: left;
+    }
+    
+    /* 调整tnt类的基础样式，确保背景宽度合适 */
+    .tnt {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* 调整表格的基础样式，确保背景宽度合适 */
+    #preface table {
+        width: 100% !important;
+        max-width: 100% !important;
+        background-color: #f5f5dc !important;
+    }
+    
+    /* 调整表格单元格的基础样式 */
+    #preface table td {
+        width: 100% !important;
+        background-color: #f5f5dc !important;
+    }
+    
+    /* 响应式设计：在宽屏幕上确保正文居中显示，背景足够宽 */
+    @media (min-width: 769px) {
+        /* 调整表格样式，使其在宽屏幕上居中，背景足够宽 */
+        #preface table {
+            max-width: 95% !important;
+            margin: 0 auto !important;
+            display: table !important;
+        }
+        
+        /* 调整表格单元格样式 */
+        #preface table td {
+            text-align: center !important;
+            vertical-align: middle !important;
+            padding: 20px !important;
+        }
+        
+        /* 调整前言内容样式，确保居中 */
+        .tnt {
+            margin: 0 auto !important;
+            text-align: center !important;
+            display: block !important;
+            padding: 20px !important;
+        }
+    }
+    
+    /* 响应式设计：在窄屏幕上优化垂直文字排版，背景足够宽 */
+    @media (max-width: 768px) {
+        /* 调整表格样式，使其在窄屏幕上自适应并居中，背景足够宽 */
+        #preface table {
+            max-width: 98% !important;
+            margin: 0 auto !important;
+            display: table !important;
+            overflow: visible !important;
+        }
+        
+        /* 调整表格单元格样式 */
+        #preface table td {
+            padding: 15px !important;
+            text-align: center !important;
+            vertical-align: top !important;
+            background-color: #f5f5dc !important;
+            width: 100% !important;
+            height: auto !important;
+        }
+        
+        /* 调整前言内容样式，使用简单的块级元素布局，确保文字从上方开始 */
+        .tnt {
+            padding: 15px !important;
+            font-size: 10pt !important;
+            /* 确保垂直文字排版在窄屏幕上正常显示 */
+            writing-mode: tb-rl !important;
+            /* 调整行高，适合窄屏幕 */
+            line-height: 1.8 !important;
+            /* 调整高度，从上方开始显示，避免滚动条 */
+            height: auto !important;
+            min-height: 350px !important;
+            max-height: 450px !important;
+            /* 使用简单的块级元素布局，确保文字从上方开始 */
+            display: block !important;
+            text-align: center !important;
+            background-color: #f5f5dc !important;
+            margin: 0 auto !important;
+            overflow: hidden !important;
+        }
+        
+        /* 调整文字大小和顶部对齐 */
+        #preface p {
+            font-size: 10pt !important;
+            line-height: 1.8 !important;
+            /* 确保文字在垂直排版时正确显示 */
+            white-space: normal !important;
+            text-align: left !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            /* 确保段落从顶部开始显示 */
+            display: inline-block !important;
+            vertical-align: top !important;
+        }
+        
+        /* 调整标签页样式 */
+        #myTab {
+            font-size: 14px !important;
+        }
+        
+        #myTab .nav-link {
+            padding: 8px 12px !important;
+            font-size: 14px !important;
+        }
     }
 
     .tnt3 {
@@ -274,9 +397,9 @@
     </ul>
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane active" id="fanti">
-            <table class="table table-bordered centered" style="height: 300px; width: 100%;">
+            <table class="table table-bordered centered">
                 <tr>
-                    <td class="tnt" style="height: 300px; vertical-align: middle;">
+                    <td class="tnt">
                         <p align="left">
                             &nbsp;&nbsp;&nbsp;&nbsp; 苗莊鄭氏，原居山東省泰安郊區房村 <br />
                             鄉埠裏八村。明朝萬歷年間，因兵荒馬亂 <br />
@@ -304,9 +427,9 @@
             </table>
         </div>
         <div class="tab-pane" id="jianti">
-            <table class="table table-bordered centered" style="height: 300px; width: 100%;">
+            <table class="table table-bordered centered">
                 <tr>
-                    <td class="tnt" style="height: 300px; vertical-align: middle;">
+                    <td class="tnt">
                         <p align="left">
                             &nbsp;&nbsp;&nbsp;&nbsp; 苗庄郑氏，原居山东省泰安郊区房村 <br />
                             乡埠里八村。明朝万历年间，因兵荒马乱 <br />
@@ -335,8 +458,8 @@
         </div>
     </div>
     <div class="container">
-        <div class="tnt3 centered" style="margin-top: 20px;">
-            <p align="left"> 注①：行辈由郑衍昆口传 </p>
+        <div class="tnt3" style="margin-top: 20px;">
+            <p style="text-align: left;"> 注①：行辈由郑衍昆口传 </p>
         </div>
     </div>
   </div>
