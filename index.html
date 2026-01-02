@@ -24,11 +24,15 @@
 <link href='#css?family=Open+Sans:400,400italic,700,600,600italic' rel='stylesheet' type='text/css'>
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <!-- 启用压缩和缓存 -->
+    <meta http-equiv="Content-Encoding" content="gzip, deflate, br">
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000">
 
 <style>
     body {
@@ -400,7 +404,7 @@
             <table class="table table-bordered centered">
                 <tr>
                     <td class="tnt">
-                        <p align="left">
+                        <p>
                             &nbsp;&nbsp;&nbsp;&nbsp; 苗莊鄭氏，原居山東省泰安郊區房村 <br />
                             鄉埠裏八村。明朝萬歷年間，因兵荒馬亂 <br />
                             遷至苗莊。始祖名曉字東升，世代勤勞 <br />
@@ -482,12 +486,12 @@
         <div id="galley2" style="margin-top: 20px;">
             <ul class="pictures2 list-unstyled">
                 <li class="image-gallery">
-                    <img data-original="image/中图/image001.jpg" src="image/中图/image001.jpg" alt="族谱图1">
-                    <img data-original="image/中图/image002.jpg" src="image/中图/image002.jpg" alt="族谱图2">
-                    <img data-original="image/中图/image003.jpg" src="image/中图/image003.jpg" alt="族谱图3">
-                    <img data-original="image/中图/image004.jpg" src="image/中图/image004.jpg" alt="族谱图4">
-                    <img data-original="image/中图/image005.jpg" src="image/中图/image005.jpg" alt="族谱图5">
-                    <img data-original="image/中图/image006.jpg" src="image/中图/image006.jpg" alt="族谱图6">
+                    <img data-original="image/中图/image001.jpg" src="image/小图/image001.jpg" alt="族谱图1" loading="lazy">
+                    <img data-original="image/中图/image002.jpg" src="image/小图/image002.jpg" alt="族谱图2" loading="lazy">
+                    <img data-original="image/中图/image003.jpg" src="image/小图/image003.jpg" alt="族谱图3" loading="lazy">
+                    <img data-original="image/中图/image004.jpg" src="image/小图/image004.jpg" alt="族谱图4" loading="lazy">
+                    <img data-original="image/中图/image005.jpg" src="image/小图/image005.jpg" alt="族谱图5" loading="lazy">
+                    <img data-original="image/中图/image006.jpg" src="image/小图/image006.jpg" alt="族谱图6" loading="lazy">
                 </li>
             </ul>
         </div>
@@ -509,7 +513,7 @@
         <div class="centered"> </div>
         <div id="galley">
             <ul class="pictures list-unstyled">
-                <li style="border: 1px solid black;"> <img data-original="descendants-chart.svg" src="descendants-chart.svg" alt="族谱图"> </li>
+                <li style="border: 1px solid black;"> <img data-original="descendants-chart.svg" src="descendants-chart.svg" alt="族谱图" loading="lazy" decoding="async"> </li>
             </ul>
         </div>
         <div class="tnt3 centered" style="margin-top: 20px;">
