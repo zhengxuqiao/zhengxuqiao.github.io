@@ -1,220 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> 郑氏族谱 </title>
-    <!-- Bootstrap 4 CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap@4/dist/css/bootstrap.min.css" crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/viewer.css">
-    <style>
-        body {
-            font-family: SimSun, serif; /* 设置页面默认字体 */
-        }
-        .pictures>li>img {
-            cursor: zoom-in;
-            width: 100%;
-        }
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>郑氏族谱</title>
 
-        .pictures2>li>img {
-            cursor: zoom-in;
-            width: calc(13% - 10px);
-            /* Adjusted for border
-            and spacing */
-            margin: 5px;
-        }
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
-        .tnt,
-        .tnt2 {
-            writing-mode: tb-rl;
-            text-align: center;
-            font-size: 8pt;
-            font-family: KaiTi, cursive; /* 添加更适合中文的字体 */
-            line-height: 1.8; /* 调整行高 */
-            letter-spacing: 1px; /* 调整字间距 */
-            overflow: hidden;
-            white-space: nowrap;
-            background-color: #f5f5dc; /* 添加浅色背景 */
-            padding: 20px; /* 调整内边距 */
-        }
+<!-- Custom CSS -->
+<link href="css/five.css" rel="stylesheet">
+<link rel="stylesheet" href="css/viewer.css">
 
-        .tnt3 {
-            writing-mode: tb-lr;
-            text-align: left;
-            font-size: 6pt;
-            overflow: hidden;
-            white-space: nowrap;
-        }
+<!-- Custom Fonts -->
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="#css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+<link href='#css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+<link href='#css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='#css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+<link href='#css?family=Open+Sans:400,400italic,700,600,600italic' rel='stylesheet' type='text/css'>
 
-        .centered {
-            text-align: center;
-        }
-        
-        /* 新增的样式 */
-        .main-title {
-            font-size: 60px;
-            border-bottom: 2px solid #333; /* 为标题添加装饰性样式 */
-            padding-bottom: 10px;
-        }
-        
-        .preface-title {
-            font-size: 50px;
-            padding-bottom: 10px;
-        }
-        
-        .gallery-title {
-            font-size: 50px;
-        }
-        
-        .traditional-gallery-title,
-        .new-gallery-title {
-            font-size: 40px;
-        }
-        
-        .edit-button {
-            text-decoration: none;
-            color: white;
-            background-color: #007bff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 20px;
-            display: inline-block;
-        }
-        
-        .refresh-button {
-            font-size: 20px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        
-        /* 为族谱图添加边框或阴影 */
-        #galley2 .pictures2 li {
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        }
-        
-        #galley .pictures li {
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        }
-        
-        /* 响应式图片展示 */
-        .image-gallery {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .image-gallery img {
-            max-width: 100%;
-            height: auto;
-        }
-        
-        /* 居中标签页 */
-        .nav-tabs-centered {
-            display: flex;
-            justify-content: center;
-            border-bottom: none;
-        }
-        
-        .nav-tabs-centered .nav-item {
-            margin-bottom: 0;
-        }
-        
-        .nav-tabs-centered .nav-link {
-            border: 1px solid #dee2e6;
-            border-bottom: none;
-            border-radius: 0.375rem 0.375rem 0 0;
-        }
-    </style>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<style>
+    body {
+        font-family: SimSun, serif; /* 设置页面默认字体 */
+    }
+    .pictures>li>img {
+        cursor: zoom-in;
+        width: 100%;
+    }
+
+    .pictures2>li>img {
+        cursor: zoom-in;
+        width: calc(13% - 10px);
+        /* Adjusted for border
+        and spacing */
+        margin: 5px;
+    }
+
+    .tnt {
+        writing-mode: tb-rl;
+        text-align: center;
+        font-size: 12pt;
+        font-family: KaiTi, cursive;
+        line-height: 2.0;
+        letter-spacing: 2px;
+        /* 移除导致内容截断的属性 */
+        /* overflow: hidden; */
+        /* white-space: nowrap; */
+        background-color: #f5f5dc;
+        padding: 20px;
+        height: auto !important;
+        min-height: 300px;
+    }
+    
+    .tnt2 {
+        writing-mode: tb-rl;
+        text-align: center;
+        font-size: 12pt;
+        font-family: KaiTi, cursive;
+        line-height: 2.0;
+        letter-spacing: 2px;
+        /* 移除导致内容截断的属性 */
+        /* overflow: hidden; */
+        /* white-space: nowrap; */
+        background-color: #f5f5dc;
+        padding: 20px;
+        height: auto !important;
+        min-height: 300px;
+    }
+
+    .tnt3 {
+        writing-mode: tb-lr;
+        text-align: left;
+        font-size: 6pt;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .centered {
+        text-align: center;
+    }
+    
+    /* 新增的样式 */
+    .main-title {
+        font-size: 60px;
+        border-bottom: 2px solid #333; /* 为标题添加装饰性样式 */
+        padding-bottom: 10px;
+    }
+    
+    .preface-title {
+        font-size: 50px;
+        padding-bottom: 10px;
+    }
+    
+    .gallery-title {
+        font-size: 50px;
+    }
+    
+    .traditional-gallery-title,
+    .new-gallery-title {
+        font-size: 40px;
+    }
+    
+    .edit-button {
+        text-decoration: none;
+        color: white;
+        background-color: #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 20px;
+        display: inline-block;
+    }
+    
+    .refresh-button {
+        font-size: 20px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    
+    /* 为族谱图添加边框或阴影 */
+    #galley2 .pictures2 li {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+    
+    #galley .pictures li {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+    
+    /* 禁用状态的编辑按钮样式 */
+    .edit-button.disabled {
+        background-color: #cccccc;
+        color: #666666;
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: 0.6;
+    }
+    
+    /* 按钮悬停效果优化 */
+    .edit-button:hover:not(.disabled) {
+        background-color: #0056b3;
+        color: white;
+        text-decoration: none;
+    }
+    
+    .refresh-button:hover {
+        background-color: #0056b3;
+    }
+    
+    /* 响应式图片展示 */
+    .image-gallery {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .image-gallery img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* 居中标签页 */
+    #myTab {
+        border-bottom: 1px solid #dee2e6;
+        display: flex;
+        justify-content: center;
+    }
+    
+    #myTab .nav-item {
+        margin-bottom: -1px;
+    }
+    
+    #myTab .nav-link {
+        border: 1px solid transparent;
+        border-radius: 0.375rem 0.375rem 0 0;
+        font-size: 18px;
+        padding: 10px 20px;
+        color: #6c757d; /* 未选中标签文字颜色 */
+        background-color: #fff; /* 未选中标签背景颜色 */
+        margin-right: 5px;
+        transition: all 0.3s ease;
+    }
+    
+    #myTab .nav-item.active .nav-link {
+        color: #007bff; /* 选中标签文字颜色 */
+        background-color: #fff; /* 选中标签背景颜色 */
+        border-color: #dee2e6 #dee2e6 #fff; /* 选中标签边框颜色 */
+        font-weight: bold;
+    }
+    
+    #myTab .nav-link:hover {
+        color: #0056b3; /* 鼠标悬停时文字颜色 */
+        background-color: #e9ecef; /* 鼠标悬停时背景颜色 */
+        border-color: #e9ecef #e9ecef #dee2e6; /* 鼠标悬停时边框颜色 */
+    }
+    
+    /* 增大前言内容字体大小 */
+    .tnt p {
+        font-size: 12pt !important; /* 增大段落字体大小 */
+        line-height: 2.0; /* 调整行高 */
+        letter-spacing: 2px; /* 调整字间距 */
+    }
+</style>
+
 </head>
 
-<body>
-    <h1 class="centered main-title" style="text-align: center;"> 鄭 氏 族 譜 </h1>
-    <br />
-    <br />
-    <div class="centered" style="display: flex; align-items: center; justify-content: center;">
-        <h2 class="preface-title" style="margin-right: 20px;"> 前言 </h2>
+<body class="index">
+
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container"> 
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header page-scroll">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+    </div>
+    <span class="navbar-header page-scroll"><a class="navbar-brand page-scroll" href="#page-top">郑氏族谱</a></span> 
+    
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="hidden"> <a href="#page-top"></a> </li>
+        <li> <a class="page-scroll" href="#page-top">首页</a> </li>
+        <li> <a class="page-scroll" href="#preface">前言</a> </li>
+        <li> <a class="page-scroll" href="#genealogy">族谱图</a> </li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse --> 
+  </div>
+  <!-- /.container-fluid --> 
+</nav>
+
+<!-- Header -->
+<header id="page-top">
+  <div class="container">
+    <div class="intro-text">
+      <div class="intro-lead-in">欢迎访问</div>
+      <div class="intro-heading">郑氏族谱</div>
+      <a href="#preface" class="page-scroll btn btn-xl"><i class="fa fa-angle-double-down fa-4x"></i></a> </div>
+  </div>
+</header>
+
+<!-- Preface Section -->
+<section id="preface">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading">前言</h2>
+        <div class="line"></div>
+      </div>
     </div>
     <!-- 添加简体/繁体切换标签 -->
-    <ul class="nav nav-tabs nav-tabs-centered" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="fanti-tab" data-toggle="tab" href="#fanti" role="tab" aria-controls="fanti" aria-selected="true">繁體</a>
+    <ul class="nav nav-tabs nav-tabs-centered" id="myTab">
+        <li class="nav-item active">
+            <a class="nav-link" href="#fanti" data-toggle="tab">繁體</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="jianti-tab" data-toggle="tab" href="#jianti" role="tab" aria-controls="jianti" aria-selected="false">简体</a>
+            <a class="nav-link" href="#jianti" data-toggle="tab">简体</a>
         </li>
     </ul>
     <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade show active" id="fanti">
-            <div class="container">
-                <table class="table table-bordered centered" style="height: 300px; width: 100%;">
-                    <tr>
-                        <td class="tnt" style="height: 300px; vertical-align: middle;">
-                            <p align="left">
-                                &nbsp;&nbsp;&nbsp;&nbsp; 苗莊鄭氏，原居山東省泰安郊區房村 <br />
-                                鄉埠裏八村。明朝萬歷年間，因兵荒馬亂 <br />
-                                遷至苗莊。始祖名曉字東升，世代勤勞 <br />
-                                忠厚，艱苦創業，遂發展成為鄭氏家族， <br />
-                                生息繁衍而又分別定居至樓德和西營。 <br />
-                                &nbsp;&nbsp;&nbsp;&nbsp; 星轉鬥移，經過四百余年的風風雨雨， <br />
-                                人世變遷，鄭氏家族有了很大發展，思先人 <br />
-                                之恩，遂想立一家譜供後世瞻仰，便根據 <br />
-                                以前先人的軸堂和前輩老人的傳說記載， <br />
-                                經考證落實，遂製成本譜。望鄭氏子孫 <br />
-                                勿忘先人之德，使鄭氏家族發揚廣大， <br />
-                                流芳萬世。 <br />
-                                <br />
-                                行輩&nbsp;&nbsp;&nbsp;&nbsp;：興賢緒耐兆&nbsp;傳善家方長 <sup> ① </sup> <br />
-                                支代表：鄭金山 <br />
-                                族代表：鄭澄保，鄭澄舜，鄭澄津，鄭希強 <br />
-                                主辦人：鄭衍昆，鄭衍超 <br />
-                                書寫人：鄭衍瑞 <br />
-                                <br />
-                                公園一九九五年古歷十一月&nbsp;&nbsp;敬書 <br />
-                            </p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+        <div class="tab-pane active" id="fanti">
+            <table class="table table-bordered centered" style="height: 300px; width: 100%;">
+                <tr>
+                    <td class="tnt" style="height: 300px; vertical-align: middle;">
+                        <p align="left">
+                            &nbsp;&nbsp;&nbsp;&nbsp; 苗莊鄭氏，原居山東省泰安郊區房村 <br />
+                            鄉埠裏八村。明朝萬歷年間，因兵荒馬亂 <br />
+                            遷至苗莊。始祖名曉字東升，世代勤勞 <br />
+                            忠厚，艱苦創業，遂發展成為鄭氏家族， <br />
+                            生息繁衍而又分別定居至樓德和西營。 <br />
+                            &nbsp;&nbsp;&nbsp;&nbsp; 星轉鬥移，經過四百余年的風風雨雨， <br />
+                            人世變遷，鄭氏家族有了很大發展，思先人 <br />
+                            之恩，遂想立一家譜供後世瞻仰，便根據 <br />
+                            以前先人的軸堂和前輩老人的傳說記載， <br />
+                            經考證落實，遂製成本譜。望鄭氏子孫 <br />
+                            勿忘先人之德，使鄭氏家族發揚廣大， <br />
+                            流芳萬世。 <br />
+                            <br />
+                            行輩&nbsp;&nbsp;&nbsp;&nbsp;：興賢緒耐兆&nbsp;傳善家方長 <sup> ① </sup> <br />
+                            支代表：鄭金山 <br />
+                            族代表：鄭澄保，鄭澄舜，鄭澄津，鄭希強 <br />
+                            主辦人：鄭衍昆，鄭衍超 <br />
+                            書寫人：鄭衍瑞 <br />
+                            <br />
+                            公園一九九五年古歷十一月&nbsp;&nbsp;敬書 <br />
+                        </p>
+                    </td>
+                </tr>
+            </table>
         </div>
-        <div class="tab-pane fade" id="jianti">
-            <div class="container">
-                <table class="table table-bordered centered" style="height: 300px; width: 100%;">
-                    <tr>
-                        <td class="tnt2" style="height: 300px; vertical-align: middle;">
-                            <p align="left">
-                                &nbsp;&nbsp;&nbsp;&nbsp; 苗庄郑氏，原居山东省泰安郊区房村 <br />
-                                乡埠里八村。明朝万历年间，因兵荒马乱 <br />
-                                迁至苗庄。始祖名晓字东升，世代勤劳 <br />
-                                忠厚，艰苦创业，遂发展成为郑氏家族， <br />
-                                生息繁衍而又分别定居至楼德和西营。 <br />
-                                &nbsp;&nbsp;&nbsp;&nbsp; 星转斗移，经过四百余年的风风雨雨， <br />
-                                人世变迁，郑氏家族有了很大发展，思先人 <br />
-                                之恩，遂想立一族谱供后世瞻仰，便根据 <br />
-                                以前先人的轴堂和前辈老人的传说记载， <br />
-                                经考证落实，遂制成本谱。望郑氏子孙 <br />
-                                勿忘先人之德，使郑氏家族发扬广大， <br />
-                                流芳万世。 <br />
-                                <br />
-                                行辈&nbsp;&nbsp;&nbsp;&nbsp;：興賢緒耐兆&nbsp;传善家方长 <sup> ① </sup> <br />
-                                支代表：郑金山 <br />
-                                族代表：郑澄保，郑澄舜，郑澄津，郑希强 <br />
-                                主办人：郑衍昆，郑衍超 <br />
-                                书写人：郑衍瑞 <br />
-                                <br />
-                                公园一九九五年古历十一月&nbsp;&nbsp;敬书 <br />
-                            </p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+        <div class="tab-pane" id="jianti">
+            <table class="table table-bordered centered" style="height: 300px; width: 100%;">
+                <tr>
+                    <td class="tnt" style="height: 300px; vertical-align: middle;">
+                        <p align="left">
+                            &nbsp;&nbsp;&nbsp;&nbsp; 苗庄郑氏，原居山东省泰安郊区房村 <br />
+                            乡埠里八村。明朝万历年间，因兵荒马乱 <br />
+                            迁至苗庄。始祖名晓字东升，世代勤劳 <br />
+                            忠厚，艰苦创业，遂发展成为郑氏家族， <br />
+                            生息繁衍而又分别定居至楼德和西营。 <br />
+                            &nbsp;&nbsp;&nbsp;&nbsp; 星转斗移，经过四百余年的风风雨雨， <br />
+                            人世变迁，郑氏家族有了很大发展，思先人 <br />
+                            之恩，遂想立一家谱供后世瞻仰，便根据 <br />
+                            以前先人的轴堂和前辈老人的传说记载， <br />
+                            经考证落实，遂制成本谱。望郑氏子孙 <br />
+                            勿忘先人之德，使郑氏家族发扬光大， <br />
+                            流芳万世。 <br />
+                            <br />
+                            行辈&nbsp;&nbsp;&nbsp;&nbsp;：興賢緒耐兆&nbsp;传善家方长 <sup> ① </sup> <br />
+                            支代表：郑金山 <br />
+                            族代表：郑澄保，郑澄舜，郑澄津，郑希强 <br />
+                            主办人：郑衍昆，郑衍超 <br />
+                            书写人：郑衍瑞 <br />
+                            <br />
+                            公园一九九五年古历十一月&nbsp;&nbsp;敬书 <br />
+                        </p>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="container">
@@ -222,121 +339,164 @@
             <p align="left"> 注①：行辈由郑衍昆口传 </p>
         </div>
     </div>
-    <br />
-    <br />
-    <div class="centered" style="margin-top: 40px;">
-        <h2 class="gallery-title"> 族谱图 </h2>
-        <br />
-        <div class="container">
-            <h3 class="traditional-gallery-title">
-                传统族谱图
-            </h3>
-            <div id="galley2" style="margin-top: 20px;">
-                <ul class="pictures2 list-unstyled">
-                    <li class="image-gallery">
-                        <img data-original="image/中图/image001.jpg" src="image/中图/image001.jpg" alt="族谱图1">
-                        <img data-original="image/中图/image002.jpg" src="image/中图/image002.jpg" alt="族谱图2">
-                        <img data-original="image/中图/image003.jpg" src="image/中图/image003.jpg" alt="族谱图3">
-                        <img data-original="image/中图/image004.jpg" src="image/中图/image004.jpg" alt="族谱图4">
-                        <img data-original="image/中图/image005.jpg" src="image/中图/image005.jpg" alt="族谱图5">
-                        <img data-original="image/中图/image006.jpg" src="image/中图/image006.jpg" alt="族谱图6">
-                    </li>
-                </ul>
-            </div>
-            <br />
-            <h3 class="new-gallery-title">
-                新族谱图
-            </h3>
-            <div>
-                <table style="width: 100%;">
-                    <tr>
-                        <td style="width: 15%;"></td>
-                        <td style="width: 30%;">
-                            <!-- 修改编辑按钮为从文件读取网址 -->
-                            <a href="#" class="edit-button" id="editButton" target="_blank">编辑</a>
-                        </td>
-                        <td style="width: 10%;"></td>
-                        <td style="width: 30%;"><button type="button" class="refresh-button" onclick="location.reload()">刷新</button></td>
-                        <td style="width: 15%;"></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="centered"> </div>
-            <div id="galley">
-                <ul class="pictures list-unstyled">
-                    <li style="border: 1px solid black;"> <img data-original="descendants-chart.svg" src="descendants-chart.svg" alt="族谱图"> </li>
-                </ul>
-            </div>
-            <div class="tnt3 centered" style="margin-top: 20px;">
-                <p align="left"> 2025年2月更新 </p>
-            </div>
-            <br />
-            <br />
-        </div>
+  </div>
+</section>
+
+<!-- Genealogy Section -->
+<section id="genealogy" class="bg-light-gray">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading">族谱图</h2>
+        <div class="line"></div>
+      </div>
     </div>
-    <!-- Bootstrap 4 JS and dependencies -->
-    <script src="https://unpkg.com/jquery@3/dist/jquery.slim.min.js" crossorigin="anonymous">
-    </script>
-    <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js" crossorigin="anonymous">
-    </script>
-    <script src="https://unpkg.com/bootstrap@4/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-    </script>
-    <script src="js/viewer.js">
-    </script>
-    <script>
-        // 页面加载时读取tunnel.json文件中的网址
-        window.addEventListener('DOMContentLoaded', function() {
-            fetch('tunnel.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h3 class="traditional-gallery-title">
+            传统族谱图
+        </h3>
+        <div id="galley2" style="margin-top: 20px;">
+            <ul class="pictures2 list-unstyled">
+                <li class="image-gallery">
+                    <img data-original="image/中图/image001.jpg" src="image/中图/image001.jpg" alt="族谱图1">
+                    <img data-original="image/中图/image002.jpg" src="image/中图/image002.jpg" alt="族谱图2">
+                    <img data-original="image/中图/image003.jpg" src="image/中图/image003.jpg" alt="族谱图3">
+                    <img data-original="image/中图/image004.jpg" src="image/中图/image004.jpg" alt="族谱图4">
+                    <img data-original="image/中图/image005.jpg" src="image/中图/image005.jpg" alt="族谱图5">
+                    <img data-original="image/中图/image006.jpg" src="image/中图/image006.jpg" alt="族谱图6">
+                </li>
+            </ul>
+        </div>
+        <br />
+        <h3 class="new-gallery-title">
+            新族谱图
+        </h3>
+        <div style="margin: 20px 0;">
+            <div class="centered">
+                <!-- 修改编辑按钮为从文件读取网址 -->
+                <button type="button" class="refresh-button" onclick="location.reload()" style="margin-right: 20px;">
+                    <i class="fa fa-refresh"></i> 刷新页面
+                </button>
+                <a href="#" class="edit-button" id="editButton" target="_blank" style="background-color: #007bff; color: white; pointer-events: auto; cursor: pointer;">
+                    <i class="fa fa-pencil"></i> 编辑族谱图
+                </a>
+            </div>
+        </div>
+        <div class="centered"> </div>
+        <div id="galley">
+            <ul class="pictures list-unstyled">
+                <li style="border: 1px solid black;"> <img data-original="descendants-chart.svg" src="descendants-chart.svg" alt="族谱图"> </li>
+            </ul>
+        </div>
+        <div class="tnt3 centered" style="margin-top: 20px;">
+            <p align="left"> 2025年2月更新 </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <span class="copyright">Copyright &copy; 2024 郑氏族谱</span> 
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- jQuery --> 
+<script src="js/jquery.js"></script> 
+
+<!-- Bootstrap Core JavaScript --> 
+<script src="js/bootstrap.min.js"></script> 
+
+<!-- Plugin JavaScript --> 
+<script src="js/jquery.easing.min.js"></script> 
+<script src="js/classie.js"></script> 
+<script src="js/cbpAnimatedHeader.js"></script> 
+
+<!-- Custom Theme JavaScript --> 
+<script src="js/five.js"></script>
+
+<!-- Viewer JavaScript -->
+<script src="js/viewer.js"></script>
+
+<!-- Custom JavaScript for Genealogy -->
+<script>
+    // 页面加载时设置族谱图编辑按钮的链接
+    window.addEventListener('DOMContentLoaded', function() {
+        const editButton = document.getElementById('editButton');
+        
+        // 从tunnel.json文件中读取网站链接
+        fetch('tunnel.json')
+            .then(response => response.json())
+            .then(data => {
+                let websiteUrl = data["02.website"];
+                if (websiteUrl && websiteUrl.trim() !== '') {
+                    // 确保URL包含协议前缀
+                    if (!websiteUrl.startsWith('http://') && !websiteUrl.startsWith('https://')) {
+                        websiteUrl = 'http://' + websiteUrl;
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    const editButton = document.getElementById('editButton');
-                    let finalUrl = data["02.website"];
-                    if (finalUrl) {
-                        // 确保URL包含协议前缀
-                        if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
-                            finalUrl = 'http://' + finalUrl;
-                        }
-                        editButton.href = finalUrl;
-                    } else {
-                        // 如果json中没有提供URL，则使用默认网址
-                        editButton.href = 'https://zhengxuqiao.github.io/';
-                    }
-                })
-                .catch(error => {
-                    console.error('无法加载json配置文件:', error);
-                    // 如果无法读取json文件，使用默认网址
-                    const editButton = document.getElementById('editButton');
+                    
+                    // 设置按钮链接和样式
+                    editButton.href = websiteUrl;
+                    editButton.style.backgroundColor = '#007bff';
+                    editButton.style.color = 'white';
+                    editButton.title = '编辑族谱图';
+                    editButton.style.cursor = 'pointer';
+                    editButton.style.pointerEvents = 'auto';
+                    editButton.classList.remove('disabled');
+                    editButton.onclick = null;
+                } else {
+                    // 如果没有配置URL，使用默认行为
                     editButton.href = 'https://zhengxuqiao.github.io/';
-                });
-        });
-    </script>
-    <script>
-        window.addEventListener('DOMContentLoaded',
-            function() {
-                var gallery = document.getElementById('galley');
-                var viewer = new Viewer(gallery, {
-                    url: 'data-original',
-                    title: function(image) {
-                        return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
-                    }
-                });
-
-                var gallery2 = document.getElementById('galley2');
-                var viewer2 = new Viewer(gallery2, {
-                    url: 'data-original',
-                    title: function(image) {
-                        return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
-
-                    }
-
-                });
+                    editButton.style.backgroundColor = '#007bff';
+                    editButton.style.color = 'white';
+                    editButton.title = '编辑族谱图';
+                    editButton.style.cursor = 'pointer';
+                    editButton.style.pointerEvents = 'auto';
+                    editButton.classList.remove('disabled');
+                    editButton.onclick = null;
+                }
+            })
+            .catch(error => {
+                console.error('加载配置文件失败:', error);
+                // 如果无法读取配置文件，使用默认URL
+                editButton.href = 'https://zhengxuqiao.github.io/';
+                editButton.style.backgroundColor = '#007bff';
+                editButton.style.color = 'white';
+                editButton.title = '编辑族谱图';
+                editButton.style.cursor = 'pointer';
+                editButton.style.pointerEvents = 'auto';
+                editButton.classList.remove('disabled');
+                editButton.onclick = null;
             });
-    </script>
-</body>
+    });
+</script>
+<script>
+    window.addEventListener('DOMContentLoaded',
+        function() {
+            var gallery = document.getElementById('galley');
+            var viewer = new Viewer(gallery, {
+                url: 'data-original',
+                title: function(image) {
+                    return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+                }
+            });
 
+            var gallery2 = document.getElementById('galley2');
+            var viewer2 = new Viewer(gallery2, {
+                url: 'data-original',
+                title: function(image) {
+                    return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+
+                }
+
+            });
+        });
+</script>
+</body>
 </html>
