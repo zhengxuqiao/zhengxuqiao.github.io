@@ -486,12 +486,12 @@
         <div id="galley2" style="margin-top: 20px;">
             <ul class="pictures2 list-unstyled">
                 <li class="image-gallery">
-                    <img data-original="image/中图/image001.jpg" src="image/小图/image001.jpg" alt="族谱图1" loading="lazy">
-                    <img data-original="image/中图/image002.jpg" src="image/小图/image002.jpg" alt="族谱图2" loading="lazy">
-                    <img data-original="image/中图/image003.jpg" src="image/小图/image003.jpg" alt="族谱图3" loading="lazy">
-                    <img data-original="image/中图/image004.jpg" src="image/小图/image004.jpg" alt="族谱图4" loading="lazy">
-                    <img data-original="image/中图/image005.jpg" src="image/小图/image005.jpg" alt="族谱图5" loading="lazy">
-                    <img data-original="image/中图/image006.jpg" src="image/小图/image006.jpg" alt="族谱图6" loading="lazy">
+                    <img src="image/中图/image001.jpg" alt="族谱图1" loading="lazy">
+                    <img src="image/中图/image002.jpg" alt="族谱图2" loading="lazy">
+                    <img src="image/中图/image003.jpg" alt="族谱图3" loading="lazy">
+                    <img src="image/中图/image004.jpg" alt="族谱图4" loading="lazy">
+                    <img src="image/中图/image005.jpg" alt="族谱图5" loading="lazy">
+                    <img src="image/中图/image006.jpg" alt="族谱图6" loading="lazy">
                 </li>
             </ul>
         </div>
@@ -513,7 +513,7 @@
         <div class="centered"> </div>
         <div id="galley">
             <ul class="pictures list-unstyled">
-                <li style="border: 1px solid black;"> <img data-original="descendants-chart.svg" src="descendants-chart.svg" alt="族谱图" loading="lazy" decoding="async"> </li>
+                <li style="border: 1px solid black;"> <img src="descendants-chart.svg" alt="族谱图" loading="lazy" decoding="async"> </li>
             </ul>
         </div>
         <div class="tnt3 centered" style="margin-top: 20px;">
@@ -608,7 +608,6 @@
         function() {
             var gallery = document.getElementById('galley');
             var viewer = new Viewer(gallery, {
-                url: 'data-original',
                 title: function(image) {
                     return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
                 }
@@ -616,96 +615,12 @@
 
             var gallery2 = document.getElementById('galley2');
             var viewer2 = new Viewer(gallery2, {
-                url: 'data-original',
                 title: function(image) {
                     return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
 
                 }
 
             });
-            
-            // 实现自动加载中图功能
-            function autoLoadMediumImages() {
-                // 获取所有小图元素
-                const smallImages = document.querySelectorAll('#galley2 .pictures2 img');
-                // 获取SVG元素
-                const svgImage = document.querySelector('#galley img');
-                
-                // 存储已加载的图片数量
-                let loadedCount = 0;
-                const totalImages = smallImages.length + 1; // 小图 + SVG
-                
-                // 存储中图加载队列
-                const mediumImageQueue = Array.from(smallImages);
-                // 当前正在加载的中图索引
-                let currentLoadingIndex = 0;
-                // 标记是否有用户点击请求
-                let userClickRequested = false;
-                
-                // 检查所有初始图片是否已加载完成
-                function checkInitialLoadComplete() {
-                    loadedCount++;
-                    if (loadedCount >= totalImages) {
-                        // 初始图片加载完成，开始自动加载中图
-                        loadNextMediumImage();
-                    }
-                }
-                
-                // 加载下一个中图
-                function loadNextMediumImage() {
-                    if (currentLoadingIndex < mediumImageQueue.length && !userClickRequested) {
-                        const img = mediumImageQueue[currentLoadingIndex];
-                        const mediumUrl = img.getAttribute('data-original');
-                        
-                        // 创建临时图片对象来预加载中图
-                        const tempImg = new Image();
-                        tempImg.src = mediumUrl;
-                        tempImg.onload = function() {
-                            console.log('Loaded medium image:', mediumUrl);
-                            currentLoadingIndex++;
-                            // 继续加载下一个中图，延迟100ms以避免阻塞
-                            setTimeout(loadNextMediumImage, 100);
-                        };
-                    }
-                }
-                
-                // 优先加载用户点击的中图
-                function loadMediumImageOnClick(img) {
-                    userClickRequested = true;
-                    const mediumUrl = img.getAttribute('data-original');
-                    
-                    // 创建临时图片对象来预加载中图
-                    const tempImg = new Image();
-                    tempImg.src = mediumUrl;
-                    tempImg.onload = function() {
-                        console.log('Priority loaded medium image:', mediumUrl);
-                    };
-                }
-                
-                // 监听小图加载完成事件
-                smallImages.forEach(img => {
-                    if (img.complete) {
-                        checkInitialLoadComplete();
-                    } else {
-                        img.addEventListener('load', checkInitialLoadComplete);
-                    }
-                    
-                    // 监听小图点击事件
-                    img.addEventListener('click', function() {
-                        loadMediumImageOnClick(this);
-                    });
-                });
-                
-                // 监听SVG加载完成事件
-                if (svgImage.complete) {
-                    checkInitialLoadComplete();
-                } else {
-                    svgImage.addEventListener('load', checkInitialLoadComplete);
-                }
-            }
-            
-            // 初始化自动加载功能
-            autoLoadMediumImages();
         });
 </script>
 </body>
