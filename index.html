@@ -245,22 +245,26 @@
     
     .edit-button {
         text-decoration: none;
-        color: white;
-        background-color: #007bff;
+        color: #212529;
+        background-color: #ffc107;
         padding: 10px 20px;
         border-radius: 5px;
         font-size: 20px;
         display: inline-block;
+        text-align: center;
+        border: none;
     }
     
     .refresh-button {
         font-size: 20px;
         padding: 10px 20px;
         border-radius: 5px;
-        background-color: #007bff;
-        color: white;
+        background-color: #ffc107;
+        color: #212529;
         border: none;
         cursor: pointer;
+        text-align: center;
+        display: inline-block;
     }
     
     /* 为族谱图添加边框或阴影 */
@@ -325,19 +329,21 @@
         background-color: #fff; /* 未选中标签背景颜色 */
         margin-right: 5px;
         transition: all 0.3s ease;
+        width: 180px;
+        text-align: center;
     }
     
     #myTab .nav-item.active .nav-link {
-        color: #007bff; /* 选中标签文字颜色 */
-        background-color: #fff; /* 选中标签背景颜色 */
+        color: #ffc107; /* 选中标签文字颜色 - 黄色 */
+        background-color: #fff; /* 选中标签背景颜色 - 白色 */
         border-color: #dee2e6 #dee2e6 #fff; /* 选中标签边框颜色 */
         font-weight: bold;
     }
     
     #myTab .nav-link:hover {
-        color: #0056b3; /* 鼠标悬停时文字颜色 */
-        background-color: #e9ecef; /* 鼠标悬停时背景颜色 */
-        border-color: #e9ecef #e9ecef #dee2e6; /* 鼠标悬停时边框颜色 */
+        color: #ffc107; /* 鼠标悬停时文字颜色 - 黄色 */
+        background-color: #fff; /* 鼠标悬停时背景颜色 - 白色 */
+        border-color: #dee2e6 #dee2e6 #dee2e6; /* 鼠标悬停时边框颜色 */
     }
     
     /* 增大前言内容字体大小 */
@@ -368,6 +374,7 @@
         <li> <a class="page-scroll" href="#page-top">首页</a> </li>
         <li> <a class="page-scroll" href="#preface">前言</a> </li>
         <li> <a class="page-scroll" href="#genealogy">族谱图</a> </li>
+        <li> <a href="#" id="contactNavButton" class="page-scroll" target="_blank">联系</a> </li>
       </ul>
     </div>
     <!-- /.navbar-collapse --> 
@@ -505,12 +512,16 @@
         </h3>
         <div style="margin: 20px 0;">
             <div class="centered">
-                <button type="button" class="refresh-button" onclick="location.reload()" style="margin-right: 20px;">
+                <button type="button" class="refresh-button" onclick="location.reload()" style="margin: 0 10px; width: 180px; background-color: #ffc107; color: #212529;">
                     <i class="fa fa-refresh"></i> 刷新页面
                 </button>
                 <!-- 修改编辑按钮为从文件读取网址 -->
-                <a href="#" class="edit-button" id="editButton" target="_blank" style="background-color: #007bff; color: white; pointer-events: auto; cursor: pointer;">
-                    <i class="fa fa-pencil"></i> 编辑族谱图
+                <a href="#" class="edit-button" id="editButton" target="_blank" style="background-color: #ffc107; color: #212529; pointer-events: auto; cursor: pointer; margin: 0 10px; width: 180px;">
+                    <i class="fa fa-pencil"></i> 编辑族谱
+                </a>
+                <!-- 添加联系按钮 -->
+                <a href="#" class="edit-button" id="contactButton" target="_blank" style="background-color: #ffc107; color: #212529; pointer-events: auto; cursor: pointer; margin: 0 10px; width: 180px;">
+                    <i class="fa fa-envelope"></i> 联系我们
                 </a>
             </div>
         </div>
@@ -557,9 +568,11 @@
 
 <!-- Custom JavaScript for Genealogy -->
 <script>
-    // 页面加载时设置族谱图编辑按钮的链接
+    // 页面加载时设置族谱图编辑按钮和联系按钮的链接
     window.addEventListener('DOMContentLoaded', function() {
         const editButton = document.getElementById('editButton');
+        const contactButton = document.getElementById('contactButton');
+        const contactNavButton = document.getElementById('contactNavButton');
         
         // 从tunnel.json文件中读取网站链接，添加缓存控制确保每次获取最新内容
         fetch('tunnel.json?' + new Date().getTime(), {
@@ -581,38 +594,85 @@
                     const encodedWebtreesUrl = encodeURIComponent(webtreesUrl);
                     const editUrl = `${baseUrl}${loginPath}&url=${encodedWebtreesUrl}`;
                     
-                    // 设置按钮链接和样式
+                    // 设置编辑按钮链接和样式
                     editButton.href = editUrl;
-                    editButton.style.backgroundColor = '#007bff';
-                    editButton.style.color = 'white';
-                    editButton.title = '编辑族谱图';
+                    editButton.style.backgroundColor = '#ffc107';
+                    editButton.style.color = '#212529';
+                    editButton.title = '编辑族谱';
                     editButton.style.cursor = 'pointer';
                     editButton.style.pointerEvents = 'auto';
                     editButton.classList.remove('disabled');
                     editButton.onclick = null;
+                    
+                    // 构建联系页面URL
+                    const contactUrl = `${baseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin`;
+                    
+                    // 设置联系按钮链接和样式
+                    contactButton.href = contactUrl;
+                    contactButton.style.backgroundColor = '#ffc107';
+                    contactButton.style.color = '#212529';
+                    contactButton.title = '联系我们';
+                    contactButton.style.cursor = 'pointer';
+                    contactButton.style.pointerEvents = 'auto';
+                    contactButton.classList.remove('disabled');
+                    contactButton.onclick = null;
+                    
+                    // 设置导航栏联系按钮
+                    contactNavButton.href = contactUrl;
+                    contactNavButton.style.cursor = 'pointer';
                 } else {
                     // 如果没有配置URL，使用默认行为
                     editButton.href = 'https://zhengxuqiao.github.io/';
-                    editButton.style.backgroundColor = '#007bff';
-                    editButton.style.color = 'white';
-                    editButton.title = '编辑族谱图';
+                    editButton.style.backgroundColor = '#ffc107';
+                    editButton.style.color = '#212529';
+                    editButton.title = '编辑族谱';
                     editButton.style.cursor = 'pointer';
                     editButton.style.pointerEvents = 'auto';
                     editButton.classList.remove('disabled');
                     editButton.onclick = null;
+                    
+                    // 联系按钮默认URL
+                    const defaultContactUrl = 'https://be483d.r27.cpolar.top/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin';
+                    contactButton.href = defaultContactUrl;
+                    contactButton.style.backgroundColor = '#ffc107';
+                    contactButton.style.color = '#212529';
+                    contactButton.title = '联系我们';
+                    contactButton.style.cursor = 'pointer';
+                    contactButton.style.pointerEvents = 'auto';
+                    contactButton.classList.remove('disabled');
+                    contactButton.onclick = null;
+                    
+                    // 导航栏联系按钮默认URL
+                    contactNavButton.href = defaultContactUrl;
+                    contactNavButton.style.cursor = 'pointer';
                 }
             })
             .catch(error => {
                 console.error('加载配置文件失败:', error);
                 // 如果无法读取配置文件，使用默认URL
                 editButton.href = 'https://zhengxuqiao.github.io/';
-                editButton.style.backgroundColor = '#007bff';
-                editButton.style.color = 'white';
-                editButton.title = '编辑族谱图';
+                editButton.style.backgroundColor = '#ffc107';
+                editButton.style.color = '#212529';
+                editButton.title = '编辑族谱';
                 editButton.style.cursor = 'pointer';
                 editButton.style.pointerEvents = 'auto';
                 editButton.classList.remove('disabled');
                 editButton.onclick = null;
+                
+                // 联系按钮默认URL
+                const defaultContactUrl = 'https://be483d.r27.cpolar.top/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin';
+                contactButton.href = defaultContactUrl;
+                contactButton.style.backgroundColor = '#ffc107';
+                contactButton.style.color = '#212529';
+                contactButton.title = '联系我们';
+                contactButton.style.cursor = 'pointer';
+                contactButton.style.pointerEvents = 'auto';
+                contactButton.classList.remove('disabled');
+                contactButton.onclick = null;
+                
+                // 导航栏联系按钮默认URL
+                contactNavButton.href = defaultContactUrl;
+                contactNavButton.style.cursor = 'pointer';
             });
     });
 </script>
