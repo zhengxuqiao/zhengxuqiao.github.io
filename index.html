@@ -53,28 +53,7 @@
         margin: 5px;
     }
 
-    .tnt {
-        writing-mode: tb-rl;
-        text-align: center;
-        font-size: 12pt;
-        font-family: KaiTi, cursive;
-        line-height: 2.0;
-        letter-spacing: 2px;
-        background-color: #f5f5dc;
-        padding: 20px;
-        height: 600px !important;
-        min-height: 600px !important;
-        /* 允许内容溢出时自动换行 */
-        overflow-wrap: break-word;
-        /* 确保文字在垂直排版时正确显示 */
-        white-space: normal;
-        /* 使用flex布局实现竖排文字的左右居中（水平居中） */
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-    }
-    
+    /* 简化的tnt2样式 */
     .tnt2 {
         writing-mode: tb-rl;
         text-align: center;
@@ -88,117 +67,106 @@
         min-height: 300px;
     }
     
-    /* 确保段落从顶部开始显示 */
-    .tnt p {
-        margin: 0;
-        padding: 0;
-        writing-mode: tb-rl;
-        /* 确保段落从顶部开始 */
-        vertical-align: top;
-        display: inline-block;
-        text-align: left;
+    /* 调整前言section的基础样式 */
+    #preface {
+        width: 100% !important;
+        padding: 20px 0 !important;
     }
     
-    /* 调整tnt类的基础样式，确保背景宽度合适 */
+    /* 新增：前言内容容器样式 */
+    .preface-content-container {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        background-color: #f5f5dc !important;
+        margin: 20px auto !important;
+        max-width: 95% !important;
+        border: 1px solid #ddd !important;
+        border-radius: 5px !important;
+    }
+    
+    /* 调整前言内容样式，实现竖排、顶上方对齐、左右居中 */
     .tnt {
-        width: 100% !important;
-        max-width: 100% !important;
+        writing-mode: tb-rl !important;
+        text-orientation: mixed !important;
+        display: inline-block !important;
+        vertical-align: top !important;
+        text-align: left !important;
+        text-align-last: left !important;
+        font-size: 12pt !important;
+        font-family: KaiTi, cursive !important;
+        line-height: 2.0 !important;
+        letter-spacing: 2px !important;
+        background-color: transparent !important;
+        padding: 20px !important;
+        margin: 0 !important;
+        width: auto !important;
+        height: auto !important;
+        min-height: 600px !important;
+        max-height: 700px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        white-space: nowrap !important;
     }
     
-    /* 调整表格的基础样式，确保背景宽度合适 */
-    #preface table {
-        width: 100% !important;
-        max-width: 100% !important;
-        background-color: #f5f5dc !important;
+    /* 调整段落样式，确保内容正常显示 */
+    .tnt p {
+        display: inline-block !important;
+        vertical-align: top !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        writing-mode: tb-rl !important;
+        text-align: left !important;
+        text-align-last: left !important;
+        white-space: pre-wrap !important;
+        word-wrap: break-word !important;
+        width: auto !important;
+        height: auto !important;
     }
     
-    /* 调整表格单元格的基础样式 */
-    #preface table td {
-        width: 100% !important;
-        background-color: #f5f5dc !important;
-    }
-    
-    /* 响应式设计：在宽屏幕上确保正文居中显示，背景足够宽 */
+    /* 响应式设计：在宽屏幕上 */
     @media (min-width: 769px) {
-        /* 调整表格样式，使其在宽屏幕上居中，背景足够宽 */
-        #preface table {
+        /* 调整前言内容容器样式 */
+        .preface-content-container {
             max-width: 95% !important;
-            margin: 0 auto !important;
-            display: table !important;
+            margin: 20px auto !important;
         }
         
-        /* 调整表格单元格样式 */
-        #preface table td {
-            text-align: center !important;
-            vertical-align: middle !important;
-            padding: 20px !important;
-        }
-        
-        /* 调整前言内容样式，确保居中 */
+        /* 调整前言内容样式 */
         .tnt {
-            margin: 0 auto !important;
-            text-align: center !important;
-            display: block !important;
+            margin: 0 !important;
             padding: 20px !important;
+            min-height: 600px !important;
+            max-height: 700px !important;
         }
     }
     
-    /* 响应式设计：在窄屏幕上优化垂直文字排版，背景足够宽 */
+    /* 响应式设计：在窄屏幕上 */
     @media (max-width: 768px) {
-        /* 调整表格样式，使其在窄屏幕上自适应并居中，背景足够宽 */
-        #preface table {
+        /* 调整前言内容容器样式 */
+        .preface-content-container {
             max-width: 98% !important;
-            margin: 0 auto !important;
-            display: table !important;
-            overflow-x: auto !important;
-            width: 100% !important;
+            margin: 15px auto !important;
         }
         
-        /* 调整表格单元格样式 */
-        #preface table td {
-            padding: 15px !important;
-            text-align: center !important;
-            vertical-align: top !important;
-            background-color: #f5f5dc !important;
-            width: 100% !important;
-            height: auto !important;
-            overflow-x: auto !important;
-        }
-        
-        /* 调整前言内容样式，使用简单的块级元素布局，确保文字从上方开始 */
+        /* 调整前言内容样式 */
         .tnt {
             padding: 15px !important;
             font-size: 10pt !important;
-            /* 确保垂直文字排版在窄屏幕上正常显示 */
-            writing-mode: tb-rl !important;
-            /* 调整行高，适合窄屏幕 */
             line-height: 1.8 !important;
-            /* 调整高度，从上方开始显示，避免滚动条 */
-            height: auto !important;
             min-height: 350px !important;
             max-height: 450px !important;
-            /* 使用简单的块级元素布局，确保文字从上方开始 */
-            display: block !important;
-            text-align: center !important;
-            background-color: #f5f5dc !important;
-            margin: 0 auto !important;
-            overflow-x: auto !important;
-            overflow-y: hidden !important;
-            max-width: 100% !important;
+            margin: 0 !important;
         }
         
-        /* 调整文字大小和顶部对齐 */
-        #preface p {
+        /* 调整段落样式 */
+        .tnt p {
             font-size: 10pt !important;
             line-height: 1.8 !important;
-            /* 确保文字在垂直排版时正确显示 */
-            white-space: normal !important;
-            text-align: left !important;
             margin: 0 !important;
             padding: 0 !important;
-            /* 确保段落从顶部开始显示 */
-            display: inline-block !important;
-            vertical-align: top !important;
         }
         
         /* 调整标签页样式 */
@@ -414,64 +382,18 @@
     </ul>
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane active" id="fanti">
-            <table class="table table-bordered centered">
-                <tr>
-                    <td class="tnt">
-                        <p>
-                            &nbsp;&nbsp;&nbsp;&nbsp; 苗莊鄭氏，原居山東省泰安郊區房村 <br />
-                            鄉埠裏八村。明朝萬歷年間，因兵荒馬亂 <br />
-                            遷至苗莊。始祖名曉字東升，世代勤勞 <br />
-                            忠厚，艱苦創業，遂發展成為鄭氏家族， <br />
-                            生息繁衍而又分別定居至樓德和西營。 <br />
-                            &nbsp;&nbsp;&nbsp;&nbsp; 星轉鬥移，經過四百余年的風風雨雨， <br />
-                            人世變遷，鄭氏家族有了很大發展，思先人 <br />
-                            之恩，遂想立一家譜供後世瞻仰，便根據 <br />
-                            以前先人的軸堂和前輩老人的傳說記載， <br />
-                            經考證落實，遂製成本譜。望鄭氏子孫 <br />
-                            勿忘先人之德，使鄭氏家族發揚廣大， <br />
-                            流芳萬世。 <br />
-                            <br />
-                            行輩&nbsp;&nbsp;&nbsp;&nbsp;：興賢緒耐兆&nbsp;傳善家方長 <sup> ① </sup> <br />
-                            支代表：鄭金山 <br />
-                            族代表：鄭澄保，鄭澄舜，鄭澄津，鄭希強 <br />
-                            主辦人：鄭衍昆，鄭衍超 <br />
-                            書寫人：鄭衍瑞 <br />
-                            <br />
-                            公園一九九五年古歷十一月&nbsp;&nbsp;敬書 <br />
-                        </p>
-                    </td>
-                </tr>
-            </table>
+            <div class="preface-content-container">
+                <div class="tnt">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp; 苗莊鄭氏，原居山東省泰安郊區房村 <br />鄉埠裏八村。明朝萬歷年間，因兵荒馬亂 <br />遷至苗莊。始祖名曉字東升，世代勤勞 <br />忠厚，艱苦創業，遂發展成為鄭氏家族， <br />生息繁衍而又分別定居至樓德和西營。 <br />&nbsp;&nbsp;&nbsp;&nbsp; 星轉鬥移，經過四百余年的風風雨雨， <br />人世變遷，鄭氏家族有了很大發展，思先人 <br />之恩，遂想立一家譜供後世瞻仰，便根據 <br />以前先人的軸堂和前輩老人的傳說記載， <br />經考證落實，遂製成本譜。望鄭氏子孫 <br />勿忘先人之德，使鄭氏家族發揚廣大， <br />流芳萬世。 <br /><br />行輩&nbsp;&nbsp;&nbsp;&nbsp;：興賢緒耐兆&nbsp;傳善家方長 <sup> ① </sup> <br />支代表：鄭金山 <br />族代表：鄭澄保，鄭澄舜，鄭澄津，鄭希強 <br />主辦人：鄭衍昆，鄭衍超 <br />書寫人：鄭衍瑞 <br /><br />公園一九九五年古歷十一月&nbsp;&nbsp;敬書 <br /></p>
+                </div>
+            </div>
         </div>
         <div class="tab-pane" id="jianti">
-            <table class="table table-bordered centered">
-                <tr>
-                    <td class="tnt">
-                        <p align="left">
-                            &nbsp;&nbsp;&nbsp;&nbsp; 苗庄郑氏，原居山东省泰安郊区房村 <br />
-                            乡埠里八村。明朝万历年间，因兵荒马乱 <br />
-                            迁至苗庄。始祖名晓字东升，世代勤劳 <br />
-                            忠厚，艰苦创业，遂发展成为郑氏家族， <br />
-                            生息繁衍而又分别定居至楼德和西营。 <br />
-                            &nbsp;&nbsp;&nbsp;&nbsp; 星转斗移，经过四百余年的风风雨雨， <br />
-                            人世变迁，郑氏家族有了很大发展，思先人 <br />
-                            之恩，遂想立一家谱供后世瞻仰，便根据 <br />
-                            以前先人的轴堂和前辈老人的传说记载， <br />
-                            经考证落实，遂制成本谱。望郑氏子孙 <br />
-                            勿忘先人之德，使郑氏家族发扬光大， <br />
-                            流芳万世。 <br />
-                            <br />
-                            行辈&nbsp;&nbsp;&nbsp;&nbsp;：興賢緒耐兆&nbsp;传善家方长 <sup> ① </sup> <br />
-                            支代表：郑金山 <br />
-                            族代表：郑澄保，郑澄舜，郑澄津，郑希强 <br />
-                            主办人：郑衍昆，郑衍超 <br />
-                            书写人：郑衍瑞 <br />
-                            <br />
-                            公园一九九五年古历十一月&nbsp;&nbsp;敬书 <br />
-                        </p>
-                    </td>
-                </tr>
-            </table>
+            <div class="preface-content-container">
+                <div class="tnt">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp; 苗庄郑氏，原居山东省泰安郊区房村 <br />乡埠里八村。明朝万历年间，因兵荒马乱 <br />迁至苗庄。始祖名晓字东升，世代勤劳 <br />忠厚，艰苦创业，遂发展成为郑氏家族， <br />生息繁衍而又分别定居至楼德和西营。 <br />&nbsp;&nbsp;&nbsp;&nbsp; 星转斗移，经过四百余年的风风雨雨， <br />人世变迁，郑氏家族有了很大发展，思先人 <br />之恩，遂想立一家谱供后世瞻仰，便根据 <br />以前先人的轴堂和前辈老人的传说记载， <br />经考证落实，遂制成本谱。望郑氏子孙 <br />勿忘先人之德，使郑氏家族发扬光大， <br />流芳万世。 <br /><br />行辈&nbsp;&nbsp;&nbsp;&nbsp;：興賢緒耐兆&nbsp;传善家方长 <sup> ① </sup> <br />支代表：郑金山 <br />族代表：郑澄保，郑澄舜，郑澄津，郑希强 <br />主办人：郑衍昆，郑衍超 <br />书写人：郑衍瑞 <br /><br />公园一九九五年古历十一月&nbsp;&nbsp;敬书 <br /></p>
+                </div>
+            </div>
         </div>
     </div>
     <div class="container">
