@@ -587,12 +587,9 @@
                         websiteUrl = 'http://' + websiteUrl;
                     }
                     
-                    // 构建完整的编辑链接，确保与示例格式完全一致
+                    // 直接跳转到后代图页面，webtrees系统会自动处理未登录重定向
                     const baseUrl = websiteUrl;
-                    const loginPath = '/index.php?route=%2Flogin%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1';
-                    const webtreesUrl = `${baseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
-                    const encodedWebtreesUrl = encodeURIComponent(webtreesUrl);
-                    const editUrl = `${baseUrl}${loginPath}&url=${encodedWebtreesUrl}`;
+                    const editUrl = `${baseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
                     
                     // 设置编辑按钮链接和样式
                     editButton.href = editUrl;
@@ -621,8 +618,12 @@
                     contactNavButton.href = contactUrl;
                     contactNavButton.style.cursor = 'pointer';
                 } else {
-                    // 如果没有配置URL，使用默认行为
-                    editButton.href = 'https://zhengxuqiao.github.io/';
+                    // 如果没有配置URL，使用默认行为，构建登录跳转链接
+                    const defaultBaseUrl = 'https://be483d.r27.cpolar.top';
+                    
+                    // 编辑按钮默认URL，直接跳转到后代图页面
+                    const defaultEditUrl = `${defaultBaseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
+                    editButton.href = defaultEditUrl;
                     editButton.style.backgroundColor = '#ffc107';
                     editButton.style.color = '#212529';
                     editButton.title = '编辑族谱';
@@ -632,10 +633,9 @@
                     editButton.onclick = null;
                     
                     // 联系按钮默认URL
-                    const defaultBaseUrl = 'https://be483d.r27.cpolar.top';
-                    const defaultWebtreesUrl = `${defaultBaseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
-                    const defaultEncodedWebtreesUrl = encodeURIComponent(defaultWebtreesUrl);
-                    const defaultContactUrl = `${defaultBaseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${defaultEncodedWebtreesUrl}`;
+                    const defaultContactWebtreesUrl = `${defaultBaseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
+                    const defaultContactEncodedWebtreesUrl = encodeURIComponent(defaultContactWebtreesUrl);
+                    const defaultContactUrl = `${defaultBaseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${defaultContactEncodedWebtreesUrl}`;
                     contactButton.href = defaultContactUrl;
                     contactButton.style.backgroundColor = '#ffc107';
                     contactButton.style.color = '#212529';
@@ -652,8 +652,12 @@
             })
             .catch(error => {
                 console.error('加载配置文件失败:', error);
-                // 如果无法读取配置文件，使用默认URL
-                editButton.href = 'https://zhengxuqiao.github.io/';
+                // 如果无法读取配置文件，使用默认URL，构建登录跳转链接
+                const defaultBaseUrl = 'https://be483d.r27.cpolar.top';
+                
+                // 编辑按钮默认URL，直接跳转到后代图页面
+                const defaultEditUrl = `${defaultBaseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
+                editButton.href = defaultEditUrl;
                 editButton.style.backgroundColor = '#ffc107';
                 editButton.style.color = '#212529';
                 editButton.title = '编辑族谱';
@@ -663,10 +667,9 @@
                 editButton.onclick = null;
                 
                 // 联系按钮默认URL
-                const defaultBaseUrl = 'https://be483d.r27.cpolar.top';
-                const defaultWebtreesUrl = `${defaultBaseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
-                const defaultEncodedWebtreesUrl = encodeURIComponent(defaultWebtreesUrl);
-                const defaultContactUrl = `${defaultBaseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${defaultEncodedWebtreesUrl}`;
+                const defaultContactWebtreesUrl = `${defaultBaseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
+                const defaultContactEncodedWebtreesUrl = encodeURIComponent(defaultContactWebtreesUrl);
+                const defaultContactUrl = `${defaultBaseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${defaultContactEncodedWebtreesUrl}`;
                 contactButton.href = defaultContactUrl;
                 contactButton.style.backgroundColor = '#ffc107';
                 contactButton.style.color = '#212529';
