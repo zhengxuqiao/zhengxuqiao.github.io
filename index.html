@@ -184,6 +184,10 @@
 
     .centered {
         text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
     }
     
     /* 新增的样式 */
@@ -430,11 +434,11 @@
         </h3>
         <div style="margin: 20px 0;">
             <div class="centered">
-                <button type="button" class="refresh-button" onclick="location.reload()" style="margin: 0 10px; width: 180px; background-color: #ffc107; color: #212529;">
+                <button type="button" class="refresh-button" onclick="location.reload()" style="margin: 0; width: 180px; background-color: #ffc107; color: #212529;">
                     <i class="fa fa-refresh"></i> 刷新页面
                 </button>
                 <!-- 修改编辑按钮为从文件读取网址 -->
-                <a href="#" class="edit-button" id="editButton" target="_blank" style="background-color: #ffc107; color: #212529; pointer-events: auto; cursor: pointer; margin: 0 10px; width: 180px;">
+                <a href="#" class="edit-button" id="editButton" target="_blank" style="background-color: #ffc107; color: #212529; pointer-events: auto; cursor: pointer; margin: 0; width: 180px;">
                     <i class="fa fa-pencil"></i> 编辑族谱
                 </a>
             </div>
