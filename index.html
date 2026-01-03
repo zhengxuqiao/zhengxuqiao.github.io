@@ -505,10 +505,10 @@
         </h3>
         <div style="margin: 20px 0;">
             <div class="centered">
-                <!-- 修改编辑按钮为从文件读取网址 -->
                 <button type="button" class="refresh-button" onclick="location.reload()" style="margin-right: 20px;">
                     <i class="fa fa-refresh"></i> 刷新页面
                 </button>
+                <!-- 修改编辑按钮为从文件读取网址 -->
                 <a href="#" class="edit-button" id="editButton" target="_blank" style="background-color: #007bff; color: white; pointer-events: auto; cursor: pointer;">
                     <i class="fa fa-pencil"></i> 编辑族谱图
                 </a>
@@ -574,12 +574,12 @@
                         websiteUrl = 'http://' + websiteUrl;
                     }
                     
-                    // 构建完整的编辑链接，使用从 tunnel.json 获取的 URL
+                    // 构建完整的编辑链接，确保与示例格式完全一致
+                    const baseUrl = websiteUrl;
                     const loginPath = '/index.php?route=%2Flogin%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1';
-                    const webtreesRoute = '%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59';
-                    const webtreesPath = `?route=${webtreesRoute}`;
-                    const fullUrl = encodeURIComponent(`${websiteUrl}${webtreesPath}`);
-                    const editUrl = `${websiteUrl}${loginPath}&url=${fullUrl}`;
+                    const webtreesUrl = `${baseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
+                    const encodedWebtreesUrl = encodeURIComponent(webtreesUrl);
+                    const editUrl = `${baseUrl}${loginPath}&url=${encodedWebtreesUrl}`;
                     
                     // 设置按钮链接和样式
                     editButton.href = editUrl;
