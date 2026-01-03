@@ -30,11 +30,11 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <!-- 启用压缩和缓存，设置图片永不过期 -->
+    <!-- 启用压缩，优化缓存策略 -->
     <meta http-equiv="Content-Encoding" content="gzip, deflate, br">
-    <meta http-equiv="Cache-Control" content="public, max-age=3153600000">
-    <meta http-equiv="Expires" content="Wed, 03 Jan 2126 00:00:00 GMT">
-    <meta http-equiv="Pragma" content="cache">
+    <meta http-equiv="Cache-Control" content="public, max-age=86400">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
 
 <style>
     body {
@@ -608,23 +608,118 @@
     });
 </script>
 <script>
+    // 图片加载重试函数
+    function setupImageRetry(image, maxRetries = 3, retryDelay = 1000) {
+        let retries = 0;
+        
+        function retryLoad() {
+            // 移除之前的事件监听器，避免重复触发
+            image.removeEventListener('error', onError);
+            
+            // 重置src属性，添加时间戳防止缓存
+            const originalSrc = image.getAttribute('data-original-src') || image.src;
+            image.src = originalSrc + (originalSrc.includes('?') ? '&' : '?') + 'timestamp=' + Date.now();
+            
+            // 重新添加事件监听器
+            image.addEventListener('error', onError);
+        }
+        
+        function onError() {
+            retries++;
+            if (retries <= maxRetries) {
+                setTimeout(retryLoad, retryDelay);
+            } else {
+                console.error('图片加载失败，已达到最大重试次数:', image.src);
+            }
+        }
+        
+        // 保存原始src并添加事件监听器
+        image.setAttribute('data-original-src', image.src);
+        image.addEventListener('error', onError);
+    }
+    
+    // 图片加载完成后执行回调
+    function loadImagesWithCallback(images, callback) {
+        let loadedCount = 0;
+        const totalImages = images.length;
+        
+        if (totalImages === 0) {
+            callback();
+            return;
+        }
+        
+        function onImageLoaded() {
+            loadedCount++;
+            if (loadedCount === totalImages) {
+                callback();
+            }
+        }
+        
+        images.forEach(image => {
+            if (image.complete) {
+                onImageLoaded();
+            } else {
+                image.addEventListener('load', onImageLoaded);
+                image.addEventListener('error', onImageLoaded); // 即使加载失败也继续
+            }
+        });
+    }
+    
     window.addEventListener('DOMContentLoaded',
         function() {
-            var gallery = document.getElementById('galley');
-            var viewer = new Viewer(gallery, {
-                title: function(image) {
-                    return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+            // 获取所有图片并设置重试机制
+            const allImages = document.querySelectorAll('img');
+            allImages.forEach(image => {
+                setupImageRetry(image);
+            });
+            
+            // 图片全部加载完成后初始化Viewer查看器
+            loadImagesWithCallback(allImages, function() {
+                // 初始化第一个查看器（SVG族谱图）
+                var gallery = document.getElementById('galley');
+                if (gallery) {
+                    var viewer = new Viewer(gallery, {
+                        title: function(image) {
+                            return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+                        }
+                    });
+                }
+
+                // 初始化第二个查看器（传统族谱图片）
+                var gallery2 = document.getElementById('galley2');
+                if (gallery2) {
+                    var viewer2 = new Viewer(gallery2, {
+                        title: function(image) {
+                            return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+                        }
+                    });
                 }
             });
-
-            var gallery2 = document.getElementById('galley2');
-            var viewer2 = new Viewer(gallery2, {
-                title: function(image) {
-                    return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
-
+            
+            // 为SVG族谱图添加特定的错误处理
+            const svgImage = document.querySelector('#galley img[src$="descendants-chart.svg"]');
+            if (svgImage) {
+                // 添加手动刷新按钮功能
+                const refreshButton = document.querySelector('.refresh-button');
+                if (refreshButton) {
+                    refreshButton.addEventListener('click', function(e) {
+                        // 阻止默认的页面刷新行为，只刷新图片
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // 刷新SVG图片
+                        svgImage.src = 'descendants-chart.svg?' + Date.now();
+                        
+                        // 刷新所有传统族谱图片
+                        const traditionalImages = document.querySelectorAll('#galley2 img');
+                        traditionalImages.forEach(img => {
+                            img.src = img.getAttribute('data-original-src') + '?' + Date.now();
+                        });
+                        
+                        alert('图片已刷新');
+                    });
                 }
-
-            });
+            }
         });
 </script>
 </body>
