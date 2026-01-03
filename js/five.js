@@ -18,32 +18,42 @@ $(function() {
     // 自定义滚动监听，避免默认ScrollSpy的切换问题
     $(window).scroll(function() {
         var scrollPos = $(window).scrollTop();
-        var navHeight = $('.navbar-fixed-top').height();
+        var windowHeight = $(window).height();
+        // 计算屏幕中间位置
+        var screenMiddlePos = scrollPos + windowHeight / 2;
         
-        // 获取各部分的位置
+        // 获取实际存在的各部分位置和高度
         var pageTopPos = $('#page-top').offset().top;
         var prefacePos = $('#preface').offset().top;
+        var prefaceHeight = $('#preface').outerHeight();
         var genealogyPos = $('#genealogy').offset().top;
+        var genealogyHeight = $('#genealogy').outerHeight();
+        var contactPos = $('#contact').offset().top;
+        var contactHeight = $('#contact').outerHeight();
         
         // 获取导航项
         var $navItems = $('.navbar-nav li a');
         var $homeNav = $navItems.filter('[href="#page-top"]');
         var $prefaceNav = $navItems.filter('[href="#preface"]');
         var $genealogyNav = $navItems.filter('[href="#genealogy"]');
+        var $contactNav = $navItems.filter('[href="#contact"]');
         
         // 移除所有激活状态
         $('.navbar-nav li').removeClass('active');
         
-        // 根据滚动位置设置激活状态
-        if (scrollPos < (prefacePos - navHeight - 20)) {
-            // 首页区域
-            $homeNav.parent().addClass('active');
-        } else if (scrollPos < (genealogyPos - navHeight - 20)) {
+        // 根据屏幕中间位置设置激活状态，判断中间位置在哪个区域内
+        if (screenMiddlePos >= contactPos && screenMiddlePos < contactPos + contactHeight) {
+            // 联系区域
+            $contactNav.parent().addClass('active');
+        } else if (screenMiddlePos >= genealogyPos && screenMiddlePos < genealogyPos + genealogyHeight) {
+            // 族谱图区域
+            $genealogyNav.parent().addClass('active');
+        } else if (screenMiddlePos >= prefacePos && screenMiddlePos < prefacePos + prefaceHeight) {
             // 前言区域
             $prefaceNav.parent().addClass('active');
         } else {
-            // 族谱图区域
-            $genealogyNav.parent().addClass('active');
+            // 首页区域
+            $homeNav.parent().addClass('active');
         }
     });
     
