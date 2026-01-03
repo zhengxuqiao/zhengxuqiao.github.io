@@ -10,8 +10,6 @@ from datetime import datetime
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))  # 项目根目录
 cmd_dir = os.path.dirname(__file__)  # 当前脚本目录
 
-# 不使用PID文件，改用Linux服务管理
-
 # 日志文件路径
 cpolar_log_file = '/var/log/cpolar/access.log'  # cpolar日志文件路径
 app_log_dir = os.path.join(cmd_dir, 'log')  # 应用日志目录
@@ -130,10 +128,21 @@ def log_output(message):
 
 
 def write_to_tunnel_json(urls, json_file):
-    # 按照tunnel.json的格式组织数据
+    # 先读取现有的tunnel.json文件
+    existing_data = {
+        "01.ssh": "",
+        "02.website": ""
+    }
+    
+    # 如果文件存在，读取现有值
+    if os.path.exists(json_file):
+        with open(json_file, 'r', encoding='utf-8') as f:
+            existing_data = json.load(f)
+    
+    # 只更新找到的隧道URL，保持未找到的原有值不变
     tunnel_data = {
-        "01.ssh": urls.get("ssh", ""),
-        "02.website": urls.get("website", "")
+        "01.ssh": urls.get("ssh", existing_data.get("01.ssh", "")),
+        "02.website": urls.get("website", existing_data.get("02.website", ""))
     }
     
     # 写入JSON文件
@@ -141,8 +150,8 @@ def write_to_tunnel_json(urls, json_file):
         json.dump(tunnel_data, f, indent=4)
     
     log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 已更新tunnel.json")
-    log_output(f'SSH隧道: {urls.get("ssh", "未找到")}')
-    log_output(f'Website隧道: {urls.get("website", "未找到")}')
+    log_output(f'SSH隧道: {urls.get("ssh", existing_data.get("01.ssh", "未找到"))}')
+    log_output(f'Website隧道: {urls.get("website", existing_data.get("02.website", "未找到"))}')
 
 
 def main():
@@ -176,7 +185,6 @@ def main():
     except Exception as e:
         # 捕获任何未处理的异常
         log_output(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 严重错误: {str(e)}")
-        cleanup()
         sys.exit(1)
 
 
