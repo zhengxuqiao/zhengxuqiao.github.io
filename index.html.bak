@@ -604,10 +604,8 @@
                     editButton.classList.remove('disabled');
                     editButton.onclick = null;
                     
-                    // 构建联系页面URL，包含完整的encoded参数
-                    const webtreesUrl = `${baseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
-                    const encodedWebtreesUrl = encodeURIComponent(webtreesUrl);
-                    const contactUrl = `${baseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${encodedWebtreesUrl}`;
+                    // 构建联系页面URL
+                    const contactUrl = `${baseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin`;
                     
                     // 设置联系按钮链接和样式
                     contactButton.href = contactUrl;
@@ -634,10 +632,7 @@
                     editButton.onclick = null;
                     
                     // 联系按钮默认URL
-                    const defaultBaseUrl = 'https://be483d.r27.cpolar.top';
-                    const defaultWebtreesUrl = `${defaultBaseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
-                    const defaultEncodedWebtreesUrl = encodeURIComponent(defaultWebtreesUrl);
-                    const defaultContactUrl = `${defaultBaseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${defaultEncodedWebtreesUrl}`;
+                    const defaultContactUrl = 'https://be483d.r27.cpolar.top/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin';
                     contactButton.href = defaultContactUrl;
                     contactButton.style.backgroundColor = '#ffc107';
                     contactButton.style.color = '#212529';
@@ -665,10 +660,7 @@
                 editButton.onclick = null;
                 
                 // 联系按钮默认URL
-                const defaultBaseUrl = 'https://be483d.r27.cpolar.top';
-                const defaultWebtreesUrl = `${defaultBaseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
-                const defaultEncodedWebtreesUrl = encodeURIComponent(defaultWebtreesUrl);
-                const defaultContactUrl = `${defaultBaseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${defaultEncodedWebtreesUrl}`;
+                const defaultContactUrl = 'https://be483d.r27.cpolar.top/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin';
                 contactButton.href = defaultContactUrl;
                 contactButton.style.backgroundColor = '#ffc107';
                 contactButton.style.color = '#212529';
