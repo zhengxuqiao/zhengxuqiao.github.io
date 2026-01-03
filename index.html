@@ -508,8 +508,8 @@
 
 <!-- Custom JavaScript for Genealogy -->
 <script>
-    // 页面加载时设置族谱图编辑按钮和联系按钮的链接
-    window.addEventListener('DOMContentLoaded', function() {
+    // 更新按钮链接的函数
+    function updateButtonLinks() {
         const editButton = document.getElementById('editButton');
         const contactSectionButton = document.getElementById('contactSectionButton');
         const contactNavButton = document.getElementById('contactNavButton');
@@ -605,6 +605,11 @@
                 contactSectionButton.classList.remove('disabled');
                 contactSectionButton.onclick = null;
             });
+    }
+    
+    // 页面加载时调用更新按钮链接函数
+    window.addEventListener('DOMContentLoaded', function() {
+        updateButtonLinks();
     });
 </script>
 <script>
@@ -716,7 +721,8 @@
                             img.src = img.getAttribute('data-original-src') + '?' + Date.now();
                         });
                         
-                        alert('图片已刷新');
+                        // 更新按钮链接
+                        updateButtonLinks();
                     });
                 }
             }
