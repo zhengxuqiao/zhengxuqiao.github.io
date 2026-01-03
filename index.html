@@ -374,7 +374,7 @@
         <li> <a class="page-scroll" href="#page-top">首页</a> </li>
         <li> <a class="page-scroll" href="#preface">前言</a> </li>
         <li> <a class="page-scroll" href="#genealogy">族谱图</a> </li>
-        <li> <a href="#" id="contactNavButton" class="page-scroll" target="_blank">联系</a> </li>
+        <li> <a href="#" id="contactNavButton" target="_blank">联系</a> </li>
       </ul>
     </div>
     <!-- /.navbar-collapse --> 
@@ -605,8 +605,6 @@
                     editButton.onclick = null;
                     
                     // 构建联系页面URL，包含完整的encoded参数
-                    const webtreesUrl = `${baseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
-                    const encodedWebtreesUrl = encodeURIComponent(webtreesUrl);
                     const contactUrl = `${baseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${encodedWebtreesUrl}`;
                     
                     // 设置联系按钮链接和样式
