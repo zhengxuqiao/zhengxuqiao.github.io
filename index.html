@@ -561,8 +561,10 @@
     window.addEventListener('DOMContentLoaded', function() {
         const editButton = document.getElementById('editButton');
         
-        // 从tunnel.json文件中读取网站链接
-        fetch('tunnel.json')
+        // 从tunnel.json文件中读取网站链接，添加缓存控制确保每次获取最新内容
+        fetch('tunnel.json?' + new Date().getTime(), {
+            cache: 'no-cache'
+        })
             .then(response => response.json())
             .then(data => {
                 let websiteUrl = data["02.website"];
