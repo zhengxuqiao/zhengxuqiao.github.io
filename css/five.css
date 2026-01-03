@@ -195,12 +195,15 @@ fieldset[disabled] .btn-xl.active {
 .navbar-default {
     border-color: transparent;
     background-color: #222;
+    min-height: auto !important;
+    padding: 5px 0 !important;
 }
 
 .navbar-default .navbar-brand {
 	font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight: 700;
 	color: #fff;
+	padding: 8px 15px !important;
 }
 
 .navbar-default .navbar-brand:hover,
@@ -278,10 +281,10 @@ fieldset[disabled] .btn-xl.active {
     .navbar-default {
         padding: 25px 0;
         border: 0;
-        background-color: #222; /* 将透明背景改为黑色背景 */
-        -webkit-transition: padding .3s;
-        -moz-transition: padding .3s;
-        transition: padding .3s;
+        background-color: transparent;
+        -webkit-transition: padding .3s, background-color .3s;
+        -moz-transition: padding .3s, background-color .3s;
+        transition: padding .3s, background-color .3s;
     }
 
     .navbar-default .navbar-brand {
@@ -302,6 +305,52 @@ fieldset[disabled] .btn-xl.active {
 
     .navbar-default.navbar-shrink .navbar-brand {
         font-size: 1.5em;
+    }
+}
+
+/* 窄屏幕导航栏优化：确保标题和菜单按钮在同一行 */
+@media(max-width:767px) {
+    /* 确保导航栏折叠时高度正常 */
+    .navbar-collapse {
+        border-top: none !important;
+        box-shadow: none !important;
+        margin-top: 5px !important;
+    }
+    
+    /* 调整导航链接样式 */
+    .navbar-nav {
+        margin: 5px 0 !important;
+    }
+    
+    /* 调整navbar-header样式，使其包含品牌和切换按钮 */
+    .navbar-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+    
+    /* 调整品牌文字样式 */
+    .navbar-default .navbar-brand {
+        font-size: 1.8em !important;
+        padding: 0 15px !important;
+        line-height: 1 !important;
+        height: auto !important;
+    }
+    
+    /* 调整汉堡按钮样式 */
+    .navbar-toggle {
+        margin-right: 15px !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding: 6px 10px !important;
+    }
+    
+    /* 确保span标签内的品牌文字正确显示 */
+    .navbar-header.page-scroll {
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
     }
 }
 
