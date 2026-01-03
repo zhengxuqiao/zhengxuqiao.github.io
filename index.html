@@ -374,7 +374,7 @@
         <li> <a class="page-scroll" href="#page-top">首页</a> </li>
         <li> <a class="page-scroll" href="#preface">前言</a> </li>
         <li> <a class="page-scroll" href="#genealogy">族谱图</a> </li>
-        <li> <a href="#" id="contactNavButton" target="_blank">联系</a> </li>
+        <li> <a class="page-scroll" href="#contact" id="contactNavButton">联系</a> </li>
       </ul>
     </div>
     <!-- /.navbar-collapse --> 
@@ -497,12 +497,12 @@
         <div id="galley2" style="margin-top: 20px;">
             <ul class="pictures2 list-unstyled">
                 <li class="image-gallery">
-                    <img src="image/中图/image001.jpg" alt="族谱图1" loading="lazy">
-                    <img src="image/中图/image002.jpg" alt="族谱图2" loading="lazy">
-                    <img src="image/中图/image003.jpg" alt="族谱图3" loading="lazy">
-                    <img src="image/中图/image004.jpg" alt="族谱图4" loading="lazy">
-                    <img src="image/中图/image005.jpg" alt="族谱图5" loading="lazy">
-                    <img src="image/中图/image006.jpg" alt="族谱图6" loading="lazy">
+                    <img src="image/中图/image001.jpg" alt="族谱图1" loading="lazy" decoding="async" width="200" height="300">
+                    <img src="image/中图/image002.jpg" alt="族谱图2" loading="lazy" decoding="async" width="200" height="300">
+                    <img src="image/中图/image003.jpg" alt="族谱图3" loading="lazy" decoding="async" width="200" height="300">
+                    <img src="image/中图/image004.jpg" alt="族谱图4" loading="lazy" decoding="async" width="200" height="300">
+                    <img src="image/中图/image005.jpg" alt="族谱图5" loading="lazy" decoding="async" width="200" height="300">
+                    <img src="image/中图/image006.jpg" alt="族谱图6" loading="lazy" decoding="async" width="200" height="300">
                 </li>
             </ul>
         </div>
@@ -519,20 +519,38 @@
                 <a href="#" class="edit-button" id="editButton" target="_blank" style="background-color: #ffc107; color: #212529; pointer-events: auto; cursor: pointer; margin: 0 10px; width: 180px;">
                     <i class="fa fa-pencil"></i> 编辑族谱
                 </a>
-                <!-- 添加联系按钮 -->
-                <a href="#" class="edit-button" id="contactButton" target="_blank" style="background-color: #ffc107; color: #212529; pointer-events: auto; cursor: pointer; margin: 0 10px; width: 180px;">
-                    <i class="fa fa-envelope"></i> 联系我们
-                </a>
             </div>
         </div>
         <div class="centered"> </div>
         <div id="galley">
             <ul class="pictures list-unstyled">
-                <li style="border: 1px solid black;"> <img src="descendants-chart.svg" alt="族谱图" loading="lazy" decoding="async"> </li>
+                <li style="border: 1px solid black;"> <img src="descendants-chart.svg" alt="族谱图" loading="lazy" decoding="async" width="1000" height="500"> </li>
             </ul>
         </div>
         <div class="tnt3 centered" style="margin-top: 20px;">
             <p align="left"> 2025年2月更新 </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading">联系</h2>
+        <div class="line"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <div style="margin: 40px 0;">
+          <p style="font-size: 18px; margin-bottom: 30px;">如有任何问题或建议，欢迎通过以下方式联系我们：</p>
+          <a href="#" id="contactSectionButton" class="edit-button" target="_blank" style="background-color: #cecece; color: #212529; pointer-events: auto; cursor: pointer; width: 200px; font-size: 24px;">
+            <i class="fa fa-envelope"></i> 联系我们
+          </a>
         </div>
       </div>
     </div>
@@ -571,7 +589,7 @@
     // 页面加载时设置族谱图编辑按钮和联系按钮的链接
     window.addEventListener('DOMContentLoaded', function() {
         const editButton = document.getElementById('editButton');
-        const contactButton = document.getElementById('contactButton');
+        const contactSectionButton = document.getElementById('contactSectionButton');
         const contactNavButton = document.getElementById('contactNavButton');
         
         // 从tunnel.json文件中读取网站链接，添加缓存控制确保每次获取最新内容
@@ -604,19 +622,15 @@
                     // 构建联系页面URL，包含完整的encoded参数
                     const contactUrl = `${baseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${encodedWebtreesUrl}`;
                     
-                    // 设置联系按钮链接和样式
-                    contactButton.href = contactUrl;
-                    contactButton.style.backgroundColor = '#ffc107';
-                    contactButton.style.color = '#212529';
-                    contactButton.title = '联系我们';
-                    contactButton.style.cursor = 'pointer';
-                    contactButton.style.pointerEvents = 'auto';
-                    contactButton.classList.remove('disabled');
-                    contactButton.onclick = null;
-                    
-                    // 设置导航栏联系按钮
-                    contactNavButton.href = contactUrl;
-                    contactNavButton.style.cursor = 'pointer';
+                    // 设置联系部分按钮链接和样式
+                    contactSectionButton.href = contactUrl;
+                    contactSectionButton.style.backgroundColor = '#cecece';
+                    contactSectionButton.style.color = '#212529';
+                    contactSectionButton.title = '联系我们';
+                    contactSectionButton.style.cursor = 'pointer';
+                    contactSectionButton.style.pointerEvents = 'auto';
+                    contactSectionButton.classList.remove('disabled');
+                    contactSectionButton.onclick = null;
                 } else {
                     // 如果没有配置URL，使用默认行为，构建登录跳转链接
                     const defaultBaseUrl = 'https://be483d.r27.cpolar.top';
@@ -636,18 +650,16 @@
                     const defaultContactWebtreesUrl = `${defaultBaseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
                     const defaultContactEncodedWebtreesUrl = encodeURIComponent(defaultContactWebtreesUrl);
                     const defaultContactUrl = `${defaultBaseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${defaultContactEncodedWebtreesUrl}`;
-                    contactButton.href = defaultContactUrl;
-                    contactButton.style.backgroundColor = '#ffc107';
-                    contactButton.style.color = '#212529';
-                    contactButton.title = '联系我们';
-                    contactButton.style.cursor = 'pointer';
-                    contactButton.style.pointerEvents = 'auto';
-                    contactButton.classList.remove('disabled');
-                    contactButton.onclick = null;
                     
-                    // 导航栏联系按钮默认URL
-                    contactNavButton.href = defaultContactUrl;
-                    contactNavButton.style.cursor = 'pointer';
+                    // 设置联系部分按钮
+                    contactSectionButton.href = defaultContactUrl;
+                    contactSectionButton.style.backgroundColor = '#cecece';
+                    contactSectionButton.style.color = '#212529';
+                    contactSectionButton.title = '联系我们';
+                    contactSectionButton.style.cursor = 'pointer';
+                    contactSectionButton.style.pointerEvents = 'auto';
+                    contactSectionButton.classList.remove('disabled');
+                    contactSectionButton.onclick = null;
                 }
             })
             .catch(error => {
@@ -670,18 +682,16 @@
                 const defaultContactWebtreesUrl = `${defaultBaseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
                 const defaultContactEncodedWebtreesUrl = encodeURIComponent(defaultContactWebtreesUrl);
                 const defaultContactUrl = `${defaultBaseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${defaultContactEncodedWebtreesUrl}`;
-                contactButton.href = defaultContactUrl;
-                contactButton.style.backgroundColor = '#ffc107';
-                contactButton.style.color = '#212529';
-                contactButton.title = '联系我们';
-                contactButton.style.cursor = 'pointer';
-                contactButton.style.pointerEvents = 'auto';
-                contactButton.classList.remove('disabled');
-                contactButton.onclick = null;
                 
-                // 导航栏联系按钮默认URL
-                contactNavButton.href = defaultContactUrl;
-                contactNavButton.style.cursor = 'pointer';
+                // 设置联系部分按钮
+                contactSectionButton.href = defaultContactUrl;
+                contactSectionButton.style.backgroundColor = '#cecece';
+                contactSectionButton.style.color = '#212529';
+                contactSectionButton.title = '联系我们';
+                contactSectionButton.style.cursor = 'pointer';
+                contactSectionButton.style.pointerEvents = 'auto';
+                contactSectionButton.classList.remove('disabled');
+                contactSectionButton.onclick = null;
             });
     });
 </script>
