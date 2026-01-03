@@ -574,8 +574,15 @@
                         websiteUrl = 'http://' + websiteUrl;
                     }
                     
+                    // 构建完整的编辑链接，使用从 tunnel.json 获取的 URL
+                    const loginPath = '/index.php?route=%2Flogin%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1';
+                    const webtreesRoute = '%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59';
+                    const webtreesPath = `?route=${webtreesRoute}`;
+                    const fullUrl = encodeURIComponent(`${websiteUrl}${webtreesPath}`);
+                    const editUrl = `${websiteUrl}${loginPath}&url=${fullUrl}`;
+                    
                     // 设置按钮链接和样式
-                    editButton.href = websiteUrl;
+                    editButton.href = editUrl;
                     editButton.style.backgroundColor = '#007bff';
                     editButton.style.color = 'white';
                     editButton.title = '编辑族谱图';
