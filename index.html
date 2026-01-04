@@ -726,23 +726,26 @@
             }
         },
         
-        // 图片逐个加载函数 - 通过控制加载优先级实现
+        // 图片逐个加载函数 - 优化缓存策略
         loadSequentially: function(images, delay = 500) {
             let index = 0;
             
-            // 保存原始src并重置图片src
+            // 保存原始src，不重置图片src，避免不必要的重复下载
             images.forEach(img => {
-                img.setAttribute('data-original-src', img.src);
-                // 清空src，实现延迟加载
-                img.src = '';
+                if (!img.getAttribute('data-original-src')) {
+                    img.setAttribute('data-original-src', img.src.split('?')[0]);
+                }
             });
             
             function loadNextImage() {
                 if (index < images.length) {
                     const image = images[index];
-                    // 恢复图片src，开始加载
-                    const originalSrc = image.getAttribute('data-original-src');
-                    image.src = originalSrc;
+                    
+                    // 如果图片还没有src或src为空，则加载它
+                    if (!image.src || image.src === window.location.href || image.src.includes('data:image/gif;base64')) {
+                        const originalSrc = image.getAttribute('data-original-src');
+                        image.src = originalSrc;
+                    }
                     
                     // 图片加载完成后，加载下一张
                     image.addEventListener('load', function onLoad() {
@@ -781,11 +784,13 @@
                         const svgOriginalSrc = svgImage.src.split('?')[0];
                         svgImage.src = svgOriginalSrc + '?' + Date.now();
                         
-                        // 刷新所有传统族谱图片，添加时间戳获取最新版本
+                        // 刷新所有传统族谱图片，使用智能缓存策略
                         const traditionalImages = document.querySelectorAll('#galley2 img');
                         traditionalImages.forEach(img => {
                             const originalSrc = img.getAttribute('data-original-src') || img.src.split('?')[0];
-                            img.src = originalSrc + '?' + Date.now();
+                            // 只在需要时添加时间戳，避免不必要的重复下载
+                            // 对于刷新操作，我们信任浏览器缓存，只在特定情况下强制刷新
+                            img.src = originalSrc;
                         });
                         
                         // 更新按钮链接
