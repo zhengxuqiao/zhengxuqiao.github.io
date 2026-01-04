@@ -9,19 +9,22 @@
 <title>郑氏族谱</title>
 
 <!-- Bootstrap Core CSS -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="all">
 
 <!-- Custom CSS -->
-<link href="css/five.css" rel="stylesheet">
-<link rel="stylesheet" href="css/viewer.css">
+<link href="css/five.css" rel="stylesheet" media="all">
+<link rel="stylesheet" href="css/viewer.css" media="all">
 
 <!-- Custom Fonts -->
-<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link href="#css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-<link href='#css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-<link href='#css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-<link href='#css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
-<link href='#css?family=Open+Sans:400,400italic,700,600,600italic' rel='stylesheet' type='text/css'>
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+<!-- 字体资源使用preconnect和preload优化，并设置display=swap避免阻塞渲染 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="#css?family=Montserrat:400,700" rel="stylesheet" type="text/css" media="print" onload="this.media='all'">
+<link href='#css?family=Kaushan+Script' rel='stylesheet' type='text/css' media="print" onload="this.media='all'">
+<link href='#css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css' media="print" onload="this.media='all'">
+<link href='#css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css' media="print" onload="this.media='all'">
+<link href='#css?family=Open+Sans:400,400italic,700,600,600italic' rel='stylesheet' type='text/css' media="print" onload="this.media='all'">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,11 +33,18 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     
+    <!-- 资源预加载和优化 -->
+    <link rel="preconnect" href="https://be483d.r27.cpolar.top">
+    <link rel="preconnect" href="https://oss.maxcdn.com">
+    <link rel="preload" href="css/bootstrap.min.css" as="style">
+    <link rel="preload" href="css/five.css" as="style">
+    <link rel="preload" href="css/viewer.css" as="style">
+    
     <!-- 启用压缩，优化缓存策略 -->
     <meta http-equiv="Content-Encoding" content="gzip, deflate, br">
-    <meta http-equiv="Cache-Control" content="public, max-age=86400">
-    <meta http-equiv="Expires" content="0">
-    <meta http-equiv="Pragma" content="no-cache">
+    <!-- 为静态资源设置合理的缓存时间，动态资源通过查询参数控制 -->
+    <meta http-equiv="Cache-Control" content="public, max-age=2592000">
+    <meta http-equiv="Expires" content="Wed, 03 Mar 2026 00:00:00 GMT">
 
 <style>
     body {
@@ -419,12 +429,12 @@
         <div id="galley2" style="margin-top: 20px;">
             <ul class="pictures2 list-unstyled">
                 <li class="image-gallery">
-                    <img src="image/中图/image001.jpg" alt="族谱图1" loading="lazy" decoding="async" width="200" height="300">
-                    <img src="image/中图/image002.jpg" alt="族谱图2" loading="lazy" decoding="async" width="200" height="300">
-                    <img src="image/中图/image003.jpg" alt="族谱图3" loading="lazy" decoding="async" width="200" height="300">
-                    <img src="image/中图/image004.jpg" alt="族谱图4" loading="lazy" decoding="async" width="200" height="300">
-                    <img src="image/中图/image005.jpg" alt="族谱图5" loading="lazy" decoding="async" width="200" height="300">
-                    <img src="image/中图/image006.jpg" alt="族谱图6" loading="lazy" decoding="async" width="200" height="300">
+                    <img src="image/中图/image001.jpg" alt="族谱图1" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
+                    <img src="image/中图/image002.jpg" alt="族谱图2" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
+                    <img src="image/中图/image003.jpg" alt="族谱图3" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
+                    <img src="image/中图/image004.jpg" alt="族谱图4" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
+                    <img src="image/中图/image005.jpg" alt="族谱图5" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
+                    <img src="image/中图/image006.jpg" alt="族谱图6" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
                 </li>
             </ul>
         </div>
@@ -446,7 +456,7 @@
         <div class="centered"> </div>
         <div id="galley">
             <ul class="pictures list-unstyled">
-                <li style="border: 1px solid black; display: flex; justify-content: center; overflow-x: auto;"> <img src="descendants-chart.svg" alt="族谱图" loading="lazy" decoding="async" style="min-height: 200px; height: auto; width: 100%; max-width: 100%;"> </li>
+                <li style="border: 1px solid black; display: flex; justify-content: center; overflow-x: auto;"> <img src="descendants-chart.svg" alt="族谱图" loading="lazy" decoding="async" style="min-height: 200px; height: auto; width: 100%; max-width: 100%;" fetchpriority="low"> </li>
             </ul>
         </div>
         <div class="tnt3 centered" style="margin-top: 20px;">
@@ -490,21 +500,21 @@
 </footer>
 
 <!-- jQuery --> 
-<script src="js/jquery.js"></script> 
+<script src="js/jquery.js" defer></script> 
 
 <!-- Bootstrap Core JavaScript --> 
-<script src="js/bootstrap.min.js"></script> 
+<script src="js/bootstrap.min.js" defer></script> 
 
 <!-- Plugin JavaScript --> 
-<script src="js/jquery.easing.min.js"></script> 
-<script src="js/classie.js"></script> 
-<script src="js/cbpAnimatedHeader.js"></script> 
+<script src="js/jquery.easing.min.js" defer></script> 
+<script src="js/classie.js" defer></script> 
+<script src="js/cbpAnimatedHeader.js" defer></script> 
 
 <!-- Custom Theme JavaScript --> 
-<script src="js/five.js"></script>
+<script src="js/five.js" defer></script>
 
 <!-- Viewer JavaScript -->
-<script src="js/viewer.js"></script>
+<script src="js/viewer.js" defer></script>
 
 <!-- Custom JavaScript for Genealogy -->
 <script>
@@ -622,7 +632,7 @@
             image.removeEventListener('error', onError);
             
             // 重置src属性，添加时间戳防止缓存
-            const originalSrc = image.getAttribute('data-original-src') || image.src;
+            const originalSrc = image.getAttribute('data-src') || image.getAttribute('data-original-src') || image.src;
             image.src = originalSrc + (originalSrc.includes('?') ? '&' : '?') + 'timestamp=' + Date.now();
             
             // 重新添加事件监听器
@@ -638,36 +648,46 @@
             }
         }
         
-        // 保存原始src并添加事件监听器
-        image.setAttribute('data-original-src', image.src);
+        // 添加事件监听器
         image.addEventListener('error', onError);
     }
     
-    // 图片加载完成后执行回调
-    function loadImagesWithCallback(images, callback) {
-        let loadedCount = 0;
-        const totalImages = images.length;
+    // 图片逐个加载函数 - 通过控制加载优先级实现
+    function loadImagesSequentially(images, delay = 500) {
+        let index = 0;
         
-        if (totalImages === 0) {
-            callback();
-            return;
-        }
-        
-        function onImageLoaded() {
-            loadedCount++;
-            if (loadedCount === totalImages) {
-                callback();
-            }
-        }
-        
-        images.forEach(image => {
-            if (image.complete) {
-                onImageLoaded();
-            } else {
-                image.addEventListener('load', onImageLoaded);
-                image.addEventListener('error', onImageLoaded); // 即使加载失败也继续
-            }
+        // 保存原始src并重置图片src
+        images.forEach(img => {
+            img.setAttribute('data-original-src', img.src);
+            // 清空src，实现延迟加载
+            img.src = '';
         });
+        
+        function loadNextImage() {
+            if (index < images.length) {
+                const image = images[index];
+                // 恢复图片src，开始加载
+                const originalSrc = image.getAttribute('data-original-src');
+                image.src = originalSrc + (originalSrc.includes('?') ? '&' : '?') + 'timestamp=' + Date.now();
+                
+                // 图片加载完成后，加载下一张
+                image.addEventListener('load', function onLoad() {
+                    image.removeEventListener('load', onLoad);
+                    setTimeout(loadNextImage, delay);
+                });
+                
+                // 图片加载失败时，也继续加载下一张
+                image.addEventListener('error', function onError() {
+                    image.removeEventListener('error', onError);
+                    setTimeout(loadNextImage, delay);
+                });
+                
+                index++;
+            }
+        }
+        
+        // 开始加载第一张图片
+        loadNextImage();
     }
     
     window.addEventListener('DOMContentLoaded',
@@ -678,28 +698,34 @@
                 setupImageRetry(image);
             });
             
-            // 图片全部加载完成后初始化Viewer查看器
-            loadImagesWithCallback(allImages, function() {
-                // 初始化第一个查看器（SVG族谱图）
-                var gallery = document.getElementById('galley');
-                if (gallery) {
-                    var viewer = new Viewer(gallery, {
-                        title: function(image) {
-                            return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
-                        }
-                    });
-                }
+            // 立即初始化Viewer查看器，不等待图片加载完成
+            // 初始化第一个查看器（SVG族谱图）
+            var gallery = document.getElementById('galley');
+            if (gallery) {
+                var viewer = new Viewer(gallery, {
+                    title: function(image) {
+                        return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+                    },
+                    // 允许在图片加载过程中显示查看器
+                    backdrop: true
+                });
+            }
 
-                // 初始化第二个查看器（传统族谱图片）
-                var gallery2 = document.getElementById('galley2');
-                if (gallery2) {
-                    var viewer2 = new Viewer(gallery2, {
-                        title: function(image) {
-                            return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
-                        }
-                    });
-                }
-            });
+            // 初始化第二个查看器（传统族谱图片）
+            var gallery2 = document.getElementById('galley2');
+            if (gallery2) {
+                var viewer2 = new Viewer(gallery2, {
+                    title: function(image) {
+                        return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+                    },
+                    // 允许在图片加载过程中显示查看器
+                    backdrop: true
+                });
+            }
+            
+            // 获取传统族谱图片并实现逐个加载
+            const traditionalImages = document.querySelectorAll('#galley2 img');
+            loadImagesSequentially(traditionalImages, 500);
             
             // 为SVG族谱图添加特定的错误处理
             const svgImage = document.querySelector('#galley img[src$="descendants-chart.svg"]');
@@ -718,7 +744,10 @@
                         // 刷新所有传统族谱图片
                         const traditionalImages = document.querySelectorAll('#galley2 img');
                         traditionalImages.forEach(img => {
-                            img.src = img.getAttribute('data-original-src') + '?' + Date.now();
+                            const originalSrc = img.getAttribute('data-original-src');
+                            if (originalSrc) {
+                                img.src = originalSrc + '?' + Date.now();
+                            }
                         });
                         
                         // 更新按钮链接
