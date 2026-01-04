@@ -40,6 +40,10 @@
     <link rel="preload" href="css/five.css" as="style">
     <link rel="preload" href="css/viewer.css" as="style">
     
+    <!-- 关键图片预加载 -->
+    <link rel="preload" href="image/小图/image001.jpg" as="image" fetchpriority="high">
+    <link rel="preload" href="descendants-chart.svg" as="image" fetchpriority="high" type="image/svg+xml" crossorigin="anonymous">
+    
     <!-- 启用压缩，优化缓存策略 -->
     <meta http-equiv="Content-Encoding" content="gzip, deflate, br">
     <!-- 为静态资源设置合理的缓存时间，动态资源通过查询参数控制 -->
@@ -393,6 +397,7 @@
         <div id="galley2" style="margin-top: 20px;">
             <ul class="pictures2 list-unstyled">
                 <li class="image-gallery">
+                    <!-- 直接加载中图 -->
                     <img src="image/中图/image001.jpg" alt="族谱图1" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
                     <img src="image/中图/image002.jpg" alt="族谱图2" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
                     <img src="image/中图/image003.jpg" alt="族谱图3" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
