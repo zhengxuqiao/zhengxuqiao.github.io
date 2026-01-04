@@ -780,9 +780,10 @@
                         e.preventDefault();
                         e.stopPropagation();
                         
-                        // 刷新SVG图片，添加时间戳获取最新版本
+                        // 刷新SVG图片，使用智能缓存策略
                         const svgOriginalSrc = svgImage.src.split('?')[0];
-                        svgImage.src = svgOriginalSrc + '?' + Date.now();
+                        // 信任浏览器缓存，避免不必要的重复下载
+                        svgImage.src = svgOriginalSrc;
                         
                         // 刷新所有传统族谱图片，使用智能缓存策略
                         const traditionalImages = document.querySelectorAll('#galley2 img');
