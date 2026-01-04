@@ -54,19 +54,92 @@
     body {
         font-family: SimSun, serif; /* 设置页面默认字体 */
     }
-    /* 图片查看器样式 */
-    .pictures>li>img,
-    .pictures2>li>img {
+    /* 图片查看器通用样式 - 确保边框粗细一致 */
+    #galley img,
+    #galley2 img {
         cursor: zoom-in;
+        object-fit: contain;
+        border: 1px solid black !important; /* 使用!important确保边框粗细一致 */
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        outline: none;
     }
     
-    .pictures>li>img {
+    /* 确保图片容器没有额外边框 */
+    #galley,
+    #galley2 {
+        border: none !important;
+        outline: none !important;
+    }
+    
+    /* 确保没有其他样式覆盖边框 */
+    .pictures,
+    .pictures2,
+    .pictures li,
+    .pictures2 li {
+        border: none !important;
+        outline: none !important;
+        background: none !important;
+    }
+    
+    /* 传统族谱图容器样式 - 整体应用 */
+    #galley2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        padding: 10px;
+        margin: 20px 0;
+        flex-wrap: nowrap;
+        overflow-x: hidden;
+    }
+    
+    /* 传统族谱图图片样式 - 整体应用 */
+    #galley2 img {
+        width: calc(16.666% - 5px);
+        max-width: 180px;
+        min-width: 120px;
+        height: auto;
+        display: block;
+    }
+    
+    /* 新族谱图容器样式 */
+    #galley {
+        padding: 10px;
+        margin: 20px 0;
+    }
+    
+    /* 新族谱图图片样式 */
+    #galley img {
         width: 100%;
+        height: auto;
+        min-height: 200px;
+        max-width: 100%;
+        display: block;
     }
     
-    .pictures2>li>img {
-        width: calc(13% - 10px);
-        margin: 5px;
+    /* 响应式设计 */
+    @media (max-width: 1200px) {
+        #galley2 img {
+            width: calc(16.666% - 4px);
+            max-width: 150px;
+        }
+    }
+    
+    @media (max-width: 992px) {
+        #galley2 img {
+            width: calc(16.666% - 3px);
+            max-width: 120px;
+            min-width: 100px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        #galley2 img {
+            width: calc(16.666% - 2px);
+            max-width: 100px;
+            min-width: 80px;
+        }
     }
     
     /* 竖排文本样式 */
@@ -395,17 +468,13 @@
             传统族谱图
         </h3>
         <div id="galley2" style="margin-top: 20px;">
-            <ul class="pictures2 list-unstyled">
-                <li class="image-gallery">
-                    <!-- 直接加载中图 -->
-                    <img src="image/中图/image001.jpg" alt="族谱图1" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
-                    <img src="image/中图/image002.jpg" alt="族谱图2" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
-                    <img src="image/中图/image003.jpg" alt="族谱图3" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
-                    <img src="image/中图/image004.jpg" alt="族谱图4" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
-                    <img src="image/中图/image005.jpg" alt="族谱图5" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
-                    <img src="image/中图/image006.jpg" alt="族谱图6" loading="lazy" decoding="async" width="200" height="300" fetchpriority="low">
-                </li>
-            </ul>
+            <!-- 所有图片直接放在容器中，合并到同一个viewer -->
+            <img src="image/中图/image001.jpg" alt="族谱图1" loading="lazy" decoding="async" fetchpriority="low">
+            <img src="image/中图/image002.jpg" alt="族谱图2" loading="lazy" decoding="async" fetchpriority="low">
+            <img src="image/中图/image003.jpg" alt="族谱图3" loading="lazy" decoding="async" fetchpriority="low">
+            <img src="image/中图/image004.jpg" alt="族谱图4" loading="lazy" decoding="async" fetchpriority="low">
+            <img src="image/中图/image005.jpg" alt="族谱图5" loading="lazy" decoding="async" fetchpriority="low">
+            <img src="image/中图/image006.jpg" alt="族谱图6" loading="lazy" decoding="async" fetchpriority="low">
         </div>
         <br />
         <h3 class="new-gallery-title">
@@ -746,16 +815,25 @@
             }
 
             // 初始化第二个查看器（传统族谱图片）
-            var gallery2 = document.getElementById('galley2');
-            if (gallery2) {
-                var viewer2 = new Viewer(gallery2, {
-                    title: function(image) {
-                        return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
-                    },
-                    // 允许在图片加载过程中显示查看器
-                    backdrop: true
-                });
-            }
+                var gallery2 = document.getElementById('galley2');
+                if (gallery2) {
+                    // 确保获取所有图片元素
+                    var images = gallery2.querySelectorAll('img');
+                    console.log('传统族谱图数量:', images.length);
+                    
+                    var viewer2 = new Viewer(gallery2, {
+                        title: function(image) {
+                            return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+                        },
+                        // 允许在图片加载过程中显示查看器
+                        backdrop: true,
+                        // 确保所有图片都能被Viewer识别
+                        filter: function(image) {
+                            // 确保所有img元素都被包含
+                            return image.tagName.toLowerCase() === 'img';
+                        }
+                    });
+                }
         });
 </script>
 </body>
