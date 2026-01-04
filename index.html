@@ -50,20 +50,22 @@
     body {
         font-family: SimSun, serif; /* 设置页面默认字体 */
     }
-    .pictures>li>img {
-        cursor: zoom-in;
-        width: 100%;
-    }
-
+    /* 图片查看器样式 */
+    .pictures>li>img,
     .pictures2>li>img {
         cursor: zoom-in;
+    }
+    
+    .pictures>li>img {
+        width: 100%;
+    }
+    
+    .pictures2>li>img {
         width: calc(13% - 10px);
-        /* Adjusted for border
-        and spacing */
         margin: 5px;
     }
-
-    /* 简化的tnt2样式 */
+    
+    /* 竖排文本样式 */
     .tnt2 {
         writing-mode: tb-rl;
         text-align: center;
@@ -77,13 +79,20 @@
         min-height: 300px;
     }
     
-    /* 调整前言section的基础样式 */
+    .tnt3 {
+        writing-mode: tb-lr;
+        text-align: left;
+        font-size: 6pt;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    
+    /* 前言section样式 */
     #preface {
         width: 100% !important;
         padding: 20px 0 !important;
     }
     
-    /* 新增：前言内容容器样式 */
     .preface-content-container {
         display: flex !important;
         justify-content: center !important;
@@ -97,7 +106,6 @@
         border-radius: 5px !important;
     }
     
-    /* 调整前言内容样式，实现竖排、顶上方对齐、左右居中 */
     .tnt {
         writing-mode: tb-rl !important;
         text-orientation: mixed !important;
@@ -119,7 +127,6 @@
         white-space: nowrap !important;
     }
     
-    /* 调整段落样式，确保内容正常显示 */
     .tnt p {
         display: inline-block !important;
         vertical-align: top !important;
@@ -132,24 +139,10 @@
         word-wrap: break-word !important;
         width: auto !important;
         height: auto !important;
+        font-size: 12pt !important;
     }
     
-    /* 响应式设计：在宽屏幕上 */
-    @media (min-width: 769px) {
-        /* 调整前言内容容器样式 */
-        .preface-content-container {
-            max-width: 95% !important;
-            margin: 20px auto !important;
-        }
-        
-        /* 调整前言内容样式 */
-        .tnt {
-            margin: 0 !important;
-            padding: 20px !important;
-        }
-    }
-    
-    /* 响应式设计：在窄屏幕上 */
+    /* 响应式设计 */
     @media (max-width: 768px) {
         /* 调整前言内容容器样式 */
         .preface-content-container {
@@ -162,15 +155,12 @@
             padding: 15px !important;
             font-size: 10pt !important;
             line-height: 1.8 !important;
-            margin: 0 !important;
         }
         
         /* 调整段落样式 */
         .tnt p {
             font-size: 10pt !important;
             line-height: 1.8 !important;
-            margin: 0 !important;
-            padding: 0 !important;
         }
         
         /* 调整标签页样式 */
@@ -183,15 +173,8 @@
             font-size: 14px !important;
         }
     }
-
-    .tnt3 {
-        writing-mode: tb-lr;
-        text-align: left;
-        font-size: 6pt;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-
+    
+    /* 通用布局样式 */
     .centered {
         text-align: center;
         display: flex;
@@ -200,20 +183,29 @@
         gap: 10px;
     }
     
-    /* 新增的样式 */
+    .image-gallery {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .image-gallery img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* 标题样式 */
     .main-title {
         font-size: 60px;
-        border-bottom: 2px solid #333; /* 为标题添加装饰性样式 */
+        border-bottom: 2px solid #333;
         padding-bottom: 10px;
     }
     
-    .preface-title {
-        font-size: 50px;
-        padding-bottom: 10px;
-    }
-    
+    .preface-title,
     .gallery-title {
         font-size: 50px;
+        padding-bottom: 10px;
     }
     
     .traditional-gallery-title,
@@ -221,18 +213,8 @@
         font-size: 40px;
     }
     
-    .edit-button {
-        text-decoration: none;
-        color: #212529;
-        background-color: #ffc107;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 20px;
-        display: inline-block;
-        text-align: center;
-        border: none;
-    }
-    
+    /* 按钮样式 */
+    .edit-button,
     .refresh-button {
         font-size: 20px;
         padding: 10px 20px;
@@ -240,18 +222,14 @@
         background-color: #ffc107;
         color: #212529;
         border: none;
-        cursor: pointer;
-        text-align: center;
         display: inline-block;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
     }
     
-    /* 为族谱图添加边框或阴影 */
-    #galley2 .pictures2 li {
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    }
-    
-    #galley .pictures li {
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    .edit-button {
+        text-decoration: none;
     }
     
     /* 禁用状态的编辑按钮样式 */
@@ -263,28 +241,21 @@
         opacity: 0.6;
     }
     
-    /* 按钮悬停效果优化 */
-    .edit-button:hover:not(.disabled) {
+    /* 按钮悬停效果 */
+    .edit-button:hover:not(.disabled),
+    .refresh-button:hover {
         background-color: #0056b3;
         color: white;
+    }
+    
+    .edit-button:hover:not(.disabled) {
         text-decoration: none;
     }
     
-    .refresh-button:hover {
-        background-color: #0056b3;
-    }
-    
-    /* 响应式图片展示 */
-    .image-gallery {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    
-    .image-gallery img {
-        max-width: 100%;
-        height: auto;
+    /* 族谱图样式 */
+    #galley2 .pictures2 li,
+    #galley .pictures li {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     }
     
     /* 居中标签页 */
@@ -303,8 +274,8 @@
         border-radius: 0.375rem 0.375rem 0 0;
         font-size: 18px;
         padding: 10px 20px;
-        color: #6c757d; /* 未选中标签文字颜色 */
-        background-color: #fff; /* 未选中标签背景颜色 */
+        color: #6c757d;
+        background-color: #fff;
         margin: 0 10px;
         transition: all 0.3s ease;
         width: 180px;
@@ -312,23 +283,16 @@
     }
     
     #myTab .nav-item.active .nav-link {
-        color: #ffc107; /* 选中标签文字颜色 - 黄色 */
-        background-color: #fff; /* 选中标签背景颜色 - 白色 */
-        border-color: #dee2e6 #dee2e6 #fff; /* 选中标签边框颜色 */
+        color: #ffc107;
+        background-color: #fff;
+        border-color: #dee2e6 #dee2e6 #fff;
         font-weight: bold;
     }
     
     #myTab .nav-link:hover {
-        color: #ffc107; /* 鼠标悬停时文字颜色 - 黄色 */
-        background-color: #fff; /* 鼠标悬停时背景颜色 - 白色 */
-        border-color: #dee2e6 #dee2e6 #dee2e6; /* 鼠标悬停时边框颜色 */
-    }
-    
-    /* 增大前言内容字体大小 */
-    .tnt p {
-        font-size: 12pt !important; /* 增大段落字体大小 */
-        line-height: 2.0; /* 调整行高 */
-        letter-spacing: 2px; /* 调整字间距 */
+        color: #ffc107;
+        background-color: #fff;
+        border-color: #dee2e6 #dee2e6 #dee2e6;
     }
 </style>
 
@@ -623,80 +587,145 @@
     });
 </script>
 <script>
-    // 图片加载重试函数
-    function setupImageRetry(image, maxRetries = 3, retryDelay = 1000) {
-        let retries = 0;
-        
-        function retryLoad() {
-            // 移除之前的事件监听器，避免重复触发
-            image.removeEventListener('error', onError);
-            
-            // 重置src属性，添加时间戳防止缓存
-            const originalSrc = image.getAttribute('data-src') || image.getAttribute('data-original-src') || image.src;
-            image.src = originalSrc + (originalSrc.includes('?') ? '&' : '?') + 'timestamp=' + Date.now();
-            
-            // 重新添加事件监听器
-            image.addEventListener('error', onError);
-        }
-        
-        function onError() {
-            retries++;
-            if (retries <= maxRetries) {
-                setTimeout(retryLoad, retryDelay);
-            } else {
-                console.error('图片加载失败，已达到最大重试次数:', image.src);
-            }
-        }
-        
-        // 添加事件监听器
-        image.addEventListener('error', onError);
-    }
-    
-    // 图片逐个加载函数 - 通过控制加载优先级实现
-    function loadImagesSequentially(images, delay = 500) {
-        let index = 0;
-        
-        // 保存原始src并重置图片src
-        images.forEach(img => {
-            img.setAttribute('data-original-src', img.src);
-            // 清空src，实现延迟加载
-            img.src = '';
-        });
-        
-        function loadNextImage() {
-            if (index < images.length) {
-                const image = images[index];
-                // 恢复图片src，开始加载
-                const originalSrc = image.getAttribute('data-original-src');
-                image.src = originalSrc + (originalSrc.includes('?') ? '&' : '?') + 'timestamp=' + Date.now();
-                
-                // 图片加载完成后，加载下一张
-                image.addEventListener('load', function onLoad() {
-                    image.removeEventListener('load', onLoad);
-                    setTimeout(loadNextImage, delay);
-                });
-                
-                // 图片加载失败时，也继续加载下一张
-                image.addEventListener('error', function onError() {
-                    image.removeEventListener('error', onError);
-                    setTimeout(loadNextImage, delay);
-                });
-                
-                index++;
-            }
-        }
-        
-        // 开始加载第一张图片
-        loadNextImage();
-    }
-    
-    window.addEventListener('DOMContentLoaded',
-        function() {
+    // 图片加载管理对象
+    const ImageLoader = {
+        // 初始化图片加载设置
+        init: function() {
             // 获取所有图片并设置重试机制
             const allImages = document.querySelectorAll('img');
             allImages.forEach(image => {
-                setupImageRetry(image);
+                this.setupRetry(image);
             });
+            
+            // 获取传统族谱图片并实现逐个加载
+            const traditionalImages = document.querySelectorAll('#galley2 img');
+            this.loadSequentially(traditionalImages, 500);
+            
+            // 初始化刷新按钮功能
+            this.setupRefreshButton();
+        },
+        
+        // 图片加载重试函数
+        setupRetry: function(image, maxRetries = 3, retryDelay = 1000) {
+            let retries = 0;
+            let isRetrying = false;
+            
+            function retryLoad() {
+                if (isRetrying) return;
+                isRetrying = true;
+                
+                // 移除之前的事件监听器，避免重复触发
+                image.removeEventListener('error', onError);
+                
+                // 重置src属性，确保重试时获取最新版本
+                const originalSrc = image.getAttribute('data-original-src') || image.src.split('?')[0];
+                
+                // 重试时添加时间戳，确保获取最新图片
+                image.src = '';
+                setTimeout(() => {
+                    image.src = originalSrc + '?' + Date.now();
+                    isRetrying = false;
+                }, 100);
+                
+                // 重新添加事件监听器
+                setTimeout(() => {
+                    image.addEventListener('error', onError);
+                }, 150);
+            }
+            
+            function onError() {
+                if (isRetrying) return;
+                
+                retries++;
+                if (retries <= maxRetries) {
+                    console.log(`图片加载失败，正在重试 (${retries}/${maxRetries}):`, image.src);
+                    setTimeout(retryLoad, retryDelay);
+                } else {
+                    console.error('图片加载失败，已达到最大重试次数:', image.src);
+                }
+            }
+            
+            // 确保只添加一次事件监听器
+            if (!image.hasAttribute('data-retry-setup')) {
+                image.addEventListener('error', onError);
+                image.setAttribute('data-retry-setup', 'true');
+            }
+        },
+        
+        // 图片逐个加载函数 - 通过控制加载优先级实现
+        loadSequentially: function(images, delay = 500) {
+            let index = 0;
+            
+            // 保存原始src并重置图片src
+            images.forEach(img => {
+                img.setAttribute('data-original-src', img.src);
+                // 清空src，实现延迟加载
+                img.src = '';
+            });
+            
+            function loadNextImage() {
+                if (index < images.length) {
+                    const image = images[index];
+                    // 恢复图片src，开始加载
+                    const originalSrc = image.getAttribute('data-original-src');
+                    image.src = originalSrc;
+                    
+                    // 图片加载完成后，加载下一张
+                    image.addEventListener('load', function onLoad() {
+                        image.removeEventListener('load', onLoad);
+                        setTimeout(loadNextImage, delay);
+                    });
+                    
+                    // 图片加载失败时，也继续加载下一张
+                    image.addEventListener('error', function onError() {
+                        image.removeEventListener('error', onError);
+                        setTimeout(loadNextImage, delay);
+                    });
+                    
+                    index++;
+                }
+            }
+            
+            // 开始加载第一张图片
+            loadNextImage();
+        },
+        
+        // 设置刷新按钮功能
+        setupRefreshButton: function() {
+            // 为SVG族谱图添加特定的错误处理
+            const svgImage = document.querySelector('#galley img[src$="descendants-chart.svg"]');
+            if (svgImage) {
+                // 添加手动刷新按钮功能
+                const refreshButton = document.querySelector('.refresh-button');
+                if (refreshButton) {
+                    refreshButton.addEventListener('click', function(e) {
+                        // 阻止默认的页面刷新行为，只刷新图片
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // 刷新SVG图片，添加时间戳获取最新版本
+                        const svgOriginalSrc = svgImage.src.split('?')[0];
+                        svgImage.src = svgOriginalSrc + '?' + Date.now();
+                        
+                        // 刷新所有传统族谱图片，添加时间戳获取最新版本
+                        const traditionalImages = document.querySelectorAll('#galley2 img');
+                        traditionalImages.forEach(img => {
+                            const originalSrc = img.getAttribute('data-original-src') || img.src.split('?')[0];
+                            img.src = originalSrc + '?' + Date.now();
+                        });
+                        
+                        // 更新按钮链接
+                        updateButtonLinks();
+                    });
+                }
+            }
+        }
+    };
+    
+    window.addEventListener('DOMContentLoaded',
+        function() {
+            // 初始化图片加载管理
+            ImageLoader.init();
             
             // 立即初始化Viewer查看器，不等待图片加载完成
             // 初始化第一个查看器（SVG族谱图）
@@ -721,39 +750,6 @@
                     // 允许在图片加载过程中显示查看器
                     backdrop: true
                 });
-            }
-            
-            // 获取传统族谱图片并实现逐个加载
-            const traditionalImages = document.querySelectorAll('#galley2 img');
-            loadImagesSequentially(traditionalImages, 500);
-            
-            // 为SVG族谱图添加特定的错误处理
-            const svgImage = document.querySelector('#galley img[src$="descendants-chart.svg"]');
-            if (svgImage) {
-                // 添加手动刷新按钮功能
-                const refreshButton = document.querySelector('.refresh-button');
-                if (refreshButton) {
-                    refreshButton.addEventListener('click', function(e) {
-                        // 阻止默认的页面刷新行为，只刷新图片
-                        e.preventDefault();
-                        e.stopPropagation();
-                        
-                        // 刷新SVG图片
-                        svgImage.src = 'descendants-chart.svg?' + Date.now();
-                        
-                        // 刷新所有传统族谱图片
-                        const traditionalImages = document.querySelectorAll('#galley2 img');
-                        traditionalImages.forEach(img => {
-                            const originalSrc = img.getAttribute('data-original-src');
-                            if (originalSrc) {
-                                img.src = originalSrc + '?' + Date.now();
-                            }
-                        });
-                        
-                        // 更新按钮链接
-                        updateButtonLinks();
-                    });
-                }
             }
         });
 </script>
