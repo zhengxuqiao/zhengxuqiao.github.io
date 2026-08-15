@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>郑氏族谱</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet" media="all">
+
+<!-- Custom CSS -->
+<link href="css/five.css" rel="stylesheet" media="all">
+<link rel="stylesheet" href="css/viewer.css" media="all">
+
+<!-- Custom Fonts -->
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+<!-- 字体资源使用preconnect和preload优化，并设置display=swap避免阻塞渲染 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="#css?family=Montserrat:400,700" rel="stylesheet" type="text/css" media="print" onload="this.media='all'">
+<link href='#css?family=Kaushan+Script' rel='stylesheet' type='text/css' media="print" onload="this.media='all'">
+<link href='#css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css' media="print" onload="this.media='all'">
+<link href='#css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css' media="print" onload="this.media='all'">
+<link href='#css?family=Open+Sans:400,400italic,700,600,600italic' rel='stylesheet' type='text/css' media="print" onload="this.media='all'">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- 资源预加载和优化 -->
+    <link rel="preconnect" href="https://be483d.r27.cpolar.top">
+    <link rel="preconnect" href="https://oss.maxcdn.com">
+    <link rel="preload" href="css/bootstrap.min.css" as="style">
+    <link rel="preload" href="css/five.css" as="style">
+    <link rel="preload" href="css/viewer.css" as="style">
+    
+    <!-- 关键图片预加载 -->
+    <link rel="preload" href="image/小图/image001.jpg" as="image" fetchpriority="high">
+    <link rel="preload" href="descendants-chart.svg" as="image" fetchpriority="high" type="image/svg+xml" crossorigin="anonymous">
+    
+    <!-- 启用压缩，优化缓存策略 -->
+    <meta http-equiv="Content-Encoding" content="gzip, deflate, br">
+    <!-- 为静态资源设置合理的缓存时间，动态资源通过查询参数控制 -->
+    <meta http-equiv="Cache-Control" content="public, max-age=2592000">
+    <meta http-equiv="Expires" content="Wed, 03 Mar 2026 00:00:00 GMT">
+
+<style>
+    body {
+        font-family: SimSun, serif; /* 设置页面默认字体 */
+    }
+    /* 图片查看器通用样式 - 确保边框粗细一致 */
+    #galley img,
+    #galley2 img {
+        cursor: zoom-in;
+        object-fit: contain;
+        border: 1px solid black !important; /* 使用!important确保边框粗细一致 */
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        outline: none;
+    }
+    
+    /* 确保图片容器没有额外边框 */
+    #galley,
+    #galley2 {
+        border: none !important;
+        outline: none !important;
+    }
+    
+    /* 确保没有其他样式覆盖边框 */
+    .pictures,
+    .pictures2,
+    .pictures li,
+    .pictures2 li {
+        border: none !important;
+        outline: none !important;
+        background: none !important;
+    }
+    
+    /* 传统族谱图容器样式 - 整体应用 */
+    #galley2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        padding: 10px;
+        margin: 20px 0;
+        flex-wrap: nowrap;
+        overflow-x: hidden;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* 传统族谱图图片样式 - 整体应用 */
+    #galley2 img {
+        width: calc(16.666% - 5px);
+        max-width: 180px;
+        min-width: auto;
+        height: auto;
+        display: block;
+        flex-shrink: 1;
+    }
+    
+    /* 新族谱图容器样式 */
+    #galley {
+        padding: 10px;
+        margin: 20px 0;
+    }
+    
+    /* 新族谱图图片样式 */
+    #galley img {
+        width: 100%;
+        height: auto;
+        min-height: 200px;
+        max-width: 100%;
+        display: block;
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 1200px) {
+        #galley2 img {
+            width: calc(16.666% - 4px);
+            max-width: 150px;
+        }
+    }
+    
+    @media (max-width: 992px) {
+        #galley2 img {
+            width: calc(16.666% - 3px);
+            max-width: 120px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        #galley2 img {
+            width: calc(16.666% - 2px);
+            max-width: 100px;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        #galley2 {
+            gap: 3px;
+            padding: 5px;
+        }
+        #galley2 img {
+            width: calc(16.666% - 2px);
+            max-width: none;
+        }
+    }
+    
+    /* 竖排文本样式 */
+    .tnt2 {
+        writing-mode: tb-rl;
+        text-align: center;
+        font-size: 12pt;
+        font-family: KaiTi, cursive;
+        line-height: 2.0;
+        letter-spacing: 2px;
+        background-color: #f5f5dc;
+        padding: 20px;
+        height: auto !important;
+        min-height: 300px;
+    }
+    
+    .tnt3 {
+        writing-mode: tb-lr;
+        text-align: left;
+        font-size: 6pt;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    
+    /* 前言section样式 */
+    #preface {
+        width: 100% !important;
+        padding: 20px 0 !important;
+    }
+    
+    .preface-content-container {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        background-color: #f5f5dc !important;
+        margin: 20px auto !important;
+        max-width: 95% !important;
+        border: 1px solid #ddd !important;
+        border-radius: 5px !important;
+    }
+    
+    .tnt {
+        writing-mode: tb-rl !important;
+        text-orientation: mixed !important;
+        display: inline-block !important;
+        vertical-align: top !important;
+        text-align: left !important;
+        text-align-last: left !important;
+        font-size: 12pt !important;
+        font-family: KaiTi, cursive !important;
+        line-height: 2.0 !important;
+        letter-spacing: 2px !important;
+        background-color: transparent !important;
+        padding: 20px !important;
+        margin: 0 !important;
+        width: auto !important;
+        height: auto !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        white-space: nowrap !important;
+    }
+    
+    .tnt p {
+        display: inline-block !important;
+        vertical-align: top !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        writing-mode: tb-rl !important;
+        text-align: left !important;
+        text-align-last: left !important;
+        white-space: pre-wrap !important;
+        word-wrap: break-word !important;
+        width: auto !important;
+        height: auto !important;
+        font-size: 12pt !important;
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+        /* 调整前言内容容器样式 */
+        .preface-content-container {
+            max-width: 98% !important;
+            margin: 15px auto !important;
+        }
+        
+        /* 调整前言内容样式 */
+        .tnt {
+            padding: 15px !important;
+            font-size: 10pt !important;
+            line-height: 1.8 !important;
+        }
+        
+        /* 调整段落样式 */
+        .tnt p {
+            font-size: 10pt !important;
+            line-height: 1.8 !important;
+        }
+        
+        /* 调整标签页样式 */
+        #myTab {
+            font-size: 14px !important;
+        }
+        
+        #myTab .nav-link {
+            padding: 8px 12px !important;
+            font-size: 14px !important;
+        }
+    }
+    
+    /* 通用布局样式 */
+    .centered {
+        text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .image-gallery {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .image-gallery img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* 标题样式 */
+    .main-title {
+        font-size: 60px;
+        border-bottom: 2px solid #333;
+        padding-bottom: 10px;
+    }
+    
+    .preface-title,
+    .gallery-title {
+        font-size: 50px;
+        padding-bottom: 10px;
+    }
+    
+    .traditional-gallery-title,
+    .new-gallery-title {
+        font-size: 40px;
+    }
+    
+    /* 按钮样式 */
+    .edit-button,
+    .refresh-button {
+        font-size: 20px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #ffc107;
+        color: #212529;
+        border: none;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    
+    .edit-button {
+        text-decoration: none;
+    }
+    
+    /* 禁用状态的编辑按钮样式 */
+    .edit-button.disabled {
+        background-color: #cccccc;
+        color: #666666;
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: 0.6;
+    }
+    
+    /* 按钮悬停效果 */
+    .edit-button:hover:not(.disabled),
+    .refresh-button:hover {
+        background-color: #0056b3;
+        color: white;
+    }
+    
+    .edit-button:hover:not(.disabled) {
+        text-decoration: none;
+    }
+    
+    /* 族谱图样式 */
+    #galley2 .pictures2 li,
+    #galley .pictures li {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+    
+    /* 居中标签页 */
+    #myTab {
+        border-bottom: 1px solid #dee2e6;
+        display: flex;
+        justify-content: center;
+    }
+    
+    #myTab .nav-item {
+        margin-bottom: -1px;
+    }
+    
+    #myTab .nav-link {
+        border: 1px solid transparent;
+        border-radius: 0.375rem 0.375rem 0 0;
+        font-size: 18px;
+        padding: 10px 20px;
+        color: #6c757d;
+        background-color: #fff;
+        margin: 0 10px;
+        transition: all 0.3s ease;
+        width: 180px;
+        text-align: center;
+    }
+    
+    #myTab .nav-item.active .nav-link {
+        color: #ffc107;
+        background-color: #fff;
+        border-color: #dee2e6 #dee2e6 #fff;
+        font-weight: bold;
+    }
+    
+    #myTab .nav-link:hover {
+        color: #ffc107;
+        background-color: #fff;
+        border-color: #dee2e6 #dee2e6 #dee2e6;
+    }
+</style>
+
+</head>
+
+<body class="index">
+
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container"> 
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header page-scroll">
+      <a class="navbar-brand page-scroll" href="#page-top">郑氏族谱</a>
+      <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+    </div>
+    
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="hidden"> <a href="#page-top"></a> </li>
+        <li> <a class="page-scroll" href="#page-top">首页</a> </li>
+        <li> <a class="page-scroll" href="#preface">前言</a> </li>
+        <li> <a class="page-scroll" href="#genealogy">族谱图</a> </li>
+        <li> <a class="page-scroll" href="#contact" id="contactNavButton">联系</a> </li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse --> 
+  </div>
+  <!-- /.container-fluid --> 
+</nav>
+
+<!-- Header -->
+<header id="page-top">
+  <div class="container">
+    <div class="intro-text">
+      <div class="intro-lead-in">欢迎访问</div>
+      <div class="intro-heading">郑氏族谱</div>
+      <a href="#preface" class="page-scroll btn btn-xl"><i class="fa fa-angle-double-down fa-4x"></i></a> </div>
+  </div>
+</header>
+
+<!-- Preface Section -->
+<section id="preface">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading">前言</h2>
+        <div class="line"></div>
+      </div>
+    </div>
+    <!-- 添加简体/繁体切换标签 -->
+    <ul class="nav nav-tabs nav-tabs-centered" id="myTab">
+        <li class="nav-item active">
+            <a class="nav-link" href="#fanti" data-toggle="tab">繁體</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#jianti" data-toggle="tab">简体</a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane active" id="fanti">
+            <div class="preface-content-container">
+                <div class="tnt">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp; 苗庄鄭氏，原居山東省泰安郊區房村 <br />鄉埠里八村。明朝萬歷年間，因兵荒馬亂 <br />迁至苗庄。始祖名曉字東升，世代勤劳 <br />忠厚，艰苦創業，遂發展成為鄭氏家族， <br />生息繁衍而又分別定居至楼德和西营。 <br />&nbsp;&nbsp;&nbsp;&nbsp; 星转斗移，經過四百余年的風風雨雨， <br />人世变迁，鄭氏家族有了很大发展，思先人 <br />之恩，遂想立一家譜供後世瞻仰，便根据 <br />以前先人的轴堂和前輩老人的傳說記載， <br />经考證落实，遂制成本譜。望郑氏子孫 <br />勿忘先人之德，使郑氏家族发扬廣大， <br />流芳萬世。 <br /><br />行輩&nbsp;&nbsp;&nbsp;&nbsp;：興賢緒耐兆&nbsp;傳善家方長 <sup> ① </sup> <br />支代表：鄭金山 <br />族代表：鄭澄保，鄭澄舜，鄭澄津，鄭希強 <br />主辦人：鄭衍昆，鄭衍超 <br />書寫人：鄭衍瑞 <br /><br />公園一九九五年古歷十一月&nbsp;&nbsp;敬書 <br /></p>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="jianti">
+            <div class="preface-content-container">
+                <div class="tnt">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp; 苗庄郑氏，原居山东省泰安郊区房村 <br />乡埠里八村。明朝万历年间，因兵荒马乱 <br />迁至苗庄。始祖名晓字东升，世代勤劳 <br />忠厚，艰苦创业，遂发展成为郑氏家族， <br />生息繁衍而又分别定居至楼德和西营。 <br />&nbsp;&nbsp;&nbsp;&nbsp; 星转斗移，经过四百余年的风风雨雨， <br />人世变迁，郑氏家族有了很大发展，思先人 <br />之恩，遂想立一家谱供后世瞻仰，便根据 <br />以前先人的轴堂和前辈老人的传说记载， <br />经考证落实，遂制成本谱。望郑氏子孙 <br />勿忘先人之德，使郑氏家族发扬光大， <br />流芳万世。 <br /><br />行辈&nbsp;&nbsp;&nbsp;&nbsp;：興賢緒耐兆&nbsp;传善家方长 <sup> ① </sup> <br />支代表：郑金山 <br />族代表：郑澄保，郑澄舜，郑澄津，郑希强 <br />主办人：郑衍昆，郑衍超 <br />书写人：郑衍瑞 <br /><br />公园一九九五年古历十一月&nbsp;&nbsp;敬书 <br /></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="tnt3" style="margin-top: 20px;">
+            <p style="text-align: left;"> 注①：行辈由郑衍昆口传 </p>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- Genealogy Section -->
+<section id="genealogy" class="bg-light-gray">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading">族谱图</h2>
+        <div class="line"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h3 class="traditional-gallery-title">
+            传统族谱图
+        </h3>
+        <div id="galley2" style="margin-top: 20px;">
+            <!-- 所有图片直接放在容器中，合并到同一个viewer -->
+            <img src="image/中图/image001.jpg" alt="族谱图1" loading="lazy" decoding="async" fetchpriority="low">
+            <img src="image/中图/image002.jpg" alt="族谱图2" loading="lazy" decoding="async" fetchpriority="low">
+            <img src="image/中图/image003.jpg" alt="族谱图3" loading="lazy" decoding="async" fetchpriority="low">
+            <img src="image/中图/image004.jpg" alt="族谱图4" loading="lazy" decoding="async" fetchpriority="low">
+            <img src="image/中图/image005.jpg" alt="族谱图5" loading="lazy" decoding="async" fetchpriority="low">
+            <img src="image/中图/image006.jpg" alt="族谱图6" loading="lazy" decoding="async" fetchpriority="low">
+        </div>
+        <br />
+        <h3 class="new-gallery-title">
+            新族谱图
+        </h3>
+        <div style="margin: 20px 0;">
+            <div class="centered">
+                <button type="button" class="refresh-button" onclick="location.reload()" style="margin: 0; width: 180px; background-color: #ffc107; color: #212529;">
+                    <i class="fa fa-refresh"></i> 刷新页面
+                </button>
+                <!-- 修改编辑按钮为从文件读取网址 -->
+                <a href="#" class="edit-button" id="editButton" target="_blank" style="background-color: #ffc107; color: #212529; pointer-events: auto; cursor: pointer; margin: 0; width: 180px;">
+                    <i class="fa fa-pencil"></i> 编辑族谱
+                </a>
+            </div>
+        </div>
+        <div class="centered"> </div>
+        <div id="galley">
+            <ul class="pictures list-unstyled">
+                <li style="border: 1px solid black; display: flex; justify-content: center; overflow-x: auto;"> <img src="descendants-chart.svg" alt="族谱图" loading="lazy" decoding="async" style="min-height: 200px; height: auto; width: 100%; max-width: 100%;" fetchpriority="low"> </li>
+            </ul>
+        </div>
+        <div class="tnt3 centered" style="margin-top: 20px;">
+            <p align="left"> 2025年2月更新 </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading">联系</h2>
+        <div class="line"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <div style="margin: 40px 0;">
+          <p style="font-size: 18px; margin-bottom: 30px;">如有任何问题或建议，欢迎通过以下方式联系我们：</p>
+          <a href="#" id="contactSectionButton" class="edit-button" target="_blank" style="background-color: #cecece; color: #212529; pointer-events: auto; cursor: pointer; width: 200px; font-size: 24px;">
+            <i class="fa fa-envelope"></i> 联系我们
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <span class="copyright">Copyright &copy; 2024 郑氏族谱</span> 
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- jQuery --> 
+<script src="js/jquery.js" defer></script> 
+
+<!-- Bootstrap Core JavaScript --> 
+<script src="js/bootstrap.min.js" defer></script> 
+
+<!-- Plugin JavaScript --> 
+<script src="js/jquery.easing.min.js" defer></script> 
+<script src="js/classie.js" defer></script> 
+<script src="js/cbpAnimatedHeader.js" defer></script> 
+
+<!-- Custom Theme JavaScript --> 
+<script src="js/five.js" defer></script>
+
+<!-- Viewer JavaScript -->
+<script src="js/viewer.js" defer></script>
+
+<!-- Custom JavaScript for Genealogy -->
+<script>
+    // 更新按钮链接的函数
+    function updateButtonLinks() {
+        const editButton = document.getElementById('editButton');
+        const contactSectionButton = document.getElementById('contactSectionButton');
+        const contactNavButton = document.getElementById('contactNavButton');
+        
+        // 从tunnel.json文件中读取网站链接，添加缓存控制确保每次获取最新内容
+        fetch('tunnel.json?' + new Date().getTime(), {
+            cache: 'no-cache'
+        })
+            .then(response => response.json())
+            .then(data => {
+                let websiteUrl = data["02.website"];
+                // 定义默认URL，确保即使没有配置文件也能正常工作
+                let baseUrl = 'https://be483d.r27.cpolar.top';
+                
+                if (websiteUrl && websiteUrl.trim() !== '') {
+                    // 确保URL包含协议前缀
+                    if (!websiteUrl.startsWith('http://') && !websiteUrl.startsWith('https://')) {
+                        websiteUrl = 'http://' + websiteUrl;
+                    }
+                    baseUrl = websiteUrl;
+                }
+                
+                // 构建编辑页面URL
+                const editPageUrl = `${baseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
+                
+                // 构建登录页面URL，包含返回URL参数
+                // 注意：返回URL需要使用简化格式，符合webtrees系统要求
+                const returnUrl = `${baseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
+                const loginUrl = `${baseUrl}/index.php?route=%2Flogin%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1&url=${encodeURIComponent(returnUrl)}`;
+                
+                // 设置编辑按钮链接和样式
+                // 直接跳转到登录页面，确保未登录用户先登录
+                editButton.href = loginUrl;
+                editButton.style.backgroundColor = '#ffc107';
+                editButton.style.color = '#212529';
+                editButton.title = '编辑族谱';
+                editButton.style.cursor = 'pointer';
+                editButton.style.pointerEvents = 'auto';
+                editButton.classList.remove('disabled');
+                editButton.onclick = null;
+                
+                // 构建联系页面URL，包含完整的encoded参数
+                const contactWebtreesUrl = `${baseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
+                const contactEncodedWebtreesUrl = encodeURIComponent(contactWebtreesUrl);
+                const contactUrl = `${baseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${contactEncodedWebtreesUrl}`;
+                
+                // 设置联系部分按钮链接和样式
+                contactSectionButton.href = contactUrl;
+                contactSectionButton.style.backgroundColor = '#cecece';
+                contactSectionButton.style.color = '#212529';
+                contactSectionButton.title = '联系我们';
+                contactSectionButton.style.cursor = 'pointer';
+                contactSectionButton.style.pointerEvents = 'auto';
+                contactSectionButton.classList.remove('disabled');
+                contactSectionButton.onclick = null;
+            })
+            .catch(error => {
+                console.error('加载配置文件失败:', error);
+                // 如果无法读取配置文件，使用默认URL
+                const defaultBaseUrl = 'https://be483d.r27.cpolar.top';
+                
+                // 构建编辑页面URL
+                const editPageUrl = `${defaultBaseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
+                
+                // 构建登录页面URL，包含返回URL参数
+                // 注意：返回URL需要使用简化格式，符合webtrees系统要求
+                const returnUrl = `${defaultBaseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
+                const loginUrl = `${defaultBaseUrl}/index.php?route=%2Flogin%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1&url=${encodeURIComponent(returnUrl)}`;
+                
+                // 设置编辑按钮链接和样式
+                // 直接跳转到登录页面，确保未登录用户先登录
+                editButton.href = loginUrl;
+                editButton.style.backgroundColor = '#ffc107';
+                editButton.style.color = '#212529';
+                editButton.title = '编辑族谱';
+                editButton.style.cursor = 'pointer';
+                editButton.style.pointerEvents = 'auto';
+                editButton.classList.remove('disabled');
+                editButton.onclick = null;
+                
+                // 联系按钮默认URL
+                const defaultContactWebtreesUrl = `${defaultBaseUrl}?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fwebtrees-descendants-chart%2FX59`;
+                const defaultContactEncodedWebtreesUrl = encodeURIComponent(defaultContactWebtreesUrl);
+                const defaultContactUrl = `${defaultBaseUrl}/index.php?route=%2Ftree%2F%25E6%2588%2591%25E7%259A%2584%25E5%25AE%25B6%25E8%25B0%25B1%2Fcontact&to=jiapuadmin&url=${defaultContactEncodedWebtreesUrl}`;
+                
+                // 设置联系部分按钮
+                contactSectionButton.href = defaultContactUrl;
+                contactSectionButton.style.backgroundColor = '#cecece';
+                contactSectionButton.style.color = '#212529';
+                contactSectionButton.title = '联系我们';
+                contactSectionButton.style.cursor = 'pointer';
+                contactSectionButton.style.pointerEvents = 'auto';
+                contactSectionButton.classList.remove('disabled');
+                contactSectionButton.onclick = null;
+            });
+    }
+    
+    // 页面加载时调用更新按钮链接函数
+    window.addEventListener('DOMContentLoaded', function() {
+        updateButtonLinks();
+    });
+</script>
+<script>
+    // 图片加载管理对象
+    const ImageLoader = {
+        // 初始化图片加载设置
+        init: function() {
+            // 获取所有图片并设置重试机制
+            const allImages = document.querySelectorAll('img');
+            allImages.forEach(image => {
+                this.setupRetry(image);
+            });
+            
+            // 获取传统族谱图片并实现逐个加载
+            const traditionalImages = document.querySelectorAll('#galley2 img');
+            this.loadSequentially(traditionalImages, 500);
+            
+            // 初始化刷新按钮功能
+            this.setupRefreshButton();
+        },
+        
+        // 图片加载重试函数
+        setupRetry: function(image, maxRetries = 3, retryDelay = 1000) {
+            let retries = 0;
+            let isRetrying = false;
+            
+            function retryLoad() {
+                if (isRetrying) return;
+                isRetrying = true;
+                
+                // 移除之前的事件监听器，避免重复触发
+                image.removeEventListener('error', onError);
+                
+                // 重置src属性，确保重试时获取最新版本
+                const originalSrc = image.getAttribute('data-original-src') || image.src.split('?')[0];
+                
+                // 重试时添加时间戳，确保获取最新图片
+                image.src = '';
+                setTimeout(() => {
+                    image.src = originalSrc + '?' + Date.now();
+                    isRetrying = false;
+                }, 100);
+                
+                // 重新添加事件监听器
+                setTimeout(() => {
+                    image.addEventListener('error', onError);
+                }, 150);
+            }
+            
+            function onError() {
+                if (isRetrying) return;
+                
+                retries++;
+                if (retries <= maxRetries) {
+                    console.log(`图片加载失败，正在重试 (${retries}/${maxRetries}):`, image.src);
+                    setTimeout(retryLoad, retryDelay);
+                } else {
+                    console.error('图片加载失败，已达到最大重试次数:', image.src);
+                }
+            }
+            
+            // 确保只添加一次事件监听器
+            if (!image.hasAttribute('data-retry-setup')) {
+                image.addEventListener('error', onError);
+                image.setAttribute('data-retry-setup', 'true');
+            }
+        },
+        
+        // 图片逐个加载函数 - 优化缓存策略
+        loadSequentially: function(images, delay = 500) {
+            let index = 0;
+            
+            // 保存原始src，不重置图片src，避免不必要的重复下载
+            images.forEach(img => {
+                if (!img.getAttribute('data-original-src')) {
+                    img.setAttribute('data-original-src', img.src.split('?')[0]);
+                }
+            });
+            
+            function loadNextImage() {
+                if (index < images.length) {
+                    const image = images[index];
+                    
+                    // 如果图片还没有src或src为空，则加载它
+                    if (!image.src || image.src === window.location.href || image.src.includes('data:image/gif;base64')) {
+                        const originalSrc = image.getAttribute('data-original-src');
+                        image.src = originalSrc;
+                    }
+                    
+                    // 图片加载完成后，加载下一张
+                    image.addEventListener('load', function onLoad() {
+                        image.removeEventListener('load', onLoad);
+                        setTimeout(loadNextImage, delay);
+                    });
+                    
+                    // 图片加载失败时，也继续加载下一张
+                    image.addEventListener('error', function onError() {
+                        image.removeEventListener('error', onError);
+                        setTimeout(loadNextImage, delay);
+                    });
+                    
+                    index++;
+                }
+            }
+            
+            // 开始加载第一张图片
+            loadNextImage();
+        },
+        
+        // 设置刷新按钮功能
+        setupRefreshButton: function() {
+            // 为SVG族谱图添加特定的错误处理
+            const svgImage = document.querySelector('#galley img[src$="descendants-chart.svg"]');
+            if (svgImage) {
+                // 添加手动刷新按钮功能
+                const refreshButton = document.querySelector('.refresh-button');
+                if (refreshButton) {
+                    refreshButton.addEventListener('click', function(e) {
+                        // 阻止默认的页面刷新行为，只刷新图片
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // 刷新SVG图片，使用智能缓存策略
+                        const svgOriginalSrc = svgImage.src.split('?')[0];
+                        // 信任浏览器缓存，避免不必要的重复下载
+                        svgImage.src = svgOriginalSrc;
+                        
+                        // 刷新所有传统族谱图片，使用智能缓存策略
+                        const traditionalImages = document.querySelectorAll('#galley2 img');
+                        traditionalImages.forEach(img => {
+                            const originalSrc = img.getAttribute('data-original-src') || img.src.split('?')[0];
+                            // 只在需要时添加时间戳，避免不必要的重复下载
+                            // 对于刷新操作，我们信任浏览器缓存，只在特定情况下强制刷新
+                            img.src = originalSrc;
+                        });
+                        
+                        // 更新按钮链接
+                        updateButtonLinks();
+                    });
+                }
+            }
+        }
+    };
+    
+    window.addEventListener('DOMContentLoaded',
+        function() {
+            // 初始化图片加载管理
+            ImageLoader.init();
+            
+            // 立即初始化Viewer查看器，不等待图片加载完成
+            // 初始化第一个查看器（SVG族谱图）
+            var gallery = document.getElementById('galley');
+            if (gallery) {
+                var viewer = new Viewer(gallery, {
+                    title: function(image) {
+                        return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+                    },
+                    // 允许在图片加载过程中显示查看器
+                    backdrop: true
+                });
+            }
+
+            // 初始化第二个查看器（传统族谱图片）
+                var gallery2 = document.getElementById('galley2');
+                if (gallery2) {
+                    // 确保获取所有图片元素
+                    var images = gallery2.querySelectorAll('img');
+                    console.log('传统族谱图数量:', images.length);
+                    
+                    var viewer2 = new Viewer(gallery2, {
+                        title: function(image) {
+                            return image.alt + ' (' + (this.index + 1) + '/' + this.length + ')';
+                        },
+                        // 允许在图片加载过程中显示查看器
+                        backdrop: true,
+                        // 确保所有图片都能被Viewer识别
+                        filter: function(image) {
+                            // 确保所有img元素都被包含
+                            return image.tagName.toLowerCase() === 'img';
+                        }
+                    });
+                }
+        });
+</script>
+</body>
+</html>
